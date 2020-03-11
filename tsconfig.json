@@ -3,6 +3,15 @@
     "target": "esnext",
     "module": "commonjs",
     "sourceMap": false,
-    "strict": true
-  }
+    "strict": true,
+    "noImplicitAny": true,
+    "removeComments": true,
+    "outDir": "dist"
+  },
+  "include": [
+    "src/**/*"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
 }
