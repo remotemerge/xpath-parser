@@ -1,0 +1,25 @@
+{
+  "name": "@cixware/hali",
+  "version": "0.0.1",
+  "description": "Hali is a tiny NodeJS package to evaluate XPath expression.",
+  "license": "Apache-2.0",
+  "keywords": [
+    "dom",
+    "evaluate",
+    "xpath"
+  ],
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "engines": {
+    "node": ">=12"
+  },
+  "scripts": {
+    "build": "tsc"
+  },
+  "dependencies": {
+  },
+  "devDependencies": {
+  }
+}
