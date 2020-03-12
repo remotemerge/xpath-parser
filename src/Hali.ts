@@ -1,5 +1,10 @@
-// init DOM parser
-const parser = new DOMParser();
+// interface for XPath expression
+interface Expression {
+    root: string;
+    queries: {
+        [key: string]: string
+    };
+}
 
 class Hali {
     // init options
@@ -11,19 +16,43 @@ class Hali {
     // init DOM node
     private domContent: Node;
 
+    /**
+     * --------------------------------------------------
+     * Initialize Node from DOM Node or HTML string.
+     * --------------------------------------------------
+     * @param content
+     * --------------------------------------------------
+     */
     constructor(content: Node | string) {
         if (content instanceof Node) {
             this.domContent = content;
         } else {
+            // init DOM parser
+            const parser = new DOMParser();
             this.domContent = parser.parseFromString(content, 'text/html');
         }
     }
 
+    /**
+     * --------------------------------------------------
+     * Evaluate an XPath expression in the specified Node
+     * and return the result.
+     * --------------------------------------------------
+     * @param expression
+     * --------------------------------------------------
+     */
     evaluate(expression: string): XPathResult {
         return document.evaluate(expression, this.domContent, null, this.options.queryFirst ? XPathResult.FIRST_ORDERED_NODE_TYPE : XPathResult.ORDERED_NODE_ITERATOR_TYPE, null);
     }
 
-    getValue(node: HTMLElement | null): string {
+    /**
+     * --------------------------------------------------
+     * Extract the text value from a given DOM Node.
+     * --------------------------------------------------
+     * @param node
+     * --------------------------------------------------
+     */
+    getValue(node: Node | null): string {
         let formattedText: string = '';
         if (node instanceof HTMLElement) {
             let nodeValue = node.nodeType === 1 ? node.innerText : ((node.nodeType === 2 || node.nodeType === 3) ? node.nodeValue : '');
@@ -34,6 +63,15 @@ class Hali {
         return formattedText;
     }
 
+    /**
+     * --------------------------------------------------
+     * This method selects all matching nodes and extract
+     * result in an array.
+     * --------------------------------------------------
+     * @param expression
+     * @param options
+     * --------------------------------------------------
+     */
     singleQuery(expression: string, options: object | undefined) {
         // override options
         this.options = Object.assign(this.options, options);
@@ -52,7 +90,17 @@ class Hali {
         }
     }
 
-    multiQuery(expression = {
+    /**
+     * --------------------------------------------------
+     * This method selects all matching parent nodes and
+     * runs sub queries on child nodes and generate an
+     * associative array result.
+     * --------------------------------------------------
+     * @param expression
+     * @param options
+     * --------------------------------------------------
+     */
+    multiQuery(expression: Expression = {
         root: '/html',
         queries: {}
     }, options: object) {
@@ -70,18 +118,9 @@ class Hali {
 
             let record: { [key: string]: string } = {};
 
-            for (const [key, val] of Object.entries(expression.queries)) {
-                record[key] = '';
-
-                let result = (this.evaluate(val)).singleNodeValue;
-                if (!result !== null) {
-                    record[key] = this.getValue(result);
-                }
-            }
             Object.keys(expression.queries).forEach((key: string) => {
-                record[key] = '';
                 let result = (this.evaluate(expression.queries[key])).singleNodeValue;
-                console.log(queries[key]);
+                record[key] = this.getValue(result);
             });
             records.push(record);
         }
