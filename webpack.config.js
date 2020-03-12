@@ -8,7 +8,7 @@ module.exports = (env, argv) => ({
   output: {
     path: path.resolve(__dirname, './dist'),
     publicPath: '/',
-    filename: 'js/[name].js',
+    filename: '[name].js',
     libraryTarget: 'commonjs2'
   },
   module: {
