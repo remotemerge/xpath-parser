@@ -56,15 +56,15 @@ export default class Hali {
     let formattedText = '';
     if (node instanceof Node) {
       switch (node.nodeType) {
-        case 1:
-          formattedText = node.textContent || '';
-          break;
-        case 2:
-        case 3:
-          formattedText = node.nodeValue || '';
-          break;
-        default:
-          formattedText = '';
+      case 1:
+        formattedText = node.textContent || '';
+        break;
+      case 2:
+      case 3:
+        formattedText = node.nodeValue || '';
+        break;
+      default:
+        formattedText = '';
       }
     }
     return formattedText.trim().replace(/\s{2,}/gm, ' ');
