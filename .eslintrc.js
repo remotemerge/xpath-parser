@@ -28,6 +28,9 @@ module.exports = {
     'indent': [
       status,
       2,
+      {
+        'SwitchCase': 1,
+      }
     ],
     'linebreak-style': [
       status,
