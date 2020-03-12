@@ -16,10 +16,11 @@
     "node": ">=12"
   },
   "scripts": {
-    "serve": "cross-env NODE_ENV=development webpack --config webpack.config.js --mode=development",
     "lint": "cross-env NODE_ENV=production eslint --ext .ts src",
     "lint:fix": "eslint --ext .ts --fix src",
-    "build": "cross-env NODE_ENV=production webpack --config webpack.config.js --mode=production --progress --hide-modules"
+    "dev": "cross-env NODE_ENV=development webpack --config webpack.config.js --mode=development",
+    "build": "cross-env NODE_ENV=production webpack --config webpack.config.js --mode=production --progress --hide-modules",
+    "test": "echo \"No test specified\""
   },
   "dependencies": {},
   "devDependencies": {
