@@ -2,11 +2,11 @@
 interface Expression {
   root: string;
   queries: {
-    [key: string]: string
+    [key: string]: string;
   };
 }
 
-class Hali {
+export default class Hali {
   // init options
   private options = {
     queryFirst: false,
@@ -53,14 +53,21 @@ class Hali {
    * --------------------------------------------------
    */
   getValue(node: Node | null): string {
-    let formattedText: string = '';
-    if (node instanceof HTMLElement) {
-      let nodeValue = node.nodeType === 1 ? node.innerText : ((node.nodeType === 2 || node.nodeType === 3) ? node.nodeValue : '');
-      if (nodeValue) {
-        formattedText = nodeValue.trim().replace(/\s{2,}/gm, ' ');
+    let formattedText = '';
+    if (node instanceof Node) {
+      switch (node.nodeType) {
+        case 1:
+          formattedText = node.textContent || '';
+          break;
+        case 2:
+        case 3:
+          formattedText = node.nodeValue || '';
+          break;
+        default:
+          formattedText = '';
       }
     }
-    return formattedText;
+    return formattedText.trim().replace(/\s{2,}/gm, ' ');
   }
 
   /**
@@ -72,18 +79,18 @@ class Hali {
    * @param options
    * --------------------------------------------------
    */
-  singleQuery(expression: string, options: object | undefined) {
+  singleQuery(expression: string, options: object | undefined): string | string[] {
     // override options
     this.options = Object.assign(this.options, options);
 
-    let evaluate = this.evaluate(expression);
+    const evaluate = this.evaluate(expression);
     if (this.options.queryFirst) {
       return this.getValue(evaluate.singleNodeValue);
     } else {
-      let records = [];
+      const records = [];
       let node = null;
       while ((node = evaluate.iterateNext())) {
-        let value = this.getValue(node);
+        const value = this.getValue(node);
         records.push(value);
       }
       return records;
@@ -103,23 +110,23 @@ class Hali {
   multiQuery(expression: Expression = {
     root: '/html',
     queries: {}
-  }, options: object) {
+  }, options: object): object {
     // override options
     this.options = Object.assign(this.options, options);
     // extract root DOM
-    let rootDom = this.evaluate(expression.root);
+    const rootDom = this.evaluate(expression.root);
 
-    let records = [];
+    const records = [];
     let nodeDom = null;
     while ((nodeDom = rootDom.iterateNext())) {
       // runtime override
       this.options.queryFirst = true;
       this.domContent = nodeDom;
 
-      let record: { [key: string]: string } = {};
+      const record: { [key: string]: string } = {};
 
       Object.keys(expression.queries).forEach((key: string) => {
-        let result = (this.evaluate(expression.queries[key])).singleNodeValue;
+        const result = (this.evaluate(expression.queries[key])).singleNodeValue;
         record[key] = this.getValue(result);
       });
       records.push(record);
