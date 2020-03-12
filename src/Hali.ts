@@ -67,7 +67,7 @@ export default class Hali {
           formattedText = '';
       }
     }
-    return formattedText.trim().replace(/\s{2,}/gm, ' ');
+    return formattedText.trim();
   }
 
   /**
