@@ -45,7 +45,6 @@ const serverConfig = (argv) => Object.assign(commonConfig(argv), {
 const browserConfig = (argv) => Object.assign(commonConfig(argv), {
   output: {
     filename: '[name].web.js',
-    libraryTarget: 'commonjs2'
   },
   target: 'web',
 });
