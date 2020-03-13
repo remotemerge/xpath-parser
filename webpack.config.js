@@ -27,7 +27,7 @@ module.exports = (env, argv) => ({
     ]
   },
   performance: {
-    hints: false
+    hints: argv.mode !== 'production'
   },
   watch: argv.mode !== 'production' || (argv.watch !== undefined && argv.watch === 'true'),
   devtool: false,
