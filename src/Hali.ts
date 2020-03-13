@@ -79,7 +79,7 @@ export default class Hali {
    * @param options
    * --------------------------------------------------
    */
-  singleQuery(expression: string, options: object | undefined): string | string[] {
+  singleQuery(expression: string, options: object = {}): string | string[] {
     // override options
     this.options = Object.assign(this.options, options);
 
@@ -110,7 +110,7 @@ export default class Hali {
   multiQuery(expression: Expression = {
     root: '/html',
     queries: {}
-  }, options: object): object {
+  }, options: object = {}): object {
     // override options
     this.options = Object.assign(this.options, options);
     // extract root DOM
