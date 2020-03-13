@@ -1,15 +1,15 @@
 // init path module
 const path = require('path');
 
-module.exports = (env, argv) => ({
+// common configs
+const commonConfig = (argv) => ({
   entry: {
     'hali': './src/Hali.ts',
   },
   output: {
     path: path.resolve(__dirname, './dist'),
     publicPath: '/',
-    filename: '[name].js',
-    libraryTarget: 'commonjs2'
+    libraryTarget: 'commonjs2',
   },
   module: {
     rules: [
@@ -27,8 +27,28 @@ module.exports = (env, argv) => ({
     ]
   },
   performance: {
-    hints: argv.mode !== 'production'
+    hints: argv.mode !== 'production' ? 'warning' : false
   },
   watch: argv.mode !== 'production' || (argv.watch !== undefined && argv.watch === 'true'),
   devtool: false,
 });
+
+// server configs
+const serverConfig = (argv) => Object.assign(commonConfig(argv), {
+  output: {
+    filename: '[name].node.js',
+  },
+  target: 'node',
+});
+
+// browser configs
+const browserConfig = (argv) => Object.assign(commonConfig(argv), {
+  output: {
+    filename: '[name].web.js',
+    libraryTarget: 'commonjs2'
+  },
+  target: 'web',
+});
+
+// export multiple configs
+module.exports = (env, argv) => [serverConfig(argv), browserConfig(argv)];
