@@ -17,7 +17,7 @@ Import the class
 ```typescript
 import Hali from '@remotemerge/hali'
 ```
-or
+OR
 ```javascript
 const Hali = require('@remotemerge/hali')
 ```
