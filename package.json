@@ -20,6 +20,8 @@
     "lint": "cross-env NODE_ENV=production eslint --ext .ts src",
     "lint:fix": "eslint --ext .ts --fix src",
     "build": "yarn lint && tsc",
+    "drypush": "npm publish --access public --dry-run",
+    "push": "npm publish --access public",
     "test": "echo \"No test specified\""
   },
   "dependencies": {},
