@@ -1,12 +1,13 @@
 {
   "compilerOptions": {
-    "target": "esnext",
-    "module": "commonjs",
+    "target": "ES5",
+    "module": "ESNext",
+    "moduleResolution": "node",
     "sourceMap": false,
     "strict": true,
     "noImplicitAny": true,
     "removeComments": true,
-    "outDir": "dist"
+    "outDir": "./dist"
   },
   "include": [
     "src/**/*"
