@@ -17,11 +17,8 @@ export default class Hali {
   private domContent: Node;
 
   /**
-   * --------------------------------------------------
    * Initialize Node from DOM Node or HTML string.
-   * --------------------------------------------------
    * @param content
-   * --------------------------------------------------
    */
   constructor(content: Node | string) {
     if (content instanceof Node) {
@@ -34,23 +31,19 @@ export default class Hali {
   }
 
   /**
-   * --------------------------------------------------
    * Evaluate an XPath expression in the specified Node
    * and return the result.
-   * --------------------------------------------------
    * @param expression
-   * --------------------------------------------------
+   * @return XPathResult
    */
   evaluate(expression: string): XPathResult {
     return document.evaluate(expression, this.domContent, null, this.options.queryFirst ? XPathResult.FIRST_ORDERED_NODE_TYPE : XPathResult.ORDERED_NODE_ITERATOR_TYPE, null);
   }
 
   /**
-   * --------------------------------------------------
    * Extract the text value from a given DOM Node.
-   * --------------------------------------------------
    * @param node
-   * --------------------------------------------------
+   * @return string
    */
   getValue(node: Node | null): string {
     let formattedText = '';
@@ -71,13 +64,10 @@ export default class Hali {
   }
 
   /**
-   * --------------------------------------------------
    * This method selects all matching nodes and extract
    * result in an array.
-   * --------------------------------------------------
    * @param expression
    * @param options
-   * --------------------------------------------------
    */
   singleQuery(expression: string, options: object = {}): string | string[] {
     // override options
@@ -98,14 +88,11 @@ export default class Hali {
   }
 
   /**
-   * --------------------------------------------------
    * This method selects all matching parent nodes and
    * runs sub queries on child nodes and generate an
    * associative array result.
-   * --------------------------------------------------
    * @param expression
    * @param options
-   * --------------------------------------------------
    */
   multiQuery(expression: Expression = {
     root: '/html',
@@ -132,5 +119,55 @@ export default class Hali {
       records.push(record);
     }
     return records;
+  }
+
+  /**
+   * This method wait for Query Selector existence in seconds
+   * @param selector
+   * @param maxSeconds
+   * @return boolean
+   */
+  waitSelector(selector: string, maxSeconds = 1): boolean {
+    let count = 0;
+    let selectorMatch = false;
+
+    const refreshId = setInterval(() => {
+      // exit if selector found
+      if (document.querySelector(selector)) {
+        selectorMatch = true;
+        clearInterval(refreshId);
+      }
+      // exit max seconds reach
+      if (count++ >= maxSeconds) {
+        clearInterval(refreshId);
+      }
+    }, 1000);
+    return selectorMatch;
+  }
+
+  /**
+   * This method wait for XPath expression existence in seconds
+   * @param expression
+   * @param maxSeconds
+   * @return boolean
+   */
+  waitXPath(expression: string, maxSeconds = 1): boolean {
+    let count = 0;
+    let expressionMatch = false;
+
+    const refreshId = setInterval(() => {
+      // exit if selector found
+      if (this.singleQuery(expression, {
+        queryFirst: true,
+      })) {
+        expressionMatch = true;
+        clearInterval(refreshId);
+      }
+      // exit max seconds reach
+      if (count++ >= maxSeconds) {
+        clearInterval(refreshId);
+      }
+    }, 1000);
+    return expressionMatch;
   }
 }
