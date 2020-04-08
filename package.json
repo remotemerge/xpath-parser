@@ -1,16 +1,17 @@
 {
-  "name": "@cixware/hali",
+  "name": "@remotemerge/hali",
   "version": "0.0.1",
   "description": "Hali is an open source, lightweight and modern utility to evaluate XPath expressions built on top of TypeScript.",
   "license": "Apache-2.0",
   "keywords": [
     "dom",
+    "delay",
     "evaluate",
     "xpath"
   ],
   "repository": {
     "type": "git",
-    "url": ""
+    "url": "git@github.com:remotemerge/hali.git"
   },
   "engines": {
     "node": ">=12"
@@ -18,23 +19,16 @@
   "scripts": {
     "lint": "cross-env NODE_ENV=production eslint --ext .ts src",
     "lint:fix": "eslint --ext .ts --fix src",
-    "dev": "cross-env NODE_ENV=development webpack --config webpack.config.js --mode=development",
-    "build": "cross-env NODE_ENV=production webpack --config webpack.config.js --mode=production --progress --hide-modules",
+    "build": "yarn lint && tsc",
     "test": "echo \"No test specified\""
   },
   "dependencies": {},
   "devDependencies": {
-    "@types/node": "^13.9.0",
-    "@types/webpack": "^4.41.7",
-    "@typescript-eslint/eslint-plugin": "^2.23.0",
-    "@typescript-eslint/parser": "^2.23.0",
+    "@types/node": "^13.11.0",
+    "@typescript-eslint/eslint-plugin": "^2.27.0",
+    "@typescript-eslint/parser": "^2.27.0",
     "cross-env": "^7.0.2",
     "eslint": "^6.8.0",
-    "eslint-loader": "^3.0.3",
-    "ts-loader": "^6.2.1",
-    "typescript": "^3.8.3",
-    "webpack": "^4.42.0",
-    "webpack-cli": "^3.3.11",
-    "webpack-dev-server": "^3.10.3"
+    "typescript": "^3.8.3"
   }
 }
