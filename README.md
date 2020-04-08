@@ -10,10 +10,14 @@ npm i @remotemerge/hali
 yarn add @remotemerge/hali
 ```
 
-# Usage
-Hali source file is `index.ts` and ES5 compiled file is available in `index.js`.
+## Usage
+Hali source file is `index.ts` and ES5 compiled file is `index.js`.
 
 Import the class
 ```typescript
 import Hali from '@remotemerge/hali'
+```
+or
+```javascript
+const Hali = require('@remotemerge/hali')
 ```
