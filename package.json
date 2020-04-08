@@ -1,6 +1,6 @@
 {
   "name": "@remotemerge/hali",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Hali is an open source, lightweight and modern utility to evaluate XPath expressions built on top of TypeScript.",
   "license": "Apache-2.0",
   "keywords": [
