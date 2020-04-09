@@ -33,10 +33,10 @@ const Hali = require('@remotemerge/hali/dist/es')
 <script src="https://cdn.jsdelivr.net/npm/@remotemerge/hali@latest/dist/browser/index.min.js"></script>
 ```
 
-# Contribution
+## Contribution
 Welcome the community for contribution. Please make a PR request for bug fixes, enhancements, new features, etc.
 
-# Disclaimer
+## Disclaimer
 All the XPath expressions above are tested on Amazon [product listing] and related pages for educational purposes only.
 
 [product listing]: https://www.amazon.com/gp/new-releases/wireless
