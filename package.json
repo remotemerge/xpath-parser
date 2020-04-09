@@ -16,18 +16,16 @@
   "engines": {
     "node": ">=12"
   },
-  "main": "index.js",
+  "main": "./dist/browser/index.js",
   "scripts": {
-    "lint": "cross-env NODE_ENV=production eslint --ext .ts src",
-    "lint:fix": "eslint --ext .ts --fix src",
-    "build": "yarn lint && tsc",
-    "drypush": "npm publish --access public --dry-run",
-    "push": "npm publish --access public",
-    "test": "echo \"No test specified\""
+    "lint": "cross-env NODE_ENV=production eslint --ext .ts .",
+    "lint:fix": "eslint --ext .ts --fix .",
+    "compile": "tsc -p tsconfig.json && tsc -p tsconfig.browser.json",
+    "build": "yarn lint && yarn compile && bash drop.sh"
   },
   "dependencies": {},
   "devDependencies": {
-    "@types/node": "^13.11.0",
+    "@types/node": "^13.11.1",
     "@typescript-eslint/eslint-plugin": "^2.27.0",
     "@typescript-eslint/parser": "^2.27.0",
     "cross-env": "^7.0.2",
