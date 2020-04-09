@@ -40,10 +40,9 @@ const myHali = new Hali('<html>...</html>');
 ```
 
 ### Scrape All Matches
-This method scrape the page and return all results found.
+This method is used for capturing all the matching results in an array.
 ```javascript
 const results = myHali.singleQuery('//span[contains(@class, "zg-item")]/a/div');
-console.log(results);
 ```
 Sample Response:
 ```json
@@ -51,14 +50,45 @@ Sample Response:
 ```
 
 ### Scrape First Match
-This method scrape the page and result first result found.
+This method is used for capturing the first result.
 ```javascript
 const result = myHali.singleQuery('//span[contains(@class, "zg-item")]/a/div', {queryFirst: true});
-console.log(result);
 ```
 Sample Response:
 ```json
 "Selfie Ring Light with Tripod Stand..."
+```
+
+### Scrape with SubQueries
+This method is useful for matching multiple products and extracting details from each product.
+```javascript
+const results = myHali.multiQuery({
+    root: '//span[contains(@class, "zg-item")]',
+    queries: {
+        title: 'a/div/@title',
+        url: 'a/@href',
+        image: 'a/span/div/img/@src',
+        price: './/span[contains(@class, "a-color-price")]',
+    }
+});
+```
+Sample Response:
+```json
+[
+  {
+    "title": "Selfie Ring Light with Tripod Stand...",
+    "url": "/Selfie-Lighting-Steamgraphy-...&refRID=T3WKXPPREYBXB1KHH4Q3",
+    "image": "https://images-na.ssl-images-...pOL._AC_UL200_SR200,200_.jpg",
+    "price": "$45.99"
+  },
+  {
+    "title": "UV Cell Phone Sanitizer, Portable UV Light Cell...",
+    "url": "/Sanitizer-Sterilizer-Arom...&refRID=T3WKXPPREYBXB1KHH4Q3",
+    "image": "https://images-na.ssl-images-...XZL._AC_UL200_SR200,200_.jpg",
+    "price": "$44.99"
+  },
+  ...
+]
 ```
 
 ## Contribution
