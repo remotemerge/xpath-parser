@@ -47,7 +47,11 @@ console.log(results);
 ```
 Sample Response:
 ```text
-["Selfie Ring Light with Tripod Stand and Phone Holder LED Circle Lights Halo Lighting for Make…", "UV Cell Phone Sanitizer, Portable UV Light Cell Phone Sterilizer, Aromatherapy Function…",...]
+[
+    "Selfie Ring Light with Tripod Stand and Phone Holder LED Circle Lights Halo Lighting for Make…",
+    "UV Cell Phone Sanitizer, Portable UV Light Cell Phone Sterilizer, Aromatherapy Function…",
+    ...
+]
 ```
 
 ### Scrape First Match
