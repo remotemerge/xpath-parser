@@ -46,12 +46,8 @@ const results = myHali.singleQuery('//span[contains(@class, "zg-item")]/a/div');
 console.log(results);
 ```
 Sample Response:
-```text
-[
-    "Selfie Ring Light with Tripod Stand and Phone Holder LED Circle Lights Halo Lighting for Make…",
-    "UV Cell Phone Sanitizer, Portable UV Light Cell Phone Sterilizer, Aromatherapy Function…",
-    ...
-]
+```json
+["Selfie Ring Light with Tripod Stand...","UV Cell Phone Sanitizer, Portable UV Light Cell...",...]
 ```
 
 ### Scrape First Match
@@ -61,8 +57,8 @@ const result = myHali.singleQuery('//span[contains(@class, "zg-item")]/a/div', {
 console.log(result);
 ```
 Sample Response:
-```text
-Selfie Ring Light with Tripod Stand and Phone Holder LED Circle Lights Halo Lighting for Make…
+```json
+"Selfie Ring Light with Tripod Stand..."
 ```
 
 ## Contribution
