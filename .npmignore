@@ -1,9 +1,10 @@
 .idea
+*.sh
 .editorconfig
 .eslintignore
 .eslintrc.js
 .gitattributes
 .gitignore
-tsconfig.json
+tsconfig*.json
 tslint.json
 yarn.lock
