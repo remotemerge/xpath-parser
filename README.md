@@ -1,5 +1,5 @@
 # Hali
-Hali is an open source, lightweight and modern utility to evaluate XPath expressions built on top of TypeScript.
+Hali is an open source, lightweight and modern JavaScript utility to evaluate XPath expressions built on top of TypeScript. This tool is built for web scraping and can be integrated with new or existing scraping projects.
 
 ## Install
 ```bash
