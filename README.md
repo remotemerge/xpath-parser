@@ -33,6 +33,34 @@ const Hali = require('@remotemerge/hali/dist/es')
 <script src="https://cdn.jsdelivr.net/npm/@remotemerge/hali@latest/dist/browser/index.min.js"></script>
 ```
 
+## Examples
+The Hali constructor `Hali(html|DOM)` supports both DOM and HTML string, initialize as required.
+```javascript
+const myHali = new Hali('<html>...</html>');
+```
+
+### Scrape All Matches
+This method scrape the page and return all results found.
+```javascript
+const results = myHali.singleQuery('//span[contains(@class, "zg-item")]/a/div');
+console.log(results);
+```
+Sample Response:
+```text
+["Selfie Ring Light with Tripod Stand and Phone Holder LED Circle Lights Halo Lighting for Make…", "UV Cell Phone Sanitizer, Portable UV Light Cell Phone Sterilizer, Aromatherapy Function…",...]
+```
+
+### Scrape First Match
+This method scrape the page and result first result found.
+```javascript
+const result = myHali.singleQuery('//span[contains(@class, "zg-item")]/a/div', {queryFirst: true});
+console.log(result);
+```
+Sample Response:
+```text
+Selfie Ring Light with Tripod Stand and Phone Holder LED Circle Lights Halo Lighting for Make…
+```
+
 ## Contribution
 Welcome the community for contribution. Please make a PR request for bug fixes, enhancements, new features, etc.
 
