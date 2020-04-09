@@ -7,10 +7,11 @@
     "strict": true,
     "noImplicitAny": true,
     "removeComments": true,
-    "outDir": "./dist/es"
+    "outDir": "./dist/es",
+    "declaration": true
   },
   "include": [
-    "**/*"
+    "index.ts"
   ],
   "exclude": [
     "node_modules"

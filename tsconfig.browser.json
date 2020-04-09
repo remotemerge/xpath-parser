@@ -2,6 +2,7 @@
   "extends": "./tsconfig.json",
   "compilerOptions": {
     "target": "ES5",
-    "outDir": "./dist/browser"
+    "outDir": "./dist/browser",
+    "declaration": false
   }
 }
