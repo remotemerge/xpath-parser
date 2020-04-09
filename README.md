@@ -18,9 +18,9 @@ import Hali from '@remotemerge/hali'
 
 * Use `dist/es/index.js` in NodeJS or ES5/ES6..ESNext environment.
 ```javascript
-import Hali from '@remotemerge/hali/es'
+import Hali from '@remotemerge/hali/dist/es'
 // or bit older
-const Hali = require('@remotemerge/hali/es')
+const Hali = require('@remotemerge/hali/dist/es')
 ```
 
 * Use `dist/browser/index.js` directly in a browser.
