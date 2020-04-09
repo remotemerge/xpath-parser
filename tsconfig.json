@@ -1,13 +1,13 @@
 {
   "compilerOptions": {
-    "target": "ES5",
+    "target": "ESNext",
     "module": "ESNext",
     "moduleResolution": "node",
     "sourceMap": false,
     "strict": true,
     "noImplicitAny": true,
     "removeComments": true,
-    "outDir": "./"
+    "outDir": "./dist/es"
   },
   "include": [
     "**/*"
