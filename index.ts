@@ -64,6 +64,16 @@ export default class Hali {
   }
 
   /**
+   * Evaluate the expression and return the first matching result
+   * @param expression
+   * @return string
+   */
+  queryFirst(expression: string): string {
+    const evaluate = this.evaluate(expression);
+    return this.getValue(evaluate.singleNodeValue);
+  }
+
+  /**
    * This method selects all matching nodes and extract
    * result in an array.
    * @param expression
