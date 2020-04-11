@@ -89,30 +89,6 @@ export default class Hali {
   }
 
   /**
-   * This method selects all matching nodes and extract
-   * result in an array.
-   * @param expression
-   * @param options
-   */
-  query(expression: string, options: object = {}): string | string[] {
-    // override options
-    this.options = Object.assign(this.options, options);
-
-    const evaluate = this.evaluate(expression);
-    if (this.options.queryFirst) {
-      return this.getValue(evaluate.singleNodeValue);
-    } else {
-      const records = [];
-      let node = null;
-      while ((node = evaluate.iterateNext())) {
-        const value = this.getValue(node);
-        records.push(value);
-      }
-      return records;
-    }
-  }
-
-  /**
    * This method selects all matching parent nodes and
    * runs sub queries on child nodes and generate an
    * associative array result.
@@ -148,9 +124,7 @@ export default class Hali {
     // extract next or previous page
     let paginated: string | string[] = '';
     if (expression.pagination) {
-      paginated = this.query(expression.pagination, {
-        queryFirst: true,
-      });
+      paginated = this.queryFirst(expression.pagination);
     }
 
     // format the data
@@ -196,9 +170,7 @@ export default class Hali {
 
     const refreshId = setInterval(() => {
       // exit if selector found
-      if (this.query(expression, {
-        queryFirst: true,
-      })) {
+      if (this.queryFirst(expression)) {
         expressionMatch = true;
         clearInterval(refreshId);
       }
