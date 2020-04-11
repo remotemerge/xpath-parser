@@ -74,6 +74,21 @@ export default class Hali {
   }
 
   /**
+   * Evaluate the expression and return all matching results
+   * @param expression
+   */
+  queryList(expression: string): string[] {
+    const records = [];
+    const evaluate = this.evaluate(expression);
+    let node;
+    while ((node = evaluate.iterateNext())) {
+      const value = this.getValue(node);
+      records.push(value);
+    }
+    return records;
+  }
+
+  /**
    * This method selects all matching nodes and extract
    * result in an array.
    * @param expression
