@@ -10,7 +10,6 @@ export default class Hali {
   // init options
   private options = {
     queryFirst: false,
-    subQueryFirst: false,
   };
 
   // init DOM node
