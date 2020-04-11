@@ -106,7 +106,7 @@ export default class Hali {
     root: '/html',
     pagination: '',
     queries: {},
-  }): { nextPage: string; results: Array<{ [key: string]: string }> } {
+  }): { paginationUrl: string; results: Array<{ [key: string]: string }> } {
     // extract root DOM
     const rootDom = this.evaluate(expression.root);
 
@@ -124,14 +124,14 @@ export default class Hali {
     }
 
     // extract next or previous page
-    let nextPage = '';
+    let paginationUrl = '';
     if (expression.pagination) {
-      nextPage = this.queryFirst(expression.pagination);
+      paginationUrl = this.queryFirst(expression.pagination);
     }
 
     // format the data
     return {
-      nextPage: nextPage,
+      paginationUrl: paginationUrl,
       results: results,
     };
   }
