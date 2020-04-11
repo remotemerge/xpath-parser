@@ -1,10 +1,20 @@
 .idea
 *.sh
 .editorconfig
-.eslintignore
-.eslintrc.js
 .gitattributes
 .gitignore
+yarn.lock
+
+# ignore eslint configs
+.eslintignore
+.eslintrc.js
+
+# ignore test directory
+/__tests__
+
+# ignore config files
+/*.config.js
+
+# ignore ts configs
 tsconfig*.json
 tslint.json
-yarn.lock
