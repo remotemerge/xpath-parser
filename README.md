@@ -43,8 +43,9 @@ const myHali = new Hali('<html>...</html>');
 This method evaluates the given expression and captures the first result. It is useful for scraping a single element value like `title`, `price`, etc from HTML pages.
 ```javascript
 const result = myHali.queryFirst('//span[@id="productTitle"]');
+console.log(result);
 ```
-Sample Response:
+Sample Output:
 ```json
 "LETSCOM Fitness Tracker HR, Activity Tracker Watch with Heart Rate Monitor, Waterproof Smart Fitness Band..."
 ```
@@ -53,8 +54,9 @@ Sample Response:
 This method is used for capturing all the matching results in an array.
 ```javascript
 const results = myHali.query('//span[contains(@class, "zg-item")]/a/div');
+console.log(results);
 ```
-Sample Response:
+Sample Output:
 ```json
 ["Selfie Ring Light with Tripod Stand...","UV Cell Phone Sanitizer, Portable UV Light Cell...",...]
 ```
@@ -71,8 +73,9 @@ const results = myHali.multiQuery({
         price: './/span[contains(@class, "a-color-price")]',
     }
 });
+console.log(results);
 ```
-Sample Response:
+Sample Output:
 ```json
 [
   {
