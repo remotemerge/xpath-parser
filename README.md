@@ -45,7 +45,7 @@ This method evaluates the given expression and captures the first result. It is 
 const result = myHali.queryFirst('//span[@id="productTitle"]');
 console.log(result);
 ```
-Sample Output:
+Sample output:
 ```text
 LETSCOM Fitness Tracker HR, Activity Tracker Watch with Heart Rate...
 ```
@@ -57,9 +57,29 @@ This method evaluates the given expression and captures all results. It is usefu
 const results = myHali.queryList('//span[contains(@class, "zg-item")]/a/div');
 console.log(results);
 ```
-Sample Output:
+Sample output:
 ```javascript
 ['Cell Phone Stand,Angle Height Adjusta…', 'Selfie Ring Light with Tripod…', 'HOVAMP MFi Certified Nylon…', '...']
+```
+
+### Scrape multiple elements
+This method loop through the given expressions and captures the first match of each expression. It is useful for scraping full product information (`title`, `seller`, `price`, `rating`, etc.) from HTML pages. The keys are preserved and the values are returned to the same keys.
+```javascript
+const result = myHali.multiQuery({
+  title: '//div[@id="ppd"]//span[@id="productTitle"]',
+  seller: '//div[@id="ppd"]//a[@id="bylineInfo"]',
+  price: '//div[@id="ppd"]//span[@id="priceblock_dealprice"]',
+  rating: '//div[@id="ppd"]//span[@id="acrCustomerReviewText"]',
+});
+```
+Sample output:
+```javascript
+{
+    title: 'LETSCOM Fitness Tracker HR, Activity Tracker Watch with Heart Rate Monitor...',
+    seller: 'LETSCOM',
+    price: '$20.39',
+    rating: '1,489 ratings',
+}
 ```
 
 ### Scrape with SubQueries
@@ -76,7 +96,7 @@ const results = myHali.multiQuery({
 });
 console.log(results);
 ```
-Sample Output:
+Sample output:
 ```json
 [
   {
