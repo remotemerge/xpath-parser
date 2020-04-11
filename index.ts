@@ -69,8 +69,7 @@ export default class Hali {
    * @return string
    */
   queryFirst(expression: string): string {
-    const evaluate = this.evaluate(expression);
-    return this.getValue(evaluate.singleNodeValue);
+    return this.getValue(this.evaluate(expression).singleNodeValue);
   }
 
   /**
