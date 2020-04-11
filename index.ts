@@ -47,18 +47,10 @@ export default class Hali {
    */
   getValue(node: Node | null): string {
     let formattedText = '';
-    if (node instanceof Node) {
-      switch (node.nodeType) {
-        case 1:
-          formattedText = node.textContent || '';
-          break;
-        case 2:
-        case 3:
-          formattedText = node.nodeValue || '';
-          break;
-        default:
-          formattedText = '';
-      }
+    if (node instanceof Attr) {
+      formattedText = node.value || '';
+    } else {
+      formattedText = node?.textContent || '';
     }
     return formattedText.trim();
   }
