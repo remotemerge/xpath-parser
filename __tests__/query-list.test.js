@@ -1,8 +1,8 @@
-import Hali from '../../dist/es';
-import productsHtml from '../data/products.html';
+import Hali from '../dist/es';
+import productsHtml from './data/products.html';
 
 const myHali = new Hali(productsHtml);
-const result = myHali.query('//span[contains(@class, "zg-item")]/a/div');
+const result = myHali.queryList('//span[contains(@class, "zg-item")]/a/div');
 
 // expect an object
 test('must return object with titles', () => {

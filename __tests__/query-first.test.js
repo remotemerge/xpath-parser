@@ -1,10 +1,8 @@
-import Hali from '../../dist/es';
-import productsHtml from '../data/product.html';
+import Hali from '../dist/es';
+import productsHtml from './data/product.html';
 
 const myHali = new Hali(productsHtml);
-const str = myHali.query('//span[@id="productTitle"]/text()', {
-  queryFirst: true,
-});
+const str = myHali.queryFirst('//span[@id="productTitle"]/text()');
 
 // expect an string
 test('must return string with title', () => {
