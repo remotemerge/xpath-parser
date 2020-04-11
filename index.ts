@@ -69,7 +69,7 @@ export default class Hali {
    * @param expression
    * @param options
    */
-  singleQuery(expression: string, options: object = {}): string | string[] {
+  query(expression: string, options: object = {}): string | string[] {
     // override options
     this.options = Object.assign(this.options, options);
 
@@ -123,7 +123,7 @@ export default class Hali {
     // extract next or previous page
     let paginated: string | string[] = '';
     if (expression.pagination) {
-      paginated = this.singleQuery(expression.pagination, {
+      paginated = this.query(expression.pagination, {
         queryFirst: true,
       });
     }
@@ -171,7 +171,7 @@ export default class Hali {
 
     const refreshId = setInterval(() => {
       // exit if selector found
-      if (this.singleQuery(expression, {
+      if (this.query(expression, {
         queryFirst: true,
       })) {
         expressionMatch = true;

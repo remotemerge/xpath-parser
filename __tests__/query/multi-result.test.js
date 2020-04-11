@@ -2,7 +2,7 @@ import Hali from '../../dist/es';
 import productsHtml from '../products.html';
 
 const myHali = new Hali(productsHtml);
-const result = myHali.singleQuery('//span[contains(@class, "zg-item")]/a/div');
+const result = myHali.query('//span[contains(@class, "zg-item")]/a/div');
 
 // expect an object
 test('must return object of with titles', () => {

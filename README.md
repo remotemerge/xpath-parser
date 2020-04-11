@@ -42,7 +42,7 @@ const myHali = new Hali('<html>...</html>');
 ### Scrape All Matches
 This method is used for capturing all the matching results in an array.
 ```javascript
-const results = myHali.singleQuery('//span[contains(@class, "zg-item")]/a/div');
+const results = myHali.query('//span[contains(@class, "zg-item")]/a/div');
 ```
 Sample Response:
 ```json
@@ -52,7 +52,7 @@ Sample Response:
 ### Scrape First Match
 This method is used for capturing the first result.
 ```javascript
-const result = myHali.singleQuery('//span[contains(@class, "zg-item")]/a/div', {queryFirst: true});
+const result = myHali.query('//span[contains(@class, "zg-item")]/a/div', {queryFirst: true});
 ```
 Sample Response:
 ```json
