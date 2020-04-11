@@ -1,4 +1,10 @@
 # <img src="images/logo.png" width="28" height="28"> Hali
+[![Package](https://img.shields.io/npm/v/@remotemerge/hali?logo=npm)](https://www.npmjs.com/package/@remotemerge/hali)
+[![Build](https://img.shields.io/github/workflow/status/remotemerge/hali/Build?label=build&logo=github)](https://github.com/remotemerge/hali)
+[![Node](https://img.shields.io/node/v/@remotemerge/hali?logo=node.js)](https://nodejs.org/en/download)
+[![Downloads](https://img.shields.io/npm/dt/@remotemerge/hali?label=downloads)](https://www.npmjs.com/package/@remotemerge/hali)
+[![Apache 2 License](https://img.shields.io/packagist/l/cixware/esewa-php-sdk.svg?label=license)](https://www.apache.org/licenses/LICENSE-2.0)
+
 Hali is an open source, lightweight and modern JavaScript utility to evaluate XPath expressions built on top of TypeScript. This tool is built for web scraping and can be integrated into new or existing web crawlers.
 
 ## Install
