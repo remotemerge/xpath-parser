@@ -15,66 +15,59 @@ export default class Hali {
         return document.evaluate(expression, this.domContent, null, this.options.queryFirst ? XPathResult.FIRST_ORDERED_NODE_TYPE : XPathResult.ORDERED_NODE_ITERATOR_TYPE, null);
     }
     getValue(node) {
-        let formattedText = '';
-        if (node instanceof Node) {
-            switch (node.nodeType) {
-                case 1:
-                    formattedText = node.textContent || '';
-                    break;
-                case 2:
-                case 3:
-                    formattedText = node.nodeValue || '';
-                    break;
-                default:
-                    formattedText = '';
-            }
+        let formattedText;
+        if (node instanceof Attr) {
+            formattedText = node.value || '';
+        }
+        else {
+            formattedText = node?.textContent || '';
         }
         return formattedText.trim();
     }
-    query(expression, options = {}) {
-        this.options = Object.assign(this.options, options);
+    queryFirst(expression) {
+        this.options.queryFirst = true;
         const evaluate = this.evaluate(expression);
-        if (this.options.queryFirst) {
-            return this.getValue(evaluate.singleNodeValue);
-        }
-        else {
-            const records = [];
-            let node = null;
-            while ((node = evaluate.iterateNext())) {
-                const value = this.getValue(node);
-                records.push(value);
-            }
-            return records;
-        }
+        return this.getValue(evaluate.singleNodeValue);
     }
-    multiQuery(expression = {
+    queryList(expression) {
+        const response = [], evaluate = this.evaluate(expression);
+        let node;
+        while ((node = evaluate.iterateNext())) {
+            const value = this.getValue(node);
+            response.push(value);
+        }
+        return response;
+    }
+    multiQuery(expressions) {
+        const response = {};
+        Object.keys(expressions).forEach((key) => {
+            response[key] = this.queryFirst(expressions[key]);
+        });
+        return response;
+    }
+    subQuery(expression = {
         root: '/html',
         pagination: '',
-        queries: {}
-    }, options = {}) {
-        this.options = Object.assign(this.options, options);
+        queries: {},
+    }) {
         const rootDom = this.evaluate(expression.root);
-        const records = [];
+        const results = [];
         let nodeDom = null;
         while ((nodeDom = rootDom.iterateNext())) {
-            this.options.queryFirst = true;
             this.domContent = nodeDom;
             const record = {};
             Object.keys(expression.queries).forEach((key) => {
-                const result = (this.evaluate(expression.queries[key])).singleNodeValue;
-                record[key] = this.getValue(result);
+                record[key] = this.queryFirst(expression.queries[key]);
             });
-            records.push(record);
+            results.push(record);
         }
-        let paginated = '';
+        let paginationUrl = '';
         if (expression.pagination) {
-            paginated = this.query(expression.pagination, {
-                queryFirst: true,
-            });
+            paginationUrl = this.queryFirst(expression.pagination);
         }
         return {
-            page: paginated,
-            data: records,
+            paginationUrl: paginationUrl,
+            results: results,
         };
     }
     waitSelector(selector, maxSeconds = 1) {
@@ -95,9 +88,7 @@ export default class Hali {
         let count = 0;
         let expressionMatch = false;
         const refreshId = setInterval(() => {
-            if (this.query(expression, {
-                queryFirst: true,
-            })) {
+            if (this.queryFirst(expression)) {
                 expressionMatch = true;
                 clearInterval(refreshId);
             }

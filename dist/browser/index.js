@@ -15,74 +15,66 @@ var Hali = (function () {
         return document.evaluate(expression, this.domContent, null, this.options.queryFirst ? XPathResult.FIRST_ORDERED_NODE_TYPE : XPathResult.ORDERED_NODE_ITERATOR_TYPE, null);
     };
     Hali.prototype.getValue = function (node) {
-        var formattedText = '';
-        if (node instanceof Node) {
-            switch (node.nodeType) {
-                case 1:
-                    formattedText = node.textContent || '';
-                    break;
-                case 2:
-                case 3:
-                    formattedText = node.nodeValue || '';
-                    break;
-                default:
-                    formattedText = '';
-            }
+        var formattedText;
+        if (node instanceof Attr) {
+            formattedText = node.value || '';
+        }
+        else {
+            formattedText = (node === null || node === void 0 ? void 0 : node.textContent) || '';
         }
         return formattedText.trim();
     };
-    Hali.prototype.query = function (expression, options) {
-        if (options === void 0) { options = {}; }
-        this.options = Object.assign(this.options, options);
+    Hali.prototype.queryFirst = function (expression) {
+        this.options.queryFirst = true;
         var evaluate = this.evaluate(expression);
-        if (this.options.queryFirst) {
-            return this.getValue(evaluate.singleNodeValue);
-        }
-        else {
-            var records = [];
-            var node = null;
-            while ((node = evaluate.iterateNext())) {
-                var value = this.getValue(node);
-                records.push(value);
-            }
-            return records;
-        }
+        return this.getValue(evaluate.singleNodeValue);
     };
-    Hali.prototype.multiQuery = function (expression, options) {
+    Hali.prototype.queryList = function (expression) {
+        var response = [], evaluate = this.evaluate(expression);
+        var node;
+        while ((node = evaluate.iterateNext())) {
+            var value = this.getValue(node);
+            response.push(value);
+        }
+        return response;
+    };
+    Hali.prototype.multiQuery = function (expressions) {
+        var _this = this;
+        var response = {};
+        Object.keys(expressions).forEach(function (key) {
+            response[key] = _this.queryFirst(expressions[key]);
+        });
+        return response;
+    };
+    Hali.prototype.subQuery = function (expression) {
         var _this = this;
         if (expression === void 0) { expression = {
             root: '/html',
             pagination: '',
-            queries: {}
+            queries: {},
         }; }
-        if (options === void 0) { options = {}; }
-        this.options = Object.assign(this.options, options);
         var rootDom = this.evaluate(expression.root);
-        var records = [];
+        var results = [];
         var nodeDom = null;
         var _loop_1 = function () {
-            this_1.options.queryFirst = true;
             this_1.domContent = nodeDom;
             var record = {};
             Object.keys(expression.queries).forEach(function (key) {
-                var result = (_this.evaluate(expression.queries[key])).singleNodeValue;
-                record[key] = _this.getValue(result);
+                record[key] = _this.queryFirst(expression.queries[key]);
             });
-            records.push(record);
+            results.push(record);
         };
         var this_1 = this;
         while ((nodeDom = rootDom.iterateNext())) {
             _loop_1();
         }
-        var paginated = '';
+        var paginationUrl = '';
         if (expression.pagination) {
-            paginated = this.query(expression.pagination, {
-                queryFirst: true,
-            });
+            paginationUrl = this.queryFirst(expression.pagination);
         }
         return {
-            page: paginated,
-            data: records,
+            paginationUrl: paginationUrl,
+            results: results,
         };
     };
     Hali.prototype.waitSelector = function (selector, maxSeconds) {
@@ -106,9 +98,7 @@ var Hali = (function () {
         var count = 0;
         var expressionMatch = false;
         var refreshId = setInterval(function () {
-            if (_this.query(expression, {
-                queryFirst: true,
-            })) {
+            if (_this.queryFirst(expression)) {
                 expressionMatch = true;
                 clearInterval(refreshId);
             }
