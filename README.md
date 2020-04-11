@@ -46,19 +46,20 @@ const result = myHali.queryFirst('//span[@id="productTitle"]');
 console.log(result);
 ```
 Sample Output:
-```json
-"LETSCOM Fitness Tracker HR, Activity Tracker Watch with Heart Rate Monitor, Waterproof Smart Fitness Band..."
+```text
+LETSCOM Fitness Tracker HR, Activity Tracker Watch with Heart Rate...
 ```
 
 ### Scrape All Matches
-This method is used for capturing all the matching results in an array.
+This method evaluates the given expression and captures all results. It is useful for scraping all URLs, all images, all CSS classes, etc from HTML pages.
 ```javascript
-const results = myHali.query('//span[contains(@class, "zg-item")]/a/div');
+// scrape titles
+const results = myHali.queryList('//span[contains(@class, "zg-item")]/a/div');
 console.log(results);
 ```
 Sample Output:
-```json
-["Selfie Ring Light with Tripod Stand...","UV Cell Phone Sanitizer, Portable UV Light Cell...",...]
+```javascript
+['Cell Phone Stand,Angle Height Adjusta…', 'Selfie Ring Light with Tripod…', 'HOVAMP MFi Certified Nylon…', '...']
 ```
 
 ### Scrape with SubQueries
