@@ -1,6 +1,7 @@
 // interface for XPath expression
 interface Expression {
   root: string;
+  pagination: string;
   queries: {
     [key: string]: string;
   };
@@ -95,6 +96,7 @@ export default class Hali {
    */
   multiQuery(expression: Expression = {
     root: '/html',
+    pagination: '',
     queries: {}
   }, options: object = {}): object {
     // override options
@@ -117,7 +119,20 @@ export default class Hali {
       });
       records.push(record);
     }
-    return records;
+
+    // extract next or previous page
+    let paginated: string | string[] = '';
+    if (expression.pagination) {
+      paginated = this.singleQuery(expression.pagination, {
+        queryFirst: true,
+      });
+    }
+
+    // format the data
+    return {
+      page: paginated,
+      data: records,
+    };
   }
 
   /**
