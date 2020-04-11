@@ -97,7 +97,7 @@ export default class Hali {
    * @param expression
    * @param options
    */
-  multiQuery(expression: Expression = {
+  subQuery(expression: Expression = {
     root: '/html',
     pagination: '',
     queries: {}
