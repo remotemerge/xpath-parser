@@ -18,3 +18,6 @@ yarn.lock
 # ignore ts configs
 tsconfig*.json
 tslint.json
+
+# ignore workflow files
+/.github
