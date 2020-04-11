@@ -71,7 +71,7 @@ export default class Hali {
    * Evaluate the expression and return all matching results
    * @param expression
    */
-  queryList(expression: string): string[] {
+  queryList(expression: string): Array<string> {
     const response = [], evaluate = this.evaluate(expression);
     let node;
     while ((node = evaluate.iterateNext())) {
@@ -86,7 +86,7 @@ export default class Hali {
    * in the associative format
    * @param expressions
    */
-  multiQuery(expressions: { [key: string]: string }): object {
+  multiQuery(expressions: { [key: string]: string }): { [key: string]: string } {
     // response format
     const response: { [key: string]: string } = {};
 
@@ -105,8 +105,8 @@ export default class Hali {
   subQuery(expression: Expression = {
     root: '/html',
     pagination: '',
-    queries: {}
-  }): object {
+    queries: {},
+  }): { nextPage: string; results: Array<{ [key: string]: string }> } {
     // extract root DOM
     const rootDom = this.evaluate(expression.root);
 
@@ -124,7 +124,7 @@ export default class Hali {
     }
 
     // extract next or previous page
-    let nextPage: string | string[] = '';
+    let nextPage = '';
     if (expression.pagination) {
       nextPage = this.queryFirst(expression.pagination);
     }
