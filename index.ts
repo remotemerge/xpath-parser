@@ -80,14 +80,28 @@ export default class Hali {
    * @param expression
    */
   queryList(expression: string): string[] {
-    const records = [];
-    const evaluate = this.evaluate(expression);
+    const response = [], evaluate = this.evaluate(expression);
     let node;
     while ((node = evaluate.iterateNext())) {
       const value = this.getValue(node);
-      records.push(value);
+      response.push(value);
     }
-    return records;
+    return response;
+  }
+
+  /**
+   * Evaluate the expressions and return the matching result
+   * in the associative format
+   * @param expressions
+   */
+  multiQuery(expressions: { [key: string]: string }): object {
+    // response format
+    const response: { [key: string]: string } = {};
+
+    Object.keys(expressions).forEach((key) => {
+      response[key] = this.queryFirst(expressions[key]);
+    });
+    return response;
   }
 
   /**
