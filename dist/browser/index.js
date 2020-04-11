@@ -2,7 +2,6 @@ var Hali = (function () {
     function Hali(content) {
         this.options = {
             queryFirst: false,
-            subQueryFirst: false,
         };
         if (content instanceof Node) {
             this.domContent = content;
@@ -32,7 +31,7 @@ var Hali = (function () {
         }
         return formattedText.trim();
     };
-    Hali.prototype.singleQuery = function (expression, options) {
+    Hali.prototype.query = function (expression, options) {
         if (options === void 0) { options = {}; }
         this.options = Object.assign(this.options, options);
         var evaluate = this.evaluate(expression);
@@ -53,6 +52,7 @@ var Hali = (function () {
         var _this = this;
         if (expression === void 0) { expression = {
             root: '/html',
+            pagination: '',
             queries: {}
         }; }
         if (options === void 0) { options = {}; }
@@ -74,7 +74,16 @@ var Hali = (function () {
         while ((nodeDom = rootDom.iterateNext())) {
             _loop_1();
         }
-        return records;
+        var paginated = '';
+        if (expression.pagination) {
+            paginated = this.query(expression.pagination, {
+                queryFirst: true,
+            });
+        }
+        return {
+            page: paginated,
+            data: records,
+        };
     };
     Hali.prototype.waitSelector = function (selector, maxSeconds) {
         if (maxSeconds === void 0) { maxSeconds = 1; }
@@ -97,7 +106,7 @@ var Hali = (function () {
         var count = 0;
         var expressionMatch = false;
         var refreshId = setInterval(function () {
-            if (_this.singleQuery(expression, {
+            if (_this.query(expression, {
                 queryFirst: true,
             })) {
                 expressionMatch = true;

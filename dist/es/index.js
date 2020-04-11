@@ -2,7 +2,6 @@ export default class Hali {
     constructor(content) {
         this.options = {
             queryFirst: false,
-            subQueryFirst: false,
         };
         if (content instanceof Node) {
             this.domContent = content;
@@ -32,7 +31,7 @@ export default class Hali {
         }
         return formattedText.trim();
     }
-    singleQuery(expression, options = {}) {
+    query(expression, options = {}) {
         this.options = Object.assign(this.options, options);
         const evaluate = this.evaluate(expression);
         if (this.options.queryFirst) {
@@ -50,6 +49,7 @@ export default class Hali {
     }
     multiQuery(expression = {
         root: '/html',
+        pagination: '',
         queries: {}
     }, options = {}) {
         this.options = Object.assign(this.options, options);
@@ -66,7 +66,16 @@ export default class Hali {
             });
             records.push(record);
         }
-        return records;
+        let paginated = '';
+        if (expression.pagination) {
+            paginated = this.query(expression.pagination, {
+                queryFirst: true,
+            });
+        }
+        return {
+            page: paginated,
+            data: records,
+        };
     }
     waitSelector(selector, maxSeconds = 1) {
         let count = 0;
@@ -86,7 +95,7 @@ export default class Hali {
         let count = 0;
         let expressionMatch = false;
         const refreshId = setInterval(() => {
-            if (this.singleQuery(expression, {
+            if (this.query(expression, {
                 queryFirst: true,
             })) {
                 expressionMatch = true;
