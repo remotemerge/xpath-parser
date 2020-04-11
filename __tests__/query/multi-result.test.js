@@ -1,5 +1,5 @@
 import Hali from '../../dist/es';
-import productsHtml from '../products.html';
+import productsHtml from '../data/products.html';
 
 const myHali = new Hali(productsHtml);
 const result = myHali.query('//span[contains(@class, "zg-item")]/a/div');
