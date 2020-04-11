@@ -2,7 +2,7 @@ import Hali from '../dist/es';
 import productsHtml from './data/product.html';
 
 const myHali = new Hali(productsHtml);
-const str = myHali.queryFirst('//span[@id="productTitle"]/text()');
+const str = myHali.queryFirst('//span[@id="productTitle"]');
 
 // expect an string
 test('must return string with title', () => {

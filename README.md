@@ -39,6 +39,16 @@ The Hali constructor `Hali(html|DOM)` supports both DOM and HTML string, initial
 const myHali = new Hali('<html>...</html>');
 ```
 
+### Scrape First Match
+This method evaluates the given expression and captures the first result. It is useful for scraping a single element value like `title`, `price`, etc from HTML pages.
+```javascript
+const result = myHali.queryFirst('//span[@id="productTitle"]');
+```
+Sample Response:
+```json
+"LETSCOM Fitness Tracker HR, Activity Tracker Watch with Heart Rate Monitor, Waterproof Smart Fitness Band..."
+```
+
 ### Scrape All Matches
 This method is used for capturing all the matching results in an array.
 ```javascript
@@ -47,16 +57,6 @@ const results = myHali.query('//span[contains(@class, "zg-item")]/a/div');
 Sample Response:
 ```json
 ["Selfie Ring Light with Tripod Stand...","UV Cell Phone Sanitizer, Portable UV Light Cell...",...]
-```
-
-### Scrape First Match
-This method is used for capturing the first result.
-```javascript
-const result = myHali.query('//span[contains(@class, "zg-item")]/a/div', {queryFirst: true});
-```
-Sample Response:
-```json
-"Selfie Ring Light with Tripod Stand..."
 ```
 
 ### Scrape with SubQueries
