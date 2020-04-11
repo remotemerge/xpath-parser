@@ -83,36 +83,42 @@ Sample output:
 ```
 
 ### Scrape with SubQueries
-This method is useful for matching multiple products and extracting details from each product.
+This method captures the `root` element and runs queries within its namespace. It is useful for scraping multiple products and full information about each product. For example, there can be 10 products on a page and each product has (`title`, `url`, `image`, `price`, etc.). This method also supports `pagination` parameter. The keys are preserved and the values are returned to the same keys.
 ```javascript
-const results = myHali.multiQuery({
-    root: '//span[contains(@class, "zg-item")]',
-    queries: {
-        title: 'a/div/@title',
-        url: 'a/@href',
-        image: 'a/span/div/img/@src',
-        price: './/span[contains(@class, "a-color-price")]',
-    }
+const result = myHali.subQuery({
+  root: '//span[contains(@class, "zg-item")]',
+  pagination: '//ul/li/a[contains(text(), "Next")]/@href',
+  queries: {
+    title: 'a/div/@title',
+    url: 'a/@href',
+    image: 'a/span/div/img/@src',
+    price: './/span[contains(@class, "a-color-price")]',
+  }
 });
-console.log(results);
+console.log(result);
 ```
 Sample output:
-```json
-[
-  {
-    "title": "Selfie Ring Light with Tripod Stand...",
-    "url": "/Selfie-Lighting-Steamgraphy-...&refRID=T3WKXPPREYBXB1KHH4Q3",
-    "image": "https://images-na.ssl-images-...pOL._AC_UL200_SR200,200_.jpg",
-    "price": "$45.99"
-  },
-  {
-    "title": "UV Cell Phone Sanitizer, Portable UV Light Cell...",
-    "url": "/Sanitizer-Sterilizer-Arom...&refRID=T3WKXPPREYBXB1KHH4Q3",
-    "image": "https://images-na.ssl-images-...XZL._AC_UL200_SR200,200_.jpg",
-    "price": "$44.99"
-  },
-  ...
-]
+```javascript
+{
+  paginationUrl: 'https://www.example.com/gp/new-releases/wireless/reTF8&pg=2',
+  results: [
+    {
+      title: 'Cell Phone Stand,Angle Height Adjustable Stab/Kindle/Tablet,4-10inch',
+      url: '/Adjustable-LISEN-Aluminum-Compatible-4-10&refRID=H1HWDWERK8YCRN76ER1T',
+      image: 'https://images-na.ssl-images-example.com/images/I/61UL200_SR200,200_.jpg',
+      price: '$16.99'
+    },
+    {
+      title: 'Selfie Ring Light with Tripod Stand and Pheaming Photo Photography Vlogging Video',
+      url: '/Selfie-Lighting-Steaming-Photography-Vlogging/dp/B081SV&K8YCRN76ER1T',
+      image: 'https://images-na.ssl-images-example.com/images/I/717L200_SR200,200_.jpg',
+      price: '$46.99'
+    },
+    {
+      // ...
+    }
+  ]
+}
 ```
 
 ## Contribution
