@@ -6,7 +6,7 @@ const str = myHali.query('//span[contains(@class, "zg-item")]/a/div', {
   queryFirst: true,
 });
 
-// expect an object
+// expect an string
 test('must return string with title', () => {
   expect(typeof str).toBe('string');
 });
