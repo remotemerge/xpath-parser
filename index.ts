@@ -69,7 +69,10 @@ export default class Hali {
    * @return string
    */
   queryFirst(expression: string): string {
-    return this.getValue(this.evaluate(expression).singleNodeValue);
+    // override options
+    this.options.queryFirst = true;
+    const evaluate = this.evaluate(expression);
+    return this.getValue(evaluate.singleNodeValue);
   }
 
   /**
