@@ -46,7 +46,7 @@ export default class Hali {
    * @return string
    */
   getValue(node: Node | null): string {
-    let formattedText = '';
+    let formattedText: string;
     if (node instanceof Attr) {
       formattedText = node.value || '';
     } else {
