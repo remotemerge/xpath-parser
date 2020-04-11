@@ -21,15 +21,21 @@
     "lint": "cross-env NODE_ENV=production eslint --ext .ts .",
     "lint:fix": "eslint --ext .ts --fix .",
     "compile": "tsc -p tsconfig.json && tsc -p tsconfig.browser.json",
-    "build": "yarn lint && yarn compile && bash drop.sh"
+    "build": "yarn lint && yarn compile && bash drop.sh",
+    "test": "jest"
   },
   "dependencies": {},
   "devDependencies": {
+    "@babel/core": "^7.9.0",
+    "@babel/preset-env": "^7.9.5",
+    "@babel/preset-typescript": "^7.9.0",
     "@types/node": "^13.11.1",
     "@typescript-eslint/eslint-plugin": "^2.27.0",
     "@typescript-eslint/parser": "^2.27.0",
+    "babel-jest": "^25.3.0",
     "cross-env": "^7.0.2",
     "eslint": "^6.8.0",
+    "jest": "^25.3.0",
     "typescript": "^3.8.3"
   }
 }
