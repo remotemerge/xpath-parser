@@ -1,8 +1,8 @@
 import Hali from '../../dist/es';
-import productsHtml from '../products.html';
+import productsHtml from '../data/product.html';
 
 const myHali = new Hali(productsHtml);
-const str = myHali.query('//span[contains(@class, "zg-item")]/a/div', {
+const str = myHali.query('//span[@id="productTitle"]/text()', {
   queryFirst: true,
 });
 
@@ -13,5 +13,5 @@ test('must return string with title', () => {
 
 // expect title
 test('match the title', () => {
-  expect(str).toBe('Cell Phone Stand,Angle Height Adjustable Stable LISEN Cell Phone Stand For Desk,Sturdy…');
+  expect(str).toBe('LETSCOM Fitness Tracker HR, Activity Tracker Watch with Heart Rate Monitor, Waterproof Smart Fitness Band with Step Counter, Calorie Counter, Pedometer Watch for Kids Women and Men');
 });
