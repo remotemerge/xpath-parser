@@ -1,4 +1,4 @@
-# Hali
+# <img src="images/logo.png" width="48" height="48"> Hali
 Hali is an open source, lightweight and modern JavaScript utility to evaluate XPath expressions built on top of TypeScript. This tool is built for web scraping and can be integrated with new or existing scraping projects.
 
 ## Install
@@ -119,6 +119,7 @@ Sample output:
 Welcome the community for contribution. Please make a PR request for bug fixes, enhancements, new features, etc.
 
 ## Disclaimer
-All the XPath expressions above are tested on Amazon [product listing] and related pages for educational purposes only.
+All the XPath expressions above are tested on Amazon [product listing] and related pages for educational purposes only. The icons are included from [flaticon] website.
 
 [product listing]: https://www.amazon.com/gp/new-releases/wireless
+[flaticon]: https://www.flaticon.com
