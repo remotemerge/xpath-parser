@@ -101,44 +101,38 @@ export default class Hali {
    * runs sub queries on child nodes and generate an
    * associative array result.
    * @param expression
-   * @param options
    */
   subQuery(expression: Expression = {
     root: '/html',
     pagination: '',
     queries: {}
-  }, options: object = {}): object {
-    // override options
-    this.options = Object.assign(this.options, options);
+  }): object {
     // extract root DOM
     const rootDom = this.evaluate(expression.root);
 
-    const records = [];
+    const results = [];
     let nodeDom = null;
     while ((nodeDom = rootDom.iterateNext())) {
-      // runtime override
-      this.options.queryFirst = true;
+      // reset dom root
       this.domContent = nodeDom;
-
       const record: { [key: string]: string } = {};
 
-      Object.keys(expression.queries).forEach((key: string) => {
-        const result = (this.evaluate(expression.queries[key])).singleNodeValue;
-        record[key] = this.getValue(result);
+      Object.keys(expression.queries).forEach((key) => {
+        record[key] = this.queryFirst(expression.queries[key]);
       });
-      records.push(record);
+      results.push(record);
     }
 
     // extract next or previous page
-    let paginated: string | string[] = '';
+    let nextPage: string | string[] = '';
     if (expression.pagination) {
-      paginated = this.queryFirst(expression.pagination);
+      nextPage = this.queryFirst(expression.pagination);
     }
 
     // format the data
     return {
-      page: paginated,
-      data: records,
+      nextPage: nextPage,
+      results: results,
     };
   }
 
