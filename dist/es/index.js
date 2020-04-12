@@ -15,12 +15,12 @@ export default class Hali {
         return document.evaluate(expression, this.domContent, null, this.options.queryFirst ? XPathResult.FIRST_ORDERED_NODE_TYPE : XPathResult.ORDERED_NODE_ITERATOR_TYPE, null);
     }
     getValue(node) {
-        let formattedText;
+        let formattedText = '';
         if (node instanceof Attr) {
             formattedText = node.value || '';
         }
-        else {
-            formattedText = node?.textContent || '';
+        else if (node instanceof HTMLElement) {
+            formattedText = node.textContent || '';
         }
         return formattedText.trim();
     }

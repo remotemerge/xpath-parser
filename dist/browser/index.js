@@ -15,12 +15,12 @@ var Hali = (function () {
         return document.evaluate(expression, this.domContent, null, this.options.queryFirst ? XPathResult.FIRST_ORDERED_NODE_TYPE : XPathResult.ORDERED_NODE_ITERATOR_TYPE, null);
     };
     Hali.prototype.getValue = function (node) {
-        var formattedText;
+        var formattedText = '';
         if (node instanceof Attr) {
             formattedText = node.value || '';
         }
-        else {
-            formattedText = (node === null || node === void 0 ? void 0 : node.textContent) || '';
+        else if (node instanceof HTMLElement) {
+            formattedText = node.textContent || '';
         }
         return formattedText.trim();
     };
