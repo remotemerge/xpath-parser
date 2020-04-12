@@ -46,11 +46,13 @@ export default class Hali {
    * @return string
    */
   getValue(node: Node | null): string {
-    let formattedText: string;
+    let formattedText = '';
     if (node instanceof Attr) {
+      // node is attribute
       formattedText = node.value || '';
-    } else {
-      formattedText = node?.textContent || '';
+    } else if (node instanceof HTMLElement) {
+      // node is html element
+      formattedText = node.textContent || '';
     }
     return formattedText.trim();
   }
