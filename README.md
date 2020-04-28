@@ -127,6 +127,17 @@ Sample output:
 }
 ```
 
+### Wait for Element
+This method waits until the element (matches by expression) exists on a page. The first parameter `expression` is XPath expression to match and the second parameter `maxSeconds` is the maximum time to wait in seconds (default to 10 seconds).
+```javascript
+myHali.waitXPath('//span[contains(@class, "a-color-price")]/span')
+  .then((response) => {
+    // expression match and element exists
+  }).catch((error) => {
+  // match nothing and timeout
+});
+```
+
 ## Contribution
 Welcome the community for contribution. Please make a PR request for bug fixes, enhancements, new features, etc.
 
