@@ -77,36 +77,26 @@ var Hali = (function () {
             results: results,
         };
     };
-    Hali.prototype.waitSelector = function (selector, maxSeconds) {
-        if (maxSeconds === void 0) { maxSeconds = 1; }
-        var count = 0;
-        var selectorMatch = false;
-        var refreshId = setInterval(function () {
-            if (document.querySelector(selector)) {
-                selectorMatch = true;
-                clearInterval(refreshId);
-            }
-            if (count++ >= maxSeconds) {
-                clearInterval(refreshId);
-            }
-        }, 1000);
-        return selectorMatch;
-    };
     Hali.prototype.waitXPath = function (expression, maxSeconds) {
         var _this = this;
-        if (maxSeconds === void 0) { maxSeconds = 1; }
-        var count = 0;
-        var expressionMatch = false;
-        var refreshId = setInterval(function () {
-            if (_this.queryFirst(expression)) {
-                expressionMatch = true;
-                clearInterval(refreshId);
-            }
-            if (count++ >= maxSeconds) {
-                clearInterval(refreshId);
-            }
-        }, 1000);
-        return expressionMatch;
+        if (maxSeconds === void 0) { maxSeconds = 10; }
+        var timer = 1;
+        return new Promise(function (resolve, reject) {
+            var refreshId = setInterval(function () {
+                var firstMatch = _this.queryFirst(expression);
+                if (firstMatch) {
+                    clearInterval(refreshId);
+                    return resolve({ found: true, message: firstMatch });
+                }
+                if (timer++ >= maxSeconds) {
+                    clearInterval(refreshId);
+                    return reject({
+                        found: false,
+                        message: "Timeout! Max " + maxSeconds + " seconds are allowed.",
+                    });
+                }
+            }, 1000);
+        });
     };
     return Hali;
 }());

@@ -70,32 +70,23 @@ export default class Hali {
             results: results,
         };
     }
-    waitSelector(selector, maxSeconds = 1) {
-        let count = 0;
-        let selectorMatch = false;
-        const refreshId = setInterval(() => {
-            if (document.querySelector(selector)) {
-                selectorMatch = true;
-                clearInterval(refreshId);
-            }
-            if (count++ >= maxSeconds) {
-                clearInterval(refreshId);
-            }
-        }, 1000);
-        return selectorMatch;
-    }
-    waitXPath(expression, maxSeconds = 1) {
-        let count = 0;
-        let expressionMatch = false;
-        const refreshId = setInterval(() => {
-            if (this.queryFirst(expression)) {
-                expressionMatch = true;
-                clearInterval(refreshId);
-            }
-            if (count++ >= maxSeconds) {
-                clearInterval(refreshId);
-            }
-        }, 1000);
-        return expressionMatch;
+    waitXPath(expression, maxSeconds = 10) {
+        let timer = 1;
+        return new Promise((resolve, reject) => {
+            const refreshId = setInterval(() => {
+                const firstMatch = this.queryFirst(expression);
+                if (firstMatch) {
+                    clearInterval(refreshId);
+                    return resolve({ found: true, message: firstMatch });
+                }
+                if (timer++ >= maxSeconds) {
+                    clearInterval(refreshId);
+                    return reject({
+                        found: false,
+                        message: `Timeout! Max ${maxSeconds} seconds are allowed.`,
+                    });
+                }
+            }, 1000);
+        });
     }
 }

@@ -24,7 +24,9 @@ export default class Hali {
             [key: string]: string;
         }>;
     };
-    waitSelector(selector: string, maxSeconds?: number): boolean;
-    waitXPath(expression: string, maxSeconds?: number): boolean;
+    waitXPath(expression: string, maxSeconds?: number): Promise<{
+        found: boolean;
+        message: string;
+    }>;
 }
 export {};
