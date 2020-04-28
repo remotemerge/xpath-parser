@@ -4,4 +4,5 @@ module.exports = {
   testMatch: [
     '**/?(*.)+(spec|test).[tj]s?(x)'
   ],
+  testTimeout: 30 * 1000, // 30 seconds
 };
