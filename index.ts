@@ -139,50 +139,35 @@ export default class Hali {
   }
 
   /**
-   * This method wait for Query Selector existence in seconds
-   * @param selector
-   * @param maxSeconds
-   * @return boolean
-   */
-  waitSelector(selector: string, maxSeconds = 1): boolean {
-    let count = 0;
-    let selectorMatch = false;
-
-    const refreshId = setInterval(() => {
-      // exit if selector found
-      if (document.querySelector(selector)) {
-        selectorMatch = true;
-        clearInterval(refreshId);
-      }
-      // exit max seconds reach
-      if (count++ >= maxSeconds) {
-        clearInterval(refreshId);
-      }
-    }, 1000);
-    return selectorMatch;
-  }
-
-  /**
-   * This method wait for XPath expression existence in seconds
+   * This method try to match given expression every second upto
+   * max seconds provided.
    * @param expression
    * @param maxSeconds
-   * @return boolean
+   * @return Promise
    */
-  waitXPath(expression: string, maxSeconds = 1): boolean {
-    let count = 0;
-    let expressionMatch = false;
+  waitXPath(expression: string, maxSeconds = 10): Promise<{ found: boolean; message: string }> {
+    // init the timer
+    let timer = 1;
 
-    const refreshId = setInterval(() => {
-      // exit if selector found
-      if (this.queryFirst(expression)) {
-        expressionMatch = true;
-        clearInterval(refreshId);
-      }
-      // exit max seconds reach
-      if (count++ >= maxSeconds) {
-        clearInterval(refreshId);
-      }
-    }, 1000);
-    return expressionMatch;
+    return new Promise((resolve, reject) => {
+      // refresh every second
+      const refreshId = setInterval(() => {
+        // try first match
+        const firstMatch = this.queryFirst(expression);
+        if (firstMatch) {
+          // clear interval
+          clearInterval(refreshId);
+          return resolve({found: true, message: firstMatch});
+        }
+        // check if timeout
+        if (timer++ >= maxSeconds) {
+          clearInterval(refreshId);
+          return reject({
+            found: false,
+            message: `Timeout! Max ${maxSeconds} seconds are allowed.`,
+          });
+        }
+      }, 1000);
+    });
   }
 }
