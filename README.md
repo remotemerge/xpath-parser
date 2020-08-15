@@ -4,6 +4,7 @@
 ![Node](https://img.shields.io/node/v/@remotemerge/hali?logo=node.js)
 ![Downloads](https://img.shields.io/npm/dt/@remotemerge/hali)
 ![License](https://img.shields.io/npm/l/@remotemerge/hali)
+
 Hali is an open source, lightweight and modern JavaScript utility to evaluate XPath expressions built on top of TypeScript. This tool is built for web scraping and can be integrated into new or existing web crawlers.
 
 ## Install
