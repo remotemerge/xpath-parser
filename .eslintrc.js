@@ -1,50 +1,41 @@
-const nodeEnv = process.env.NODE_ENV;
-let status = (nodeEnv === 'production') ? 'error' : 'warn';
+// build environment
+const buildEnv = process.env.NODE_ENV === 'production' ? 'error' : 'warn';
 
 module.exports = {
-  'root': true,
-  'env': {
-    'node': true,
-    'browser': true,
-    'commonjs': true,
-    'es6': true,
+  root: true,
+  env: {
+    node: true,
+    browser: true,
+    commonjs: true,
+    es6: true,
   },
-  'extends': [
+  extends: [
     'eslint:recommended',
     'plugin:@typescript-eslint/eslint-recommended',
     'plugin:@typescript-eslint/recommended',
   ],
-  'parser': '@typescript-eslint/parser',
-  'parserOptions': {
-    'ecmaVersion': 'esnext',
-    'ecmaFeatures': {
+  parser: '@typescript-eslint/parser',
+  parserOptions: {
+    ecmaVersion: 2020,
+    ecmaFeatures: {
       jsx: false,
     },
-    'lib': [],
-    'sourceType': 'module',
+    lib: [],
+    sourceType: 'module',
   },
-  'plugins': [],
-  'rules': {
-    'indent': [
-      status,
+  plugins: [],
+  rules: {
+    indent: [
+      buildEnv,
       2,
       {
-        'SwitchCase': 1,
-      }
+        SwitchCase: 1,
+      },
     ],
-    'linebreak-style': [
-      status,
-      'unix',
-    ],
-    'quotes': [
-      status,
-      'single',
-    ],
-    'semi': [
-      status,
-      'always',
-    ],
-    'no-unused-vars': status,
-    'no-console': status,
-  }
+    'linebreak-style': [buildEnv, 'unix'],
+    quotes: [buildEnv, 'single'],
+    semi: [buildEnv, 'always'],
+    'no-unused-vars': buildEnv,
+    'no-console': buildEnv,
+  },
 };
