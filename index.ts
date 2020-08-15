@@ -37,7 +37,15 @@ export default class Hali {
    * @return XPathResult
    */
   evaluate(expression: string): XPathResult {
-    return document.evaluate(expression, this.domContent, null, this.options.queryFirst ? XPathResult.FIRST_ORDERED_NODE_TYPE : XPathResult.ORDERED_NODE_ITERATOR_TYPE, null);
+    return document.evaluate(
+      expression,
+      this.domContent,
+      null,
+      this.options.queryFirst
+        ? XPathResult.FIRST_ORDERED_NODE_TYPE
+        : XPathResult.ORDERED_NODE_ITERATOR_TYPE,
+      null
+    );
   }
 
   /**
@@ -74,7 +82,8 @@ export default class Hali {
    * @param expression
    */
   queryList(expression: string): Array<string> {
-    const response = [], evaluate = this.evaluate(expression);
+    const response = [],
+      evaluate = this.evaluate(expression);
     let node;
     while ((node = evaluate.iterateNext())) {
       const value = this.getValue(node);
@@ -88,7 +97,9 @@ export default class Hali {
    * in the associative format
    * @param expressions
    */
-  multiQuery(expressions: { [key: string]: string }): { [key: string]: string } {
+  multiQuery(expressions: {
+    [key: string]: string;
+  }): { [key: string]: string } {
     // response format
     const response: { [key: string]: string } = {};
 
@@ -104,11 +115,13 @@ export default class Hali {
    * associative array result.
    * @param expression
    */
-  subQuery(expression: Expression = {
-    root: '/html',
-    pagination: '',
-    queries: {},
-  }): { paginationUrl: string; results: Array<{ [key: string]: string }> } {
+  subQuery(
+    expression: Expression = {
+      root: '/html',
+      pagination: '',
+      queries: {},
+    }
+  ): { paginationUrl: string; results: Array<{ [key: string]: string }> } {
     // extract root DOM
     const rootDom = this.evaluate(expression.root);
 
@@ -145,7 +158,10 @@ export default class Hali {
    * @param maxSeconds
    * @return Promise
    */
-  waitXPath(expression: string, maxSeconds = 10): Promise<{ found: boolean; message: string }> {
+  waitXPath(
+    expression: string,
+    maxSeconds = 10
+  ): Promise<{ found: boolean; message: string }> {
     // init the timer
     let timer = 1;
 
@@ -157,7 +173,7 @@ export default class Hali {
         if (firstMatch) {
           // clear interval
           clearInterval(refreshId);
-          return resolve({found: true, message: firstMatch});
+          return resolve({ found: true, message: firstMatch });
         }
         // check if timeout
         if (timer++ >= maxSeconds) {
