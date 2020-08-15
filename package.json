@@ -9,12 +9,17 @@
     "evaluate",
     "xpath"
   ],
+  "author": {
+    "name": "Madan Sapkota",
+    "email": "code+gh@madansapkota.com",
+    "url": "https://madansapkota.com"
+  },
   "repository": {
     "type": "git",
     "url": "git@github.com:remotemerge/hali.git"
   },
-  "engines": {
-    "node": "^10 || ^12 || >=13"
+  "bugs": {
+    "url": "https://github.com/remotemerge/hali/issues"
   },
   "main": "./dist/browser/index.js",
   "scripts": {
@@ -26,17 +31,17 @@
   },
   "dependencies": {},
   "devDependencies": {
-    "@babel/core": "^7.9.0",
-    "@babel/preset-env": "^7.9.5",
-    "@babel/preset-typescript": "^7.9.0",
-    "@types/jest": "^25.2.1",
-    "@types/node": "^13.13.4",
-    "@typescript-eslint/eslint-plugin": "^2.30.0",
-    "@typescript-eslint/parser": "^2.30.0",
-    "babel-jest": "^25.4.0",
+    "@babel/core": "^7.11.1",
+    "@babel/preset-env": "^7.11.0",
+    "@babel/preset-typescript": "^7.10.4",
+    "@types/jest": "^26.0.10",
+    "@types/node": "^14.0.27",
+    "@typescript-eslint/eslint-plugin": "^3.9.0",
+    "@typescript-eslint/parser": "^3.9.0",
+    "babel-jest": "^26.3.0",
     "cross-env": "^7.0.2",
-    "eslint": "^6.8.0",
-    "jest": "^25.4.0",
-    "typescript": "^3.8.3"
+    "eslint": "^7.7.0",
+    "jest": "^26.4.0",
+    "typescript": "^3.9.7"
   }
 }
