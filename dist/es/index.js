@@ -63,14 +63,13 @@ export default class Hali {
             });
             results.push(record);
         }
-        let paginationUrl = '';
+        const response = { results: results };
         if (expression.pagination) {
-            paginationUrl = this.queryFirst(expression.pagination);
+            Object.assign(response, {
+                paginationUrl: this.queryFirst(expression.pagination),
+            });
         }
-        return {
-            paginationUrl: paginationUrl,
-            results: results,
-        };
+        return response;
     }
     waitXPath(expression, maxSeconds = 10) {
         let timer = 1;
