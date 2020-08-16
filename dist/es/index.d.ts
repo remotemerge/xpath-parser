@@ -1,6 +1,6 @@
 interface Expression {
     root: string;
-    pagination: string;
+    pagination?: string;
     queries: {
         [key: string]: string;
     };
@@ -19,7 +19,7 @@ export default class Hali {
         [key: string]: string;
     };
     subQuery(expression?: Expression): {
-        paginationUrl: string;
+        paginationUrl?: string;
         results: Array<{
             [key: string]: string;
         }>;

@@ -70,14 +70,13 @@ var Hali = (function () {
         while ((nodeDom = rootDom.iterateNext())) {
             _loop_1();
         }
-        var paginationUrl = '';
+        var response = { results: results };
         if (expression.pagination) {
-            paginationUrl = this.queryFirst(expression.pagination);
+            Object.assign(response, {
+                paginationUrl: this.queryFirst(expression.pagination),
+            });
         }
-        return {
-            paginationUrl: paginationUrl,
-            results: results,
-        };
+        return response;
     };
     Hali.prototype.waitXPath = function (expression, maxSeconds) {
         var _this = this;

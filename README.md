@@ -1,7 +1,6 @@
-# <img src="images/logo.png" width="28" height="28"> Hali
+# <img src="./images/logo.png" width="28" height="28"> Hali
 [![Package](https://img.shields.io/npm/v/@remotemerge/hali?logo=npm)](https://www.npmjs.com/package/@remotemerge/hali)
 ![Build](https://img.shields.io/github/workflow/status/remotemerge/hali/Build?logo=github)
-![Node](https://img.shields.io/node/v/@remotemerge/hali?logo=node.js)
 ![Downloads](https://img.shields.io/npm/dt/@remotemerge/hali)
 ![License](https://img.shields.io/npm/l/@remotemerge/hali)
 
@@ -89,7 +88,7 @@ Sample output:
 ```
 
 ### Scrape with SubQueries
-This method captures the `root` element and runs queries within its namespace. It is useful for scraping multiple products and full information about each product. For example, there can be 10 products on a page and each product has (`title`, `url`, `image`, `price`, etc.). This method also supports `pagination` parameter. The keys are preserved and the values are returned to the same keys.
+This method captures the `root` element and runs queries within its namespace. It is useful for scraping multiple products and full information about each product. For example, there can be 10 products on a page and each product has (`title`, `url`, `image`, `price`, etc.). This method also supports `pagination` parameter. The keys are preserved and the values are returned to the same keys. Here `pagination` is optional parameter.
 ```javascript
 const result = myHali.subQuery({
   root: '//span[contains(@class, "zg-item")]',
