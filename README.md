@@ -1,7 +1,6 @@
-# <img src="images/logo.png" width="28" height="28"> Hali
+# <img src="./images/logo.png" width="28" height="28"> Hali
 [![Package](https://img.shields.io/npm/v/@remotemerge/hali?logo=npm)](https://www.npmjs.com/package/@remotemerge/hali)
 ![Build](https://img.shields.io/github/workflow/status/remotemerge/hali/Build?logo=github)
-![Node](https://img.shields.io/node/v/@remotemerge/hali?logo=node.js)
 ![Downloads](https://img.shields.io/npm/dt/@remotemerge/hali)
 ![License](https://img.shields.io/npm/l/@remotemerge/hali)
 
