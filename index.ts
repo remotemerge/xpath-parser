@@ -1,7 +1,7 @@
 // interface for XPath expression
 interface Expression {
   root: string;
-  pagination: string;
+  pagination?: string;
   queries: {
     [key: string]: string;
   };
@@ -121,7 +121,7 @@ export default class Hali {
       pagination: '',
       queries: {},
     }
-  ): { paginationUrl: string; results: Array<{ [key: string]: string }> } {
+  ): { paginationUrl?: string; results: Array<{ [key: string]: string }> } {
     // extract root DOM
     const rootDom = this.evaluate(expression.root);
 
@@ -138,17 +138,16 @@ export default class Hali {
       results.push(record);
     }
 
-    // extract next or previous page
-    let paginationUrl = '';
-    if (expression.pagination) {
-      paginationUrl = this.queryFirst(expression.pagination);
-    }
+    // init response
+    const response = { results: results };
 
-    // format the data
-    return {
-      paginationUrl: paginationUrl,
-      results: results,
-    };
+    // evaluate pagination
+    if (expression.pagination) {
+      Object.assign(response, {
+        paginationUrl: this.queryFirst(expression.pagination),
+      });
+    }
+    return response;
   }
 
   /**
