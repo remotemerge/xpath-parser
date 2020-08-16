@@ -89,7 +89,7 @@ Sample output:
 ```
 
 ### Scrape with SubQueries
-This method captures the `root` element and runs queries within its namespace. It is useful for scraping multiple products and full information about each product. For example, there can be 10 products on a page and each product has (`title`, `url`, `image`, `price`, etc.). This method also supports `pagination` parameter. The keys are preserved and the values are returned to the same keys.
+This method captures the `root` element and runs queries within its namespace. It is useful for scraping multiple products and full information about each product. For example, there can be 10 products on a page and each product has (`title`, `url`, `image`, `price`, etc.). This method also supports `pagination` parameter. The keys are preserved and the values are returned to the same keys. Here `pagination` is optional parameter.
 ```javascript
 const result = myHali.subQuery({
   root: '//span[contains(@class, "zg-item")]',
