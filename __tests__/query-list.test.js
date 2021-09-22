@@ -1,4 +1,4 @@
-import Hali from '../dist/es';
+import Hali from '../dist';
 import productsHtml from './data/products.html';
 
 const myHali = new Hali(productsHtml);
