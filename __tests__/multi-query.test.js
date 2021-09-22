@@ -1,4 +1,4 @@
-import Hali from '../dist/es';
+import Hali from '../dist';
 import productHtml from './data/product.html';
 
 const myHali = new Hali(productHtml);
@@ -18,7 +18,9 @@ test('must have four elements', () => {
 });
 
 test('match the product title', () => {
-  expect(product.title).toBe('LETSCOM Fitness Tracker HR, Activity Tracker Watch with Heart Rate Monitor, Waterproof Smart Fitness Band with Step Counter, Calorie Counter, Pedometer Watch for Kids Women and Men');
+  expect(product.title).toBe(
+    'LETSCOM Fitness Tracker HR, Activity Tracker Watch with Heart Rate Monitor, Waterproof Smart Fitness Band with Step Counter, Calorie Counter, Pedometer Watch for Kids Women and Men',
+  );
 });
 
 test('product price contains dollar sign', () => {

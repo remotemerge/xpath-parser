@@ -1,26 +1,16 @@
-// interface for XPath expression
-interface Expression {
-  root: string;
-  pagination?: string;
-  queries: {
-    [key: string]: string;
-  };
-}
-
 export default class Hali {
   // init options
-  private options = {
+  options = {
     queryFirst: false,
   };
-
   // init DOM node
-  private domContent: Node;
+  domContent;
 
   /**
    * Initialize Node from DOM Node or HTML string.
    * @param content
    */
-  constructor(content: Node | string) {
+  constructor(content) {
     if (content instanceof Node) {
       this.domContent = content;
     } else {
@@ -36,7 +26,7 @@ export default class Hali {
    * @param expression
    * @return XPathResult
    */
-  evaluate(expression: string): XPathResult {
+  evaluate(expression) {
     return document.evaluate(
       expression,
       this.domContent,
@@ -51,7 +41,7 @@ export default class Hali {
    * @param node
    * @return string
    */
-  getValue(node: Node | null): string {
+  getValue(node) {
     let formattedText = '';
     if (node instanceof Attr) {
       // node is attribute
@@ -68,7 +58,7 @@ export default class Hali {
    * @param expression
    * @return string
    */
-  queryFirst(expression: string): string {
+  queryFirst(expression) {
     // override options
     this.options.queryFirst = true;
     const evaluate = this.evaluate(expression);
@@ -79,7 +69,7 @@ export default class Hali {
    * Evaluate the expression and return all matching results
    * @param expression
    */
-  queryList(expression: string): Array<string> {
+  queryList(expression) {
     const response = [];
     const evaluate = this.evaluate(expression);
     let node;
@@ -95,10 +85,9 @@ export default class Hali {
    * in the associative format
    * @param expressions
    */
-  multiQuery(expressions: { [key: string]: string }): { [key: string]: string } {
+  multiQuery(expressions) {
     // response format
-    const response: { [key: string]: string } = {};
-
+    const response = {};
     Object.keys(expressions).forEach((key) => {
       response[key] = this.queryFirst(expressions[key]);
     });
@@ -112,31 +101,27 @@ export default class Hali {
    * @param expression
    */
   subQuery(
-    expression: Expression = {
+    expression = {
       root: '/html',
       pagination: '',
       queries: {},
     },
-  ): { paginationUrl?: string; results: Array<{ [key: string]: string }> } {
+  ) {
     // extract root DOM
     const rootDom = this.evaluate(expression.root);
-
     const results = [];
     let nodeDom = null;
     while ((nodeDom = rootDom.iterateNext())) {
       // reset dom root
       this.domContent = nodeDom;
-      const record: { [key: string]: string } = {};
-
+      const record = {};
       Object.keys(expression.queries).forEach((key) => {
         record[key] = this.queryFirst(expression.queries[key]);
       });
       results.push(record);
     }
-
     // init response
     const response = { results: results };
-
     // evaluate pagination
     if (expression.pagination) {
       Object.assign(response, {
@@ -153,10 +138,9 @@ export default class Hali {
    * @param maxSeconds
    * @return Promise
    */
-  waitXPath(expression: string, maxSeconds = 10): Promise<{ found: boolean; message: string }> {
+  waitXPath(expression, maxSeconds = 10) {
     // init the timer
     let timer = 1;
-
     return new Promise((resolve, reject) => {
       // refresh every second
       const refreshId = setInterval(() => {
@@ -165,7 +149,10 @@ export default class Hali {
         if (firstMatch) {
           // clear interval
           clearInterval(refreshId);
-          return resolve({ found: true, message: firstMatch });
+          return resolve({
+            found: true,
+            message: firstMatch,
+          });
         }
         // check if timeout
         if (timer++ >= maxSeconds) {

@@ -1,6 +1,6 @@
 {
   "name": "@remotemerge/hali",
-  "version": "1.0.8",
+  "version": "2.0.0",
   "description": "Hali is an open source, lightweight and modern JavaScript utility to evaluate XPath expressions built on top of TypeScript.",
   "license": "MIT",
   "keywords": [
@@ -11,7 +11,7 @@
   ],
   "author": {
     "name": "Madan Sapkota",
-    "email": "code+gh@madansapkota.com",
+    "email": "contact+github@madansapkota.com",
     "url": "https://madansapkota.com"
   },
   "repository": {
@@ -23,25 +23,27 @@
   },
   "main": "./dist/browser/index.js",
   "scripts": {
-    "lint": "cross-env NODE_ENV=production eslint --ext .ts .",
+    "build": "yarn lint && tsc",
+    "lint": "eslint --ext .ts .",
     "lint:fix": "eslint --ext .ts --fix .",
-    "compile": "tsc -p tsconfig.json && tsc -p tsconfig.browser.json",
-    "build": "yarn lint && yarn compile && bash drop.sh",
     "test": "jest"
   },
-  "dependencies": {},
+  "dependencies": {
+    "typescript": "^4.4.3"
+  },
   "devDependencies": {
-    "@babel/core": "^7.12.16",
-    "@babel/preset-env": "^7.12.16",
-    "@babel/preset-typescript": "^7.12.16",
-    "@types/jest": "^26.0.20",
-    "@types/node": "^14.14.28",
-    "@typescript-eslint/eslint-plugin": "^4.15.1",
-    "@typescript-eslint/parser": "^4.15.1",
-    "babel-jest": "^26.6.3",
-    "cross-env": "^7.0.3",
-    "eslint": "^7.20.0",
-    "jest": "^26.6.3",
-    "typescript": "^4.1.5"
+    "@babel/preset-env": "^7.15.6",
+    "@babel/preset-typescript": "^7.15.0",
+    "@typescript-eslint/eslint-plugin": "^4.31.2",
+    "@typescript-eslint/parser": "^4.31.2",
+    "eslint": "^7.32.0",
+    "eslint-config-standard": "^16.0.3",
+    "eslint-plugin-import": "^2.24.2",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^5.1.0",
+    "jest": "^27.2.1"
+  },
+  "optionalDependencies": {
+    "prettier": "^2.4.1"
   }
 }

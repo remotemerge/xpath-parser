@@ -1,4 +1,4 @@
-import Hali from '../dist/es';
+import Hali from '../dist';
 import productsHtml from './data/products.html';
 
 const myHali = new Hali(productsHtml);
@@ -44,7 +44,7 @@ const firstProduct = products.results[0];
 
 test('match the product title', () => {
   expect(firstProduct.title).toBe(
-    'Cell Phone Stand,Angle Height Adjustable Stable LISEN Cell Phone Stand For Desk,Sturdy Aluminum Metal Phone Holder,Compatible with Mobile Phone/iPad/Kindle/Tablet,4-10inch'
+    'Cell Phone Stand,Angle Height Adjustable Stable LISEN Cell Phone Stand For Desk,Sturdy Aluminum Metal Phone Holder,Compatible with Mobile Phone/iPad/Kindle/Tablet,4-10inch',
   );
 });
 

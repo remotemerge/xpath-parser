@@ -21,21 +21,11 @@ Hali source file is `index.ts`.
 import Hali from '@remotemerge/hali'
 ```
 
-* Use `dist/es/index.js` in NodeJS or ES5/ES6..ESNext environment.
+* Use `dist/index.js` in NodeJS or ES5/ES6..ESNext environment.
 ```javascript
-import Hali from '@remotemerge/hali/dist/es'
+import Hali from '@remotemerge/hali/dist/index.js'
 // or bit older
-const Hali = require('@remotemerge/hali/dist/es')
-```
-
-* Use `dist/browser/index.js` directly in a browser.
-```html
-<script type="text/javascript" src="/path/to/browser/index.js"></script>
-```
-
-* Use jsDelivr CDN
-```html
-<script src="https://cdn.jsdelivr.net/npm/@remotemerge/hali@latest/dist/browser/index.min.js"></script>
+const Hali = require('@remotemerge/hali/dist/index.js')
 ```
 
 ## Examples
