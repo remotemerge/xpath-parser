@@ -1,2 +1,4 @@
+.github
+__tests__
 dist
-__test__
+images
