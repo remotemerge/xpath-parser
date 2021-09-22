@@ -23,7 +23,7 @@
   },
   "main": "./dist/browser/index.js",
   "scripts": {
-    "lint": "cross-env NODE_ENV=production eslint --ext .ts .",
+    "lint": "eslint --ext .ts .",
     "lint:fix": "eslint --ext .ts --fix .",
     "compile": "tsc -p tsconfig.json && tsc -p tsconfig.browser.json",
     "build": "yarn lint && yarn compile && bash drop.sh",
@@ -39,7 +39,6 @@
     "@typescript-eslint/eslint-plugin": "^4.31.2",
     "@typescript-eslint/parser": "^4.31.2",
     "babel-jest": "^27.2.1",
-    "cross-env": "^7.0.3",
     "eslint": "^7.32.0",
     "eslint-config-standard": "^16.0.3",
     "eslint-plugin-import": "^2.24.2",
