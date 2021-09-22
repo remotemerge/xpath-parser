@@ -1,41 +1,19 @@
-// build environment
-const buildEnv = process.env.NODE_ENV === 'production' ? 'error' : 'warn';
-
 module.exports = {
-  root: true,
   env: {
-    node: true,
     browser: true,
-    commonjs: true,
-    es6: true,
+    es2021: true,
+    node: true,
   },
-  extends: [
-    'eslint:recommended',
-    'plugin:@typescript-eslint/eslint-recommended',
-    'plugin:@typescript-eslint/recommended',
-  ],
+  extends: ['standard'],
   parser: '@typescript-eslint/parser',
   parserOptions: {
-    ecmaVersion: 2020,
-    ecmaFeatures: {
-      jsx: false,
-    },
-    lib: [],
+    ecmaVersion: 12,
     sourceType: 'module',
   },
-  plugins: [],
+  plugins: ['@typescript-eslint'],
   rules: {
-    indent: [
-      buildEnv,
-      2,
-      {
-        SwitchCase: 1,
-      },
-    ],
-    'linebreak-style': [buildEnv, 'unix'],
-    quotes: [buildEnv, 'single'],
-    semi: [buildEnv, 'always'],
-    'no-unused-vars': buildEnv,
-    'no-console': buildEnv,
+    'comma-dangle': 'off',
+    'space-before-function-paren': 'off',
+    semi: 'off',
   },
 };
