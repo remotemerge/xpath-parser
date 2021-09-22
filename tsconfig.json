@@ -7,7 +7,7 @@
     "strict": true,
     "noImplicitAny": true,
     "removeComments": true,
-    "outDir": "./dist/es",
+    "outDir": "./dist",
     "declaration": true
   },
   "include": [

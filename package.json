@@ -23,10 +23,9 @@
   },
   "main": "./dist/browser/index.js",
   "scripts": {
+    "build": "yarn lint && tsc",
     "lint": "eslint --ext .ts .",
     "lint:fix": "eslint --ext .ts --fix .",
-    "compile": "tsc -p tsconfig.json && tsc -p tsconfig.browser.json",
-    "build": "yarn lint && yarn compile && bash drop.sh",
     "test": "jest"
   },
   "dependencies": {
