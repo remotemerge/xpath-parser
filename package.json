@@ -21,7 +21,7 @@
   "bugs": {
     "url": "https://github.com/remotemerge/hali/issues"
   },
-  "main": "./dist/browser/index.js",
+  "main": "./dist/index.js",
   "scripts": {
     "build": "yarn lint && tsc",
     "lint": "eslint --ext .ts .",
