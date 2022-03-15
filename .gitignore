@@ -36,7 +36,8 @@ ehthumbs_vista.db
 *.sw?
 
 ## Node modules
-/node_modules/
+/node_modules
+/.yarn
 
 ### Custom
-package-lock.json
+yarn.lock
