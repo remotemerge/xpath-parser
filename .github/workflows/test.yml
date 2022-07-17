@@ -1,4 +1,4 @@
-name: Build
+name: Test
 
 # set criteria
 on: [pull_request]
@@ -6,10 +6,15 @@ on: [pull_request]
 jobs:
   Test:
     # select the OS
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
+
     steps:
       # use actions
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
+
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 'lts/*'
 
       - name: Print version
         run: node -v && npm -v

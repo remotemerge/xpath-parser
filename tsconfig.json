@@ -3,14 +3,12 @@
     "target": "ESNext",
     "module": "ESNext",
     "moduleResolution": "node",
-    "sourceMap": false,
     "strict": true,
-    "noImplicitAny": true,
-    "outDir": "./dist",
+    "outDir": "dist",
     "declaration": true
   },
   "include": [
-    "index.ts"
+    "src/*.ts"
   ],
   "exclude": [
     "dist",
