@@ -1,6 +1,6 @@
 {
   "name": "@remotemerge/hali",
-  "version": "2.0.4",
+  "version": "2.0.5",
   "description": "Hali is an open source, lightweight and modern JavaScript utility to evaluate XPath expressions built on top of TypeScript.",
   "license": "MIT",
   "keywords": [
@@ -21,7 +21,7 @@
   "bugs": {
     "url": "https://github.com/remotemerge/hali/issues"
   },
-  "main": "./dist/index.js",
+  "main": "dist/index.js",
   "scripts": {
     "lint": "eslint --ext .ts src",
     "lint:fix": "eslint --ext .ts --fix src",
