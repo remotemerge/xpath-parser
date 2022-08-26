@@ -1,8 +1,8 @@
-import Hali from '../dist';
-import productsHtml from './data/products.html';
+import XpathParser from '../dist/xpath-parser.js';
+import htmlContent from './data/products.html';
 
-const myHali = new Hali(productsHtml);
-const results = myHali.queryList('//span[contains(@class, "zg-item")]/a/div');
+const parser = new XpathParser(htmlContent);
+const results = parser.queryList('//span[contains(@class, "zg-item")]/a/div');
 
 test('must return object', () => {
   expect(typeof results).toBe('object');

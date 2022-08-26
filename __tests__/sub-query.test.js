@@ -1,8 +1,8 @@
-import Hali from '../dist';
-import productsHtml from './data/products.html';
+import XpathParser from '../dist/xpath-parser.js';
+import htmlContent from './data/products.html';
 
-const myHali = new Hali(productsHtml);
-const products = myHali.subQuery({
+const parser = new XpathParser(htmlContent);
+const products = parser.subQuery({
   root: '//span[contains(@class, "zg-item")]',
   pagination: '//ul/li/a[contains(text(), "Next")]/@href',
   queries: {

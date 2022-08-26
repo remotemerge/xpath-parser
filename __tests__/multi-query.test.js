@@ -1,8 +1,8 @@
-import Hali from '../dist';
-import productHtml from './data/product.html';
+import XpathParser from '../dist/xpath-parser.js';
+import htmlContent from './data/product.html';
 
-const myHali = new Hali(productHtml);
-const product = myHali.multiQuery({
+const parser = new XpathParser(htmlContent);
+const product = parser.multiQuery({
   title: '//div[@id="ppd"]//span[@id="productTitle"]',
   seller: '//div[@id="ppd"]//a[@id="bylineInfo"]',
   price: '//div[@id="ppd"]//span[@id="priceblock_dealprice"]',
