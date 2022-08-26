@@ -1,18 +1,15 @@
 {
   "compilerOptions": {
-    "target": "ESNext",
     "module": "ESNext",
     "moduleResolution": "node",
-    "strict": true,
+    "noEmit": true,
     "outDir": "dist",
-    "declaration": true
+    "removeComments": true,
+    "strict": true,
+    "target": "ESNext"
   },
   "include": [
+    "src/types/*.ts",
     "src/*.ts"
-  ],
-  "exclude": [
-    "dist",
-    "node_modules",
-    "__tests__"
   ]
 }
