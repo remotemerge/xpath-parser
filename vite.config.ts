@@ -4,7 +4,7 @@ import { defineConfig } from 'vite';
 export default defineConfig({
   build: {
     lib: {
-      entry: './src/XpathParser.ts',
+      entry: './src/XPathParser.ts',
       name: 'XpathParser',
       fileName: 'xpath-parser',
       formats: ['es'],

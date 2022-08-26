@@ -7,7 +7,7 @@ interface Expression {
   };
 }
 
-export default class XpathParser {
+export default class XPathParser {
   // init options
   private options = {
     queryFirst: false,
