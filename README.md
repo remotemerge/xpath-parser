@@ -1,6 +1,6 @@
 # <img src="./public/logo.png" width="28" height="28"> XPath Parser
 [![Package](https://img.shields.io/npm/v/@remotemerge/xpath-parser?logo=npm)](https://www.npmjs.com/package/@remotemerge/xpath-parser)
-![Build](https://img.shields.io/github/workflow/status/remotemerge/xpath-parser/Build?logo=github)
+![Build](https://img.shields.io/github/workflow/status/remotemerge/xpath-parser/Production?logo=github)
 ![Downloads](https://img.shields.io/npm/dt/@remotemerge/xpath-parser)
 ![License](https://img.shields.io/npm/l/@remotemerge/xpath-parser)
 
