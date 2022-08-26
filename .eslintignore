@@ -1,2 +1,5 @@
-__tests__
-dist
+/.github/
+/.idea/
+/__tests__/
+/dist/
+/public/
