@@ -9,7 +9,7 @@ on:
       - completed
 
 jobs:
-  test:
+  install:
     # OS to run
     runs-on: ubuntu-latest
 
@@ -25,8 +25,8 @@ jobs:
       - name: "Print version"
         run: node -v && npm -v
 
-      - name: "Install dependencies"
-        run: npm install
+      - name: "Create test directory"
+        run: \mkdir package_test && \cd package_test
 
       - name: "Init package config"
         run: npm init -y
