@@ -18,6 +18,9 @@ jobs:
       - name: "Install dependencies and build"
         run: npm install && npm run build
 
+      - name: "Copy readme doc"
+        run: \cp README.md ./dist/README.md
+
       # publish to NPM
       - uses: actions/setup-node@v3
         with:

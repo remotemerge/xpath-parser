@@ -1,4 +1,4 @@
-# The workflow to publish package
+# The workflow to run the tests
 name: Testing
 
 # Controls when the workflow will run
