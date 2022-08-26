@@ -1,43 +1,36 @@
-# <img src="./images/logo.png" width="28" height="28"> Hali
-[![Package](https://img.shields.io/npm/v/@remotemerge/hali?logo=npm)](https://www.npmjs.com/package/@remotemerge/hali)
-![Build](https://img.shields.io/github/workflow/status/remotemerge/hali/Build?logo=github)
-![Downloads](https://img.shields.io/npm/dt/@remotemerge/hali)
-![License](https://img.shields.io/npm/l/@remotemerge/hali)
+# <img src="./public/logo.png" width="28" height="28"> XPath Parser
+[![Package](https://img.shields.io/npm/v/@remotemerge/xpath-parser?logo=npm)](https://www.npmjs.com/package/@remotemerge/xpath-parser)
+![Build](https://img.shields.io/github/workflow/status/remotemerge/xpath-parser/Build?logo=github)
+![Downloads](https://img.shields.io/npm/dt/@remotemerge/xpath-parser)
+![License](https://img.shields.io/npm/l/@remotemerge/xpath-parser)
 
-Hali is an open source, lightweight and modern JavaScript utility to evaluate XPath expressions built on top of TypeScript. This tool is built for web scraping and can be integrated into new or existing web crawlers.
+XPath Parser is a modern JavaScript utility to parse XPath expressions; built for web scraping in a JavaScript environment.
+It's open source, modern, lightweight and fast. You can easily integrate it into new or existing web crawlers, browser extensions, etc.
 
 ## Install
 ```bash
 # using NPM
-npm i @remotemerge/hali
+npm i @remotemerge/xpath-parser
 # using Yarn
-yarn add @remotemerge/hali
+yarn add @remotemerge/xpath-parser
 ```
 
 ## Usage
-Hali source file is `index.ts`. 
-* Use `index.ts` in TypeScript environment.
-```typescript
-import Hali from '@remotemerge/hali'
-```
-
-* Use `dist/index.js` in NodeJS or ES5/ES6..ESNext environment.
+Import the XPathParser class in your project.
 ```javascript
-import Hali from '@remotemerge/hali/dist/index.js'
-// or bit older
-const Hali = require('@remotemerge/hali/dist/index.js')
+import XPathParser from '@remotemerge/xpath-parser'
 ```
 
 ## Examples
-The Hali constructor `Hali(html|DOM)` supports both DOM and HTML string, initialize as required.
+The XPathParser constructor `XPathParser(html|DOM)` supports both DOM and HTML string, initialize as required.
 ```javascript
-const myHali = new Hali('<html>...</html>');
+const parser = new XPathParser('<html>...</html>');
 ```
 
 ### Scrape First Match
-This method evaluates the given expression and captures the first result. It is useful for scraping a single element value like `title`, `price`, etc from HTML pages.
+This method evaluates the given expression and captures the first result. It is useful for scraping a single element value like `title`, `price`, etc. from HTML pages.
 ```javascript
-const result = myHali.queryFirst('//span[@id="productTitle"]');
+const result = parser.queryFirst('//span[@id="productTitle"]');
 console.log(result);
 ```
 Sample output:
@@ -46,10 +39,10 @@ LETSCOM Fitness Tracker HR, Activity Tracker Watch with Heart Rate...
 ```
 
 ### Scrape All Matches
-This method evaluates the given expression and captures all results. It is useful for scraping all URLs, all images, all CSS classes, etc from HTML pages.
+This method evaluates the given expression and captures all results. It is useful for scraping all URLs, all images, all CSS classes, etc. from HTML pages.
 ```javascript
 // scrape titles
-const results = myHali.queryList('//span[contains(@class, "zg-item")]/a/div');
+const results = parser.queryList('//span[contains(@class, "zg-item")]/a/div');
 console.log(results);
 ```
 Sample output:
@@ -60,7 +53,7 @@ Sample output:
 ### Scrape multiple elements
 This method loop through the given expressions and captures the first match of each expression. It is useful for scraping full product information (`title`, `seller`, `price`, `rating`, etc.) from HTML pages. The keys are preserved and the values are returned to the same keys.
 ```javascript
-const result = myHali.multiQuery({
+const result = parser.multiQuery({
   title: '//div[@id="ppd"]//span[@id="productTitle"]',
   seller: '//div[@id="ppd"]//a[@id="bylineInfo"]',
   price: '//div[@id="ppd"]//span[@id="priceblock_dealprice"]',
@@ -68,7 +61,7 @@ const result = myHali.multiQuery({
 });
 ```
 Sample output:
-```javascript
+```text
 {
     title: 'LETSCOM Fitness Tracker HR, Activity Tracker Watch with Heart Rate Monitor...',
     seller: 'LETSCOM',
@@ -80,7 +73,7 @@ Sample output:
 ### Scrape with SubQueries
 This method captures the `root` element and runs queries within its namespace. It is useful for scraping multiple products and full information about each product. For example, there can be 10 products on a page and each product has (`title`, `url`, `image`, `price`, etc.). This method also supports `pagination` parameter. The keys are preserved and the values are returned to the same keys. Here `pagination` is optional parameter.
 ```javascript
-const result = myHali.subQuery({
+const result = parser.subQuery({
   root: '//span[contains(@class, "zg-item")]',
   pagination: '//ul/li/a[contains(text(), "Next")]/@href',
   queries: {
@@ -93,7 +86,7 @@ const result = myHali.subQuery({
 console.log(result);
 ```
 Sample output:
-```javascript
+```text
 {
   paginationUrl: 'https://www.example.com/gp/new-releases/wireless/reTF8&pg=2',
   results: [
@@ -119,7 +112,7 @@ Sample output:
 ### Wait for Element
 This method waits until the element (matches by expression) exists on a page. The first parameter `expression` is XPath expression to match and the second parameter `maxSeconds` is the maximum time to wait in seconds (default to 10 seconds).
 ```javascript
-myHali.waitXPath('//span[contains(@class, "a-color-price")]/span')
+parser.waitXPath('//span[contains(@class, "a-color-price")]/span')
   .then((response) => {
     // expression match and element exists
   }).catch((error) => {
