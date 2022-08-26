@@ -7,7 +7,7 @@ interface Expression {
   };
 }
 
-export default class Hali {
+export default class XpathParser {
   // init options
   private options = {
     queryFirst: false,
