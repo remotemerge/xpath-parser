@@ -1,17 +1,16 @@
-import Hali from '../dist';
-import productsHtml from './data/products.html';
+import XpathParser from '../dist/xpath-parser.js';
+import htmlContent from './data/products.html';
 
-// init hali
-const eHali = new Hali(productsHtml);
+const parser = new XpathParser(htmlContent);
 
 test('must have an object with target', () => {
-  return eHali.waitXPath('//span[contains(@class, "a-color-price")]/span').then((response) => {
+  return parser.waitXPath('//span[contains(@class, "a-color-price")]/span').then((response) => {
     expect(response.found).toBe(true);
   });
 });
 
 test('must have an object with error', () => {
-  return eHali.waitXPath('//span[contains(@class, "class-not-exists")]/span', 3).catch((error) => {
+  return parser.waitXPath('//span[contains(@class, "class-not-exists")]/span', 3).catch((error) => {
     expect(error.message).toMatch('Timeout!');
   });
 });

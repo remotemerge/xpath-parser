@@ -1,7 +1,6 @@
-module.exports = {
+export default {
   clearMocks: true,
-  coverageDirectory: 'coverage',
-  testMatch: ['**/?(*.)+(spec|test).[tj]s?(x)'],
-  testEnvironment: 'jsdom',
   testTimeout: 30 * 1000, // 30 seconds
+  testEnvironment: 'jsdom',
+  testMatch: ['**/__tests__/*.[jt]s?(x)'],
 };

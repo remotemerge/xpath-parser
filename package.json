@@ -1,45 +1,50 @@
 {
-  "name": "@remotemerge/hali",
-  "version": "2.0.5",
-  "description": "Hali is an open source, lightweight and modern JavaScript utility to evaluate XPath expressions built on top of TypeScript.",
+  "name": "@remotemerge/xpath-parser",
+  "version": "1.0.0",
+  "description": "Modern JavaScript utility to parse XPath expressions!",
   "license": "MIT",
   "keywords": [
-    "dom",
-    "delay",
-    "evaluate",
-    "xpath"
+    "DOM",
+    "Evaluate",
+    "XPath",
+    "Parser"
   ],
   "author": {
     "name": "Madan Sapkota",
-    "email": "contact+github@madansapkota.com",
+    "email": "contact@madansapkota.com",
     "url": "https://madansapkota.com"
   },
   "repository": {
     "type": "git",
-    "url": "git@github.com:remotemerge/hali.git"
+    "url": "git@github.com:remotemerge/xpath-parser.git"
   },
   "bugs": {
-    "url": "https://github.com/remotemerge/hali/issues"
+    "url": "https://github.com/remotemerge/xpath-parser/issues"
   },
-  "main": "dist/index.js",
+  "prettier": {
+    "bracketSameLine": true,
+    "printWidth": 120,
+    "singleQuote": true,
+    "tabWidth": 2,
+    "trailingComma": "all"
+  },
+  "type": "module",
+  "module": "dist/xpath-parser.js",
   "scripts": {
     "lint": "eslint --ext .ts src",
     "lint:fix": "eslint --ext .ts --fix src",
-    "test": "jest",
-    "build": "npm run lint && tsc"
-  },
-  "dependencies": {
-    "typescript": "^4.7.4"
+    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
+    "build": "node package.js && vite build"
   },
   "devDependencies": {
-    "@babel/preset-env": "^7.18.6",
-    "@babel/preset-typescript": "^7.18.6",
-    "@types/jest": "^28.1.6",
-    "@typescript-eslint/eslint-plugin": "^5.30.6",
-    "@typescript-eslint/parser": "^5.30.6",
-    "eslint": "^8.20.0",
-    "jest": "^28.1.3",
-    "jest-environment-jsdom": "^28.1.3"
+    "@types/jest": "^28.1.8",
+    "@typescript-eslint/eslint-plugin": "^5.35.1",
+    "@typescript-eslint/parser": "^5.35.1",
+    "eslint": "^8.22.0",
+    "jest": "^29.0.0",
+    "jest-environment-jsdom": "^29.0.0",
+    "typescript": "^4.8.2",
+    "vite": "^3.0.9"
   },
   "optionalDependencies": {
     "prettier": "^2.7.1"

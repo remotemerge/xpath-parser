@@ -1,8 +1,8 @@
-import Hali from '../dist';
-import productsHtml from './data/product.html';
+import XpathParser from '../dist/xpath-parser.js';
+import htmlContent from './data/product.html';
 
-const myHali = new Hali(productsHtml);
-const str = myHali.queryFirst('//span[@id="productTitle"]');
+const parser = new XpathParser(htmlContent);
+const str = parser.queryFirst('//span[@id="productTitle"]');
 
 test('title must be string', () => {
   expect(typeof str).toBe('string');
