@@ -25,8 +25,8 @@ jobs:
       - name: "Print version"
         run: node -v && npm -v
 
-      - name: "Create test directory"
-        run: \mkdir package_test && \cd package_test
+      - name: "Clean the directory"
+        run: rm -rf *
 
       - name: "Init package config"
         run: npm init -y
