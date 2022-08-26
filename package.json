@@ -1,25 +1,25 @@
 {
-  "name": "@remotemerge/hali",
+  "name": "@remotemerge/xpath-parser",
   "version": "2.0.5",
-  "description": "Hali is an open source, lightweight and modern JavaScript utility to evaluate XPath expressions built on top of TypeScript.",
+  "description": "Modern JavaScript utility to evaluate XPath expressions. It's lightweight and fast!",
   "license": "MIT",
   "keywords": [
-    "dom",
-    "delay",
-    "evaluate",
-    "xpath"
+    "DOM",
+    "Evaluate",
+    "XPath",
+    "Parser"
   ],
   "author": {
     "name": "Madan Sapkota",
-    "email": "contact+github@madansapkota.com",
+    "email": "contact@madansapkota.com",
     "url": "https://madansapkota.com"
   },
   "repository": {
     "type": "git",
-    "url": "git@github.com:remotemerge/hali.git"
+    "url": "git@github.com:remotemerge/xpath-parser.git"
   },
   "bugs": {
-    "url": "https://github.com/remotemerge/hali/issues"
+    "url": "https://github.com/remotemerge/xpath-parser/issues"
   },
   "main": "dist/index.js",
   "scripts": {
