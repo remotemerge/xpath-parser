@@ -16,7 +16,7 @@ jobs:
       # Use nodejs LTS version
       - uses: actions/setup-node@v3
         with:
-          node-version: 'lts/latest'
+          node-version: 'lts/*'
 
       - name: "Print version"
         run: node -v && npm -v
