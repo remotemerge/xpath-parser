@@ -21,7 +21,6 @@
   "bugs": {
     "url": "https://github.com/remotemerge/xpath-parser/issues"
   },
-  "main": "dist/index.js",
   "prettier": {
     "bracketSameLine": true,
     "printWidth": 120,
@@ -29,6 +28,7 @@
     "tabWidth": 2,
     "trailingComma": "all"
   },
+  "type": "module",
   "scripts": {
     "lint": "eslint --ext .ts src",
     "lint:fix": "eslint --ext .ts --fix src",
