@@ -24,6 +24,6 @@ const packageConfig = {
 };
 
 // generate chrome manifest
-const publicPath = `${__dirname}/public`;
+const publicPath = `${__dirname}/dist`;
 fs.existsSync(publicPath) || fs.mkdirSync(publicPath);
 fs.createWriteStream(`${publicPath}/package.json`, 'utf-8').write(JSON.stringify(packageConfig));
