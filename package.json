@@ -34,7 +34,7 @@
     "lint": "eslint --ext .ts src",
     "lint:fix": "eslint --ext .ts --fix src",
     "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
-    "build": "vite build"
+    "build": "node package.js && vite build"
   },
   "devDependencies": {
     "@types/jest": "^28.1.8",
