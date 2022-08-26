@@ -1,4 +1,4 @@
-# The workflow to publish package
+# The workflow to install the package
 name: Install
 
 # Controls when the workflow will run
