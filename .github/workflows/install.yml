@@ -1,0 +1,38 @@
+# The workflow to publish package
+name: Install
+
+# Controls when the workflow will run
+on:
+  workflow_run:
+    workflows: [ "Production" ]
+    types:
+      - completed
+
+jobs:
+  test:
+    # OS to run
+    runs-on: ubuntu-latest
+
+    steps:
+      # checkout the code
+      - uses: actions/checkout@v3
+
+      # Use nodejs LTS version
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 'lts/*'
+
+      - name: "Print version"
+        run: node -v && npm -v
+
+      - name: "Install dependencies"
+        run: npm install
+
+      - name: "Init package config"
+        run: npm init -y
+
+      - name: "Install XPathParser package"
+        run: npm i @remotemerge/xpath-parser
+
+      - name: "List installed packages"
+        run: npm list --depth=0
