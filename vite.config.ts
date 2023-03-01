@@ -1,7 +1,10 @@
-import { defineConfig } from 'vite';
+import { defineConfig } from 'vitest/config';
 
 // overwrite configs
 export default defineConfig({
+  test: {
+    environment: 'jsdom',
+  },
   build: {
     minify: false,
     target: 'esnext',
