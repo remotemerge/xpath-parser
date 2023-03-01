@@ -11,7 +11,7 @@ export default class XPathParser {
 
   /**
    * Initialize Node from DOM Node or HTML string.
-   * @param content
+   * @param content - A DOM Node or an HTML string.
    */
   constructor(content: Node | string) {
     if (content instanceof Node) {
@@ -26,8 +26,8 @@ export default class XPathParser {
   /**
    * Evaluate an XPath expression in the specified Node
    * and return the result.
-   * @param expression
-   * @return XPathResult
+   * @param expression - The XPath expression to evaluate.
+   * @return The result of evaluating the XPath expression.
    */
   evaluate(expression: string): XPathResult {
     return document.evaluate(
@@ -41,8 +41,8 @@ export default class XPathParser {
 
   /**
    * Extract the text value from a given DOM Node.
-   * @param node
-   * @return string
+   * @param node - The DOM Node to extract the text value from.
+   * @return The text value of the DOM Node.
    */
   getValue(node: Node | null): string {
     let formattedText = '';
@@ -57,9 +57,9 @@ export default class XPathParser {
   }
 
   /**
-   * Evaluate the expression and return the first matching result
-   * @param expression
-   * @return string
+   * Evaluate the expression and return the first matching result.
+   * @param expression - The XPath expression to evaluate.
+   * @return The first matching result of evaluating the XPath expression.
    */
   queryFirst(expression: string): string {
     // override options
@@ -69,8 +69,9 @@ export default class XPathParser {
   }
 
   /**
-   * Evaluate the expression and return all matching results
-   * @param expression
+   * Evaluate the expression and return all matching results.
+   * @param expression - The XPath expression to evaluate.
+   * @return An array of all the matching results of evaluating the XPath expression.
    */
   queryList(expression: string): Array<string> {
     const response = [];
@@ -85,8 +86,9 @@ export default class XPathParser {
 
   /**
    * Evaluate the expressions and return the matching result
-   * in the associative format
-   * @param expressions
+   * in the associative format.
+   * @param expressions - An object with XPath expressions as values.
+   * @return An object with the results of evaluating the XPath expressions as key-value pairs.
    */
   multiQuery(expressions: { [key: string]: string }): { [key: string]: string } {
     // response format
@@ -102,7 +104,10 @@ export default class XPathParser {
    * This method selects all matching parent nodes and
    * runs sub queries on child nodes and generate an
    * associative array result.
-   * @param expression
+   * @param expression - An object that specifies the XPath expressions to use for the root node,
+   * child nodes, and pagination.
+   * @return An object that contains an array of objects with the results of evaluating the XPath
+   * expressions as key-value pairs, and optionally, a pagination URL.
    */
   subQuery(
     expression: Expression = {
@@ -140,11 +145,13 @@ export default class XPathParser {
   }
 
   /**
-   * This method try to match given expression every second upto
-   * max seconds provided.
-   * @param expression
-   * @param maxSeconds
-   * @return Promise
+   * This method tries to match a given expression every second up to
+   * a maximum number of seconds.
+   * @param expression - The XPath expression to match.
+   * @param maxSeconds - The maximum number of seconds to keep trying.
+   * @return A Promise that resolves with an object containing a boolean indicating whether
+   * the expression was found, and a message with the first match if it was found, or rejects
+   * with a TimeoutError if the expression was not found within the maximum number of seconds.
    */
   waitXPath(expression: string, maxSeconds = 10): Promise<{ found: boolean; message: string }> {
     // init the timer
