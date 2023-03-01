@@ -31,8 +31,8 @@
   "type": "module",
   "module": "dist/xpath-parser.js",
   "scripts": {
-    "lint": "eslint --ext .ts src",
-    "lint:fix": "eslint --ext .ts --fix src",
+    "lint": "eslint src/**/*.{ts,tsx}",
+    "lint:fix": "eslint --fix src/**/*.{ts,tsx}",
     "test": "vitest",
     "build": "vite build && node package.js && cp README.md ./dist"
   },
