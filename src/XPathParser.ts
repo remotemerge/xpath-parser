@@ -14,13 +14,7 @@ export default class XPathParser {
    * @param content - A DOM Node or an HTML string.
    */
   constructor(content: Node | string) {
-    if (content instanceof Node) {
-      this.domContent = content;
-    } else {
-      // init DOM parser
-      const parser = new DOMParser();
-      this.domContent = parser.parseFromString(content, 'text/html');
-    }
+    this.domContent = content instanceof Node ? content : new DOMParser().parseFromString(content, 'text/html');
   }
 
   /**
@@ -30,13 +24,10 @@ export default class XPathParser {
    * @return The result of evaluating the XPath expression.
    */
   evaluate(expression: string): XPathResult {
-    return document.evaluate(
-      expression,
-      this.domContent,
-      null,
-      this.options.queryFirst ? XPathResult.FIRST_ORDERED_NODE_TYPE : XPathResult.ORDERED_NODE_ITERATOR_TYPE,
-      null,
-    );
+    const resultType = this.options.queryFirst
+      ? XPathResult.FIRST_ORDERED_NODE_TYPE
+      : XPathResult.ORDERED_NODE_ITERATOR_TYPE;
+    return document.evaluate(expression, this.domContent, null, resultType, null);
   }
 
   /**
@@ -45,15 +36,7 @@ export default class XPathParser {
    * @return The text value of the DOM Node.
    */
   getValue(node: Node | null): string {
-    let formattedText = '';
-    if (node instanceof Attr) {
-      // node is attribute
-      formattedText = node.value || '';
-    } else if (node instanceof HTMLElement) {
-      // node is html element
-      formattedText = node.textContent || '';
-    }
-    return formattedText.trim();
+    return (node instanceof Attr ? node.value : node instanceof HTMLElement ? node.textContent : '')?.trim() || '';
   }
 
   /**
@@ -64,8 +47,7 @@ export default class XPathParser {
   queryFirst(expression: string): string {
     // override options
     this.options.queryFirst = true;
-    const evaluate = this.evaluate(expression);
-    return this.getValue(evaluate.singleNodeValue);
+    return this.getValue(this.evaluate(expression).singleNodeValue);
   }
 
   /**
@@ -73,13 +55,12 @@ export default class XPathParser {
    * @param expression - The XPath expression to evaluate.
    * @return An array of all the matching results of evaluating the XPath expression.
    */
-  queryList(expression: string): Array<string> {
-    const response = [];
+  queryList(expression: string): string[] {
+    const response: string[] = [];
     const evaluate = this.evaluate(expression);
     let node;
     while ((node = evaluate.iterateNext())) {
-      const value = this.getValue(node);
-      response.push(value);
+      response.push(this.getValue(node));
     }
     return response;
   }
@@ -90,13 +71,14 @@ export default class XPathParser {
    * @param expressions - An object with XPath expressions as values.
    * @return An object with the results of evaluating the XPath expressions as key-value pairs.
    */
-  multiQuery(expressions: { [key: string]: string }): { [key: string]: string } {
+  multiQuery(expressions: Expression['queries']): Record<string, string> {
     // response format
-    const response: { [key: string]: string } = {};
+    const response: Record<string, string> = {};
 
     Object.keys(expressions).forEach((key) => {
       response[key] = this.queryFirst(expressions[key]);
     });
+
     return response;
   }
 
@@ -109,38 +91,30 @@ export default class XPathParser {
    * @return An object that contains an array of objects with the results of evaluating the XPath
    * expressions as key-value pairs, and optionally, a pagination URL.
    */
-  subQuery(
-    expression: Expression = {
-      root: '/html',
-      pagination: '',
-      queries: {},
-    },
-  ): { paginationUrl?: string; results: Array<{ [key: string]: string }> } {
+  subQuery(expression: Expression): { paginationUrl?: string; results: Record<string, string>[] } {
     // extract root DOM
     const rootDom = this.evaluate(expression.root);
+    const results: Record<string, string>[] = [];
+    let nodeDom: Node | null = null;
 
-    const results = [];
-    let nodeDom = null;
     while ((nodeDom = rootDom.iterateNext())) {
       // reset dom root
       this.domContent = nodeDom;
-      const record: { [key: string]: string } = {};
+      const record: Record<string, string> = {};
 
-      Object.keys(expression.queries).forEach((key) => {
-        record[key] = this.queryFirst(expression.queries[key]);
+      Object.entries(expression.queries).forEach(([key, value]) => {
+        record[key] = this.queryFirst(value);
       });
+
       results.push(record);
     }
 
     // init response
-    const response = { results: results };
-
-    // evaluate pagination
+    const response: { paginationUrl?: string; results: Record<string, string>[] } = { results };
     if (expression.pagination) {
-      Object.assign(response, {
-        paginationUrl: this.queryFirst(expression.pagination),
-      });
+      response.paginationUrl = this.queryFirst(expression.pagination);
     }
+
     return response;
   }
 
@@ -153,7 +127,7 @@ export default class XPathParser {
    * the expression was found, and a message with the first match if it was found, or rejects
    * with a TimeoutError if the expression was not found within the maximum number of seconds.
    */
-  waitXPath(expression: string, maxSeconds = 10): Promise<{ found: boolean; message: string }> {
+  async waitXPath(expression: string, maxSeconds = 10): Promise<{ found: boolean; message: string }> {
     // init the timer
     let timer = 1;
 
@@ -165,14 +139,15 @@ export default class XPathParser {
         if (firstMatch) {
           // clear interval
           clearInterval(refreshId);
-          return resolve({ found: true, message: firstMatch });
+          resolve({ found: true, message: firstMatch });
         }
+
         // check if timeout
         if (timer++ >= maxSeconds) {
           clearInterval(refreshId);
           const error = new Error(`Timeout! Max ${maxSeconds} seconds are allowed.`);
           error.name = 'TimeoutError';
-          return reject(error);
+          reject(error);
         }
       }, 1000);
     });
