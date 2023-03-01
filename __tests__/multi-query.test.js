@@ -1,3 +1,6 @@
+import { test } from 'vitest';
+import assert from 'assert';
+
 import XpathParser from '../dist/xpath-parser.js';
 import htmlContent from './data/product.html';
 
@@ -10,23 +13,24 @@ const product = parser.multiQuery({
 });
 
 test('must return an object', () => {
-  expect(typeof product).toBe('object');
+  assert.strictEqual(typeof product, 'object');
 });
 
 test('must have four elements', () => {
-  expect(Object.keys(product).length).toBe(4);
+  assert.strictEqual(Object.keys(product).length, 4);
 });
 
 test('match the product title', () => {
-  expect(product.title).toBe(
+  assert.strictEqual(
+    product.title,
     'LETSCOM Fitness Tracker HR, Activity Tracker Watch with Heart Rate Monitor, Waterproof Smart Fitness Band with Step Counter, Calorie Counter, Pedometer Watch for Kids Women and Men',
   );
 });
 
 test('product price contains dollar sign', () => {
-  expect(product.price).toMatch('$');
+  assert(product.price.includes('$'));
 });
 
 test('product rating contains numbers', () => {
-  expect(product.rating).toMatch(/\d+/);
+  assert(product.rating.match(/\d+/));
 });
