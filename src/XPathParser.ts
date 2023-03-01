@@ -1,11 +1,4 @@
-// interface for XPath expression
-interface Expression {
-  root: string;
-  pagination?: string;
-  queries: {
-    [key: string]: string;
-  };
-}
+import { Expression } from './typings/parser';
 
 export default class XPathParser {
   // init options
