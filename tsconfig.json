@@ -1,15 +1,21 @@
 {
   "compilerOptions": {
+    "declaration": true,
+    "esModuleInterop": true,
     "module": "ESNext",
     "moduleResolution": "node",
     "noEmit": true,
-    "outDir": "dist",
-    "removeComments": true,
+    "skipLibCheck": true,
     "strict": true,
-    "target": "ESNext"
+    "strictFunctionTypes": true,
+    "strictNullChecks": true,
+    "target": "ESNext",
+    "typeRoots": [
+      "src/typings",
+      "node_modules/@types"
+    ]
   },
   "include": [
-    "src/types/*.ts",
-    "src/*.ts"
+    "src/**/*.ts"
   ]
 }
