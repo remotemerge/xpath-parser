@@ -1,10 +1,11 @@
 {
   "compilerOptions": {
     "declaration": true,
-    "esModuleInterop": true,
+    "emitDeclarationOnly": true,
+    "esModuleInterop": false,
     "module": "ESNext",
     "moduleResolution": "node",
-    "noEmit": true,
+    "outDir": "dist",
     "skipLibCheck": true,
     "strict": true,
     "strictFunctionTypes": true,
