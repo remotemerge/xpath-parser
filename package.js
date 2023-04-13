@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-import { mkdir, writeFile } from 'fs/promises';
+import { copyFile, mkdir, writeFile } from 'fs/promises';
 import { join, resolve } from 'path';
 
 // use vars from package config
@@ -17,10 +17,15 @@ const configs = {
   repository: pc.repository,
   bugs: pc.bugs,
   type: pc.type,
-  module: pc.module,
+  types: pc.types.replace(/^dist\//, ''),
+  main: pc.main.replace(/^dist\//, ''),
+  module: pc.module.replace(/^dist\//, ''),
 };
 
 // generate package.json in dist
 const publicPath = join(resolve(), 'dist');
 await mkdir(publicPath, { recursive: true });
 await writeFile(join(publicPath, 'package.json'), JSON.stringify(configs), 'utf-8');
+
+// copy README.md to dist
+await copyFile('README.md', `${publicPath}/README.md`);
