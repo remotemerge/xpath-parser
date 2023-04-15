@@ -1,22 +1,17 @@
 {
   "compilerOptions": {
-    "declaration": true,
-    "emitDeclarationOnly": true,
-    "esModuleInterop": false,
     "module": "ESNext",
     "moduleResolution": "node",
-    "outDir": "dist",
     "skipLibCheck": true,
     "strict": true,
-    "strictFunctionTypes": true,
-    "strictNullChecks": true,
     "target": "ESNext",
     "typeRoots": [
-      "src/typings",
-      "node_modules/@types"
+      "node_modules/@types",
+      "src/types"
     ]
   },
   "include": [
-    "src/**/*.ts"
+    "src/types/parser.d.ts",
+    "src/index.ts"
   ]
 }
