@@ -9,17 +9,15 @@ on:
 
 jobs:
   publish:
-    # OS to run
+    # The type of runner that the job will run on
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
+      - name: "Checkout repository"
+        uses: actions/checkout@v3
 
       - name: "Install dependencies and build"
         run: npm install && npm run build
-
-      - name: "Copy readme doc"
-        run: \cp README.md ./dist/README.md
 
       # publish to NPM
       - uses: actions/setup-node@v3
