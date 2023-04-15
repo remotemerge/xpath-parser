@@ -1,5 +1,10 @@
-import { Expression } from './typings/parser';
+import type { Expression } from './types/parser';
 
+/**
+ * This class is used to parse HTML content using XPath expressions.
+ *
+ * @class XPathParser
+ */
 export default class XPathParser {
   // init options
   private options = {
@@ -11,17 +16,18 @@ export default class XPathParser {
 
   /**
    * Initialize Node from DOM Node or HTML string.
-   * @param content - A DOM Node or an HTML string.
+   *
+   * @param {Node|string} content - A DOM Node or an HTML string.
    */
   constructor(content: Node | string) {
     this.domContent = content instanceof Node ? content : new DOMParser().parseFromString(content, 'text/html');
   }
 
   /**
-   * Evaluate an XPath expression in the specified Node
-   * and return the result.
-   * @param expression - The XPath expression to evaluate.
-   * @return The result of evaluating the XPath expression.
+   * Evaluate an XPath expression in the specified Node and return the result.
+   *
+   * @param {string} expression - The XPath expression to evaluate.
+   * @return {XPathResult} The result of evaluating the XPath expression.
    */
   evaluate(expression: string): XPathResult {
     const resultType = this.options.queryFirst
@@ -32,8 +38,9 @@ export default class XPathParser {
 
   /**
    * Extract the text value from a given DOM Node.
-   * @param node - The DOM Node to extract the text value from.
-   * @return The text value of the DOM Node.
+   *
+   * @param {Node|null} node - The DOM Node to extract the text value from.
+   * @return {string} The text value of the DOM Node.
    */
   getValue(node: Node | null): string {
     return (node instanceof Attr ? node.value : node instanceof HTMLElement ? node.textContent : '')?.trim() || '';
@@ -41,8 +48,9 @@ export default class XPathParser {
 
   /**
    * Evaluate the expression and return the first matching result.
-   * @param expression - The XPath expression to evaluate.
-   * @return The first matching result of evaluating the XPath expression.
+   *
+   * @param {string} expression - The XPath expression to evaluate.
+   * @return {string} The first matching result of evaluating the XPath expression.
    */
   queryFirst(expression: string): string {
     // override options
@@ -52,8 +60,9 @@ export default class XPathParser {
 
   /**
    * Evaluate the expression and return all matching results.
-   * @param expression - The XPath expression to evaluate.
-   * @return An array of all the matching results of evaluating the XPath expression.
+   *
+   * @param {string} expression - The XPath expression to evaluate.
+   * @return {string[]} An array of all the matching results of evaluating the XPath expression.
    */
   queryList(expression: string): string[] {
     const response: string[] = [];
@@ -66,10 +75,10 @@ export default class XPathParser {
   }
 
   /**
-   * Evaluate the expressions and return the matching result
-   * in the associative format.
-   * @param expressions - An object with XPath expressions as values.
-   * @return An object with the results of evaluating the XPath expressions as key-value pairs.
+   * Evaluate the expressions and return the matching result in the associative format.
+   *
+   * @param {Expression[]} expressions - An object with XPath expressions as values.
+   * @return {Record<string, string>} An object with the results of evaluating the XPath expressions as key-value pairs.
    */
   multiQuery(expressions: Expression['queries']): Record<string, string> {
     // response format
@@ -83,13 +92,10 @@ export default class XPathParser {
   }
 
   /**
-   * This method selects all matching parent nodes and
-   * runs sub queries on child nodes and generate an
-   * associative array result.
-   * @param expression - An object that specifies the XPath expressions to use for the root node,
-   * child nodes, and pagination.
-   * @return An object that contains an array of objects with the results of evaluating the XPath
-   * expressions as key-value pairs, and optionally, a pagination URL.
+   * This method selects all matching parent nodes and runs sub queries on child nodes and generate an associative array result.
+   *
+   * @param {Expression} expression - An object that specifies the XPath expressions to use for the root node, child nodes, and pagination.
+   * @return {Record<string, string>[]} An array of objects with the results of evaluating the XPath expressions as key-value pairs, and optionally, a pagination URL.
    */
   subQuery(expression: Expression): { paginationUrl?: string; results: Record<string, string>[] } {
     // extract root DOM
@@ -119,13 +125,11 @@ export default class XPathParser {
   }
 
   /**
-   * This method tries to match a given expression every second up to
-   * a maximum number of seconds.
-   * @param expression - The XPath expression to match.
-   * @param maxSeconds - The maximum number of seconds to keep trying.
-   * @return A Promise that resolves with an object containing a boolean indicating whether
-   * the expression was found, and a message with the first match if it was found, or rejects
-   * with a TimeoutError if the expression was not found within the maximum number of seconds.
+   * This method tries to match a given expression every second up to a maximum number of seconds.
+   *
+   * @param {string} expression - The XPath expression to match.
+   * @param {number} maxSeconds - The maximum number of seconds to keep trying. Default is 10.
+   * @return {Promise<{ found: boolean; message: string }>} A Promise that resolves with an object containing a boolean indicating whether the expression was found, and a message with the first match if it was found, or rejects with a TimeoutError if the expression was not found within the maximum number of seconds.
    */
   async waitXPath(expression: string, maxSeconds = 10): Promise<{ found: boolean; message: string }> {
     // init the timer
