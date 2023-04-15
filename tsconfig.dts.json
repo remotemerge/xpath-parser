@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "declaration": true,
+    "emitDeclarationOnly": true,
+    "module": "System",
+    "moduleResolution": "node",
+    "outDir": "dist",
+    "target": "ESNext"
+  },
+  "include": [
+    "src/**/*.ts"
+  ]
+}
