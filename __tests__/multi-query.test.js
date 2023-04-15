@@ -1,7 +1,10 @@
-import XpathParser from '../dist/xpath-parser.js';
+import { test } from 'vitest';
+import assert from 'assert';
+
+import Parser from '../dist/index.es.js';
 import htmlContent from './data/product.html';
 
-const parser = new XpathParser(htmlContent);
+const parser = new Parser(htmlContent);
 const product = parser.multiQuery({
   title: '//div[@id="ppd"]//span[@id="productTitle"]',
   seller: '//div[@id="ppd"]//a[@id="bylineInfo"]',
@@ -10,23 +13,24 @@ const product = parser.multiQuery({
 });
 
 test('must return an object', () => {
-  expect(typeof product).toBe('object');
+  assert.strictEqual(typeof product, 'object');
 });
 
 test('must have four elements', () => {
-  expect(Object.keys(product).length).toBe(4);
+  assert.strictEqual(Object.keys(product).length, 4);
 });
 
 test('match the product title', () => {
-  expect(product.title).toBe(
+  assert.strictEqual(
+    product.title,
     'LETSCOM Fitness Tracker HR, Activity Tracker Watch with Heart Rate Monitor, Waterproof Smart Fitness Band with Step Counter, Calorie Counter, Pedometer Watch for Kids Women and Men',
   );
 });
 
 test('product price contains dollar sign', () => {
-  expect(product.price).toMatch('$');
+  assert(product.price.includes('$'));
 });
 
 test('product rating contains numbers', () => {
-  expect(product.rating).toMatch(/\d+/);
+  assert(product.rating.match(/\d+/));
 });

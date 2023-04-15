@@ -2,14 +2,16 @@
   "compilerOptions": {
     "module": "ESNext",
     "moduleResolution": "node",
-    "noEmit": true,
-    "outDir": "dist",
-    "removeComments": true,
+    "skipLibCheck": true,
     "strict": true,
-    "target": "ESNext"
+    "target": "ESNext",
+    "typeRoots": [
+      "node_modules/@types",
+      "src/types"
+    ]
   },
   "include": [
-    "src/types/*.ts",
-    "src/*.ts"
+    "src/types/parser.ts",
+    "src/index.ts"
   ]
 }

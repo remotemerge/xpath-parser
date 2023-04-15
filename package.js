@@ -1,16 +1,13 @@
 #!/usr/bin/env node
 
-import fs from 'fs';
-import path from 'path';
+import { copyFile, mkdir, writeFile } from 'fs/promises';
+import { join, resolve } from 'path';
 
 // use vars from package config
 import pc from './package.json' assert { type: 'json' };
 
-// current directory
-const __dirname = path.resolve();
-
 // format configs
-const packageConfig = {
+const configs = {
   name: pc.name,
   version: pc.version,
   description: pc.description,
@@ -20,10 +17,15 @@ const packageConfig = {
   repository: pc.repository,
   bugs: pc.bugs,
   type: pc.type,
-  module: pc.module,
+  types: pc.types.replace(/^dist\//, ''),
+  main: pc.main.replace(/^dist\//, ''),
+  module: pc.module.replace(/^dist\//, ''),
 };
 
-// generate chrome manifest
-const publicPath = `${__dirname}/dist`;
-fs.existsSync(publicPath) || fs.mkdirSync(publicPath);
-fs.createWriteStream(`${publicPath}/package.json`, 'utf-8').write(JSON.stringify(packageConfig));
+// generate package.json in dist
+const publicPath = join(resolve(), 'dist');
+await mkdir(publicPath, { recursive: true });
+await writeFile(join(publicPath, 'package.json'), JSON.stringify(configs), 'utf-8');
+
+// copy README.md to dist
+await copyFile('README.md', `${publicPath}/README.md`);

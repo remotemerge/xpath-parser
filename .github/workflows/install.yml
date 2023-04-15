@@ -10,23 +10,23 @@ on:
 
 jobs:
   install:
-    # OS to run
-    runs-on: ubuntu-latest
+    # The matrix of OS and Node.js versions
+    strategy:
+      matrix:
+        os: [ ubuntu-latest, macos-latest, windows-latest ]
+        node: [ 14, 16, 18, 'current' ]
+
+    # The type of runner that the job will run on
+    runs-on: ${{ matrix.os }}
 
     steps:
-      # checkout the code
-      - uses: actions/checkout@v3
-
-      # Use nodejs LTS version
-      - uses: actions/setup-node@v3
+      - name: "Use specified Node.js version"
+        uses: actions/setup-node@v3
         with:
-          node-version: 'lts/*'
+          node-version: ${{ matrix.node }}
 
       - name: "Print version"
         run: node -v && npm -v
-
-      - name: "Clean the directory"
-        run: rm -rf *
 
       - name: "Init package config"
         run: npm init -y

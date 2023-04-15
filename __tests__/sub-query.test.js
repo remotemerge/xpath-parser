@@ -1,7 +1,10 @@
-import XpathParser from '../dist/xpath-parser.js';
+import { test } from 'vitest';
+import assert from 'assert';
+
+import Parser from '../dist/index.es.js';
 import htmlContent from './data/products.html';
 
-const parser = new XpathParser(htmlContent);
+const parser = new Parser(htmlContent);
 const products = parser.subQuery({
   root: '//span[contains(@class, "zg-item")]',
   pagination: '//ul/li/a[contains(text(), "Next")]/@href',
@@ -14,44 +17,41 @@ const products = parser.subQuery({
 });
 
 test('must return an object', () => {
-  expect(typeof products).toBe('object');
+  assert.strictEqual(typeof products, 'object');
 });
 
-test('must have one or two elements', () => {
-  expect(Object.keys(products).length).toBeGreaterThanOrEqual(1);
-  expect(Object.keys(products).length).toBeLessThanOrEqual(2);
+test('must have resuts array and pagination url', () => {
+  assert(Array.isArray(products.results));
+  assert.strictEqual(typeof products.paginationUrl, 'string');
 });
 
 test('pagination url is string', () => {
   if (products.paginationUrl) {
-    expect(products).toMatchObject({
-      paginationUrl: expect.any(String),
-    });
+    assert.strictEqual(typeof products.paginationUrl, 'string');
   }
 });
 
 test('must have results array', () => {
-  expect(products).toMatchObject({
-    results: expect.any(Array),
-  });
+  assert(Array.isArray(products.results));
 });
 
 test('each product must be an object', () => {
-  expect(typeof products.results[0]).toBe('object');
+  assert.strictEqual(typeof products.results[0], 'object');
 });
 
 const firstProduct = products.results[0];
 
 test('match the product title', () => {
-  expect(firstProduct.title).toBe(
+  assert.strictEqual(
+    firstProduct.title,
     'Cell Phone Stand,Angle Height Adjustable Stable LISEN Cell Phone Stand For Desk,Sturdy Aluminum Metal Phone Holder,Compatible with Mobile Phone/iPad/Kindle/Tablet,4-10inch',
   );
 });
 
 test('product price contains dollar sign', () => {
-  expect(firstProduct.price).toMatch('$');
+  assert(firstProduct.price.includes('$'));
 });
 
 test('product image url starts with https', () => {
-  expect(firstProduct.image).toMatch(/^https:\/\//);
+  assert(firstProduct.image.startsWith('https://'));
 });
