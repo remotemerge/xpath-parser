@@ -6,7 +6,6 @@ on: [pull_request]
 
 jobs:
   test:
-  install:
     # The type of runner that the job will run on
     runs-on: ${{ matrix.os }}
 
