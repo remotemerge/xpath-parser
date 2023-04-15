@@ -1,10 +1,10 @@
 import { test } from 'vitest';
 import assert from 'assert';
 
-import XpathParser from '../dist/xpath-parser.js';
+import Parser from '../dist/index.es.js';
 import htmlContent from './data/products.html';
 
-const parser = new XpathParser(htmlContent);
+const parser = new Parser(htmlContent);
 const products = parser.subQuery({
   root: '//span[contains(@class, "zg-item")]',
   pagination: '//ul/li/a[contains(text(), "Next")]/@href',

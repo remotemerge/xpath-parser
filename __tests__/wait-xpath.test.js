@@ -1,9 +1,10 @@
 import { test } from 'vitest';
 import assert from 'assert';
-import XpathParser from '../dist/xpath-parser.js';
+
+import Parser from '../dist/index.es.js';
 import htmlContent from './data/products.html';
 
-const parser = new XpathParser(htmlContent);
+const parser = new Parser(htmlContent);
 
 test('must have an object with target', async () => {
   const response = await parser.waitXPath('//span[contains(@class, "a-color-price")]/span');
