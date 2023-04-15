@@ -11,7 +11,7 @@
     ]
   },
   "include": [
-    "src/types/parser.d.ts",
+    "src/types/parser.ts",
     "src/index.ts"
   ]
 }
