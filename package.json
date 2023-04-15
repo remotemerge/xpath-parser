@@ -39,8 +39,8 @@
     "lint": "eslint --ext .ts src",
     "lint:fix": "eslint --ext .ts --fix src",
     "test": "vitest",
-    "build": "vite build && node --no-warnings package.js",
-    "build:types": "tsc --emitDeclarationOnly"
+    "build": "vite build && tsc --project tsconfig.dts.json && node --no-warnings package.js",
+    "build:types": "tsc --project tsconfig.dts.json"
   },
   "devDependencies": {
     "@types/node": "^18.15.11",
@@ -50,7 +50,6 @@
     "jsdom": "^21.1.1",
     "typescript": "^5.0.4",
     "vite": "^4.2.1",
-    "vite-plugin-dts": "^2.2.0",
     "vitest": "^0.30.1"
   },
   "optionalDependencies": {
