@@ -10,13 +10,14 @@ on:
 
 jobs:
   install:
+    # The type of runner that the job will run on
+    runs-on: ${{ matrix.os }}
+
     # The matrix of OS and Node.js versions
     strategy:
       matrix:
         os: [ ubuntu-latest, macos-latest, windows-latest ]
         node: [ 14, 16, 18, 'current' ]
-    # The type of runner that the job will run on
-    runs-on: ${{ matrix.os }}
 
     steps:
 
