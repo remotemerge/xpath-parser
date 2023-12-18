@@ -25,11 +25,15 @@
     "node": ">=20.10"
   },
   "prettier": {
-    "bracketSameLine": true,
+    "arrowParens": "always",
+    "bracketSpacing": true,
+    "endOfLine": "lf",
     "printWidth": 120,
+    "semi": true,
     "singleQuote": true,
     "tabWidth": 2,
-    "trailingComma": "all"
+    "trailingComma": "all",
+    "useTabs": false
   },
   "type": "module",
   "types": "dist/index.d.ts",
@@ -47,6 +51,7 @@
     "@typescript-eslint/eslint-plugin": "^6.14.0",
     "@typescript-eslint/parser": "^6.14.0",
     "eslint": "^8.56.0",
+    "eslint-plugin-prettier": "^5.0.1",
     "jsdom": "^23.0.1",
     "typescript": "^5.3.3",
     "vite": "^5.0.10",
