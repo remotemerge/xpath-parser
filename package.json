@@ -42,7 +42,7 @@
   "scripts": {
     "lint": "eslint --ext .ts src",
     "lint:fix": "eslint --ext .ts --fix src",
-    "test": "vitest",
+    "test": "vitest run",
     "build": "vite build && tsc --project tsconfig.dts.json && node --no-warnings package.js",
     "build:types": "tsc --project tsconfig.dts.json"
   },
