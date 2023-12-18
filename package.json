@@ -22,7 +22,7 @@
     "url": "https://github.com/remotemerge/xpath-parser/issues"
   },
   "engines": {
-    "node": ">=18.16"
+    "node": ">=20.10"
   },
   "prettier": {
     "bracketSameLine": true,
