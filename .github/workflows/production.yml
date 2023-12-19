@@ -26,16 +26,24 @@ jobs:
       - name: "Install dependencies and build"
         run: npm ci && npm run build
 
-      - name: "Publish to NPM"
-        run: |
-          npm config set registry https://registry.npmjs.org
-          npm publish ./dist --access public
+      - name: "Set registry to NPM Packages"
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: "Publish to NPM Packages"
+        run: npm publish ./dist --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
 
-      - name: "Publish to GitHub"
-        run: |
-          npm config set registry https://npm.pkg.github.com
-          npm publish ./dist
+      - name: "Set registry to GitHub Packages"
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          registry-url: 'https://npm.pkg.github.com'
+
+      - name: "Publish to GitHub Packages"
+        run: npm publish ./dist
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GH_ACCESS_TOKEN }}
