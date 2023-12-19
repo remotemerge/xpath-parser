@@ -13,26 +13,29 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: "Checkout repository"
-        uses: actions/checkout@v3
+      - name: "Checkout the repository"
+        uses: actions/checkout@v4
+
+      - name: "Use Node.js 20.x version"
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+          cache-dependency-path: package-lock.json
 
       - name: "Install dependencies and build"
-        run: npm install && npm run build
+        run: npm ci && npm run build
 
-      # publish to NPM
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 'lts/*'
-          registry-url: 'https://registry.npmjs.org'
-      - run: npm publish ./dist --access public
+      - name: "Publish to NPM"
+        run: |
+          npm config set registry https://registry.npmjs.org
+          npm publish ./dist --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
 
-      # publish to GitHub
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 'lts/*'
-          registry-url: 'https://npm.pkg.github.com'
-      - run: npm publish ./dist
+      - name: "Publish to GitHub"
+        run: |
+          npm config set registry https://npm.pkg.github.com
+          npm publish ./dist
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GH_ACCESS_TOKEN }}
