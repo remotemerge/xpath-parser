@@ -16,15 +16,17 @@ jobs:
 
     steps:
       - name: "Checkout repository"
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
-      # Use nodejs LTS version
-      - uses: actions/setup-node@v3
+      # Use Node.js LTS version
+      - uses: actions/setup-node@v4
         with:
-          node-version: 'lts/*'
+          node-version: 20
+          cache: 'npm'
+          cache-dependency-path: package-lock.json
 
       - name: "Install dependencies and build"
-        run: npm install && npm run build
+        run: npm ci && npm run build
 
       - name: "Run Tests"
         run: npm run test

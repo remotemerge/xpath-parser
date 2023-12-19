@@ -1,6 +1,6 @@
 {
   "name": "@remotemerge/xpath-parser",
-  "version": "1.1.1",
+  "version": "1.2.0",
   "description": "Modern JavaScript utility to parse XPath expressions!",
   "license": "MIT",
   "keywords": [
@@ -22,14 +22,18 @@
     "url": "https://github.com/remotemerge/xpath-parser/issues"
   },
   "engines": {
-    "node": ">=18.16"
+    "node": ">=20.10"
   },
   "prettier": {
-    "bracketSameLine": true,
+    "arrowParens": "always",
+    "bracketSpacing": true,
+    "endOfLine": "lf",
     "printWidth": 120,
+    "semi": true,
     "singleQuote": true,
     "tabWidth": 2,
-    "trailingComma": "all"
+    "trailingComma": "all",
+    "useTabs": false
   },
   "type": "module",
   "types": "dist/index.d.ts",
@@ -38,21 +42,22 @@
   "scripts": {
     "lint": "eslint --ext .ts src",
     "lint:fix": "eslint --ext .ts --fix src",
-    "test": "vitest",
+    "test": "vitest run",
     "build": "vite build && tsc --project tsconfig.dts.json && node --no-warnings package.js",
     "build:types": "tsc --project tsconfig.dts.json"
   },
   "devDependencies": {
-    "@types/node": "^18.15.11",
-    "@typescript-eslint/eslint-plugin": "^5.58.0",
-    "@typescript-eslint/parser": "^5.58.0",
-    "eslint": "^8.38.0",
-    "jsdom": "^21.1.1",
-    "typescript": "^5.0.4",
-    "vite": "^4.2.1",
-    "vitest": "^0.30.1"
+    "@types/node": "^20.10.5",
+    "@typescript-eslint/eslint-plugin": "^6.14.0",
+    "@typescript-eslint/parser": "^6.14.0",
+    "eslint": "^8.56.0",
+    "eslint-plugin-prettier": "^5.0.1",
+    "jsdom": "^23.0.1",
+    "typescript": "^5.3.3",
+    "vite": "^5.0.10",
+    "vitest": "^1.0.4"
   },
   "optionalDependencies": {
-    "prettier": "^2.8.7"
+    "prettier": "^3.1.1"
   }
 }
