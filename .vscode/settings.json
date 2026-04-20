@@ -9,10 +9,7 @@
   "editor.insertSpaces": true,
   "editor.lineNumbers": "on",
   "editor.matchBrackets": "always",
-  "editor.rulers": [
-    80,
-    120
-  ],
+  "editor.rulers": [80, 120],
   "extensions.autoCheckUpdates": true,
   "extensions.autoInstallExtensions": [
     "dbaeumer.vscode-eslint",

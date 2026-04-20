@@ -4,35 +4,94 @@ name: Install
 # Controls when the workflow will run
 on:
   workflow_run:
-    workflows: [ "Production" ]
+    workflows: [ "Publish" ]
     types:
       - completed
 
 jobs:
-  install:
-    # The matrix of OS and Node.js versions
+  install-npm:
+    # Run on multiple operating systems and Node.js versions
+    runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ ubuntu-latest, macos-latest, windows-latest ]
-        node: [ 14, 16, 18, 20, 'current' ]
-
-    # The type of runner that the job will run on
-    runs-on: ${{ matrix.os }}
+        os: [ ubuntu-latest, windows-latest, macos-latest ]
+        node-version: [20, 22, 24]
+      fail-fast: false
 
     steps:
-      - name: "Use specified Node.js version"
-        uses: actions/setup-node@v4
+      - name: "Set up Node.js"
+        uses: actions/setup-node@v6
         with:
-          node-version: ${{ matrix.node }}
+          node-version: ${{ matrix.node-version }}
 
-      - name: "Print version"
-        run: node -v && npm -v
-
-      - name: "Init package config"
-        run: npm init -y
-
-      - name: "Install XPathParser package"
-        run: npm i @remotemerge/xpath-parser
+      - name: "Install XPath Parser"
+        run: npm init -y && npm install @remotemerge/xpath-parser
 
       - name: "List installed packages"
         run: npm list --depth=0
+
+  install-yarn:
+    # Run on multiple operating systems and Node.js versions
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ ubuntu-latest, macos-latest ]
+        node-version: [20, 22, 24]
+      fail-fast: false
+
+    steps:
+      - name: "Set up Node.js"
+        uses: actions/setup-node@v6
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: "Install XPath Parser"
+        run: npm init -y && yarn add @remotemerge/xpath-parser
+
+      - name: "List installed packages"
+        run: yarn list --depth=0
+
+  install-pnpm:
+    # Run on multiple operating systems and Node.js versions
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ ubuntu-latest, windows-latest, macos-latest ]
+        node-version: [20, 22, 24]
+      fail-fast: false
+
+    steps:
+      - name: "Set up Node.js"
+        uses: actions/setup-node@v6
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: "Install pnpm"
+        uses: pnpm/action-setup@v4
+
+      - name: "Install XPath Parser"
+        run: pnpm init && pnpm add @remotemerge/xpath-parser
+
+      - name: "List installed packages"
+        run: pnpm list --depth=0
+
+  install-bun:
+    # Run on multiple operating systems
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ ubuntu-latest, windows-latest, macos-latest ]
+      fail-fast: false
+
+    steps:
+      - name: "Set up Bun"
+        uses: oven-sh/setup-bun@v2
+
+      - name: "Generate package.json file"
+        run: bun init -y
+
+      - name: "Install XPath Parser"
+        run: bun add @remotemerge/xpath-parser
+
+      - name: "List installed packages"
+        run: bun pm ls

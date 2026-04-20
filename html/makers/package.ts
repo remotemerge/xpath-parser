@@ -27,4 +27,4 @@ await mkdir(publicPath, { recursive: true });
 await writeFile(join(publicPath, 'package.json'), JSON.stringify(configs), 'utf-8');
 
 // copy README.md to dist
-await copyFile('README.md', `${publicPath}/README.md`);
+await copyFile('../README.md', `${publicPath}/README.md`);

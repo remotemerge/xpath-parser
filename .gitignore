@@ -1,14 +1,14 @@
 ### Vendor directories
-/.yarn/
-/node_modules/
+/html/.yarn/
+/html/node_modules/
+/html/vendor/
 
 ### Build directories
-/build/
-/bundle/
-/dist/
-/output/
+/html/build/
+/html/bundle/
+/html/dist/
 
-### JetBrains template
+### JetBrains
 /.idea/*
 !/.idea/dictionaries/
 !/.idea/dictionaries/*.xml
@@ -16,9 +16,9 @@
 !/.idea/prettier.xml
 !/.idea/vcs.xml
 
-### VisualStudioCode template
+### Visual Studio Code
 /.vscode/*
-!/.vscode/settings.json
+!/.vscode/*.json
 
 ### Windows template
 *.lnk
@@ -51,4 +51,6 @@ ehthumbs_vista.db
 *.key
 *.log
 .env
+package-lock.json
+pnpm-lock.yaml
 yarn.lock

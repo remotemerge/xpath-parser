@@ -23,7 +23,7 @@ yarn add @remotemerge/xpath-parser
 Import the XPathParser class in your project.
 
 ```javascript
-import XPathParser from '@remotemerge/xpath-parser'
+import XPathParser from '@remotemerge/xpath-parser';
 ```
 
 ## Examples
@@ -64,7 +64,7 @@ console.log(results);
 Sample output:
 
 ```javascript
-['Cell Phone Stand,Angle Height Adjusta…', 'Selfie Ring Light with Tripod…', 'HOVAMP MFi Certified Nylon…', '...']
+['Cell Phone Stand,Angle Height Adjusta…', 'Selfie Ring Light with Tripod…', 'HOVAMP MFi Certified Nylon…', '...'];
 ```
 
 ### Scrape multiple elements
@@ -109,7 +109,7 @@ const result = parser.subQuery({
     url: 'a/@href',
     image: 'a/span/div/img/@src',
     price: './/span[contains(@class, "a-color-price")]',
-  }
+  },
 });
 console.log(result);
 ```
@@ -146,10 +146,12 @@ expression to match and the second parameter `maxSeconds` is the maximum time to
 .
 
 ```javascript
-parser.waitXPath('//span[contains(@class, "a-color-price")]/span')
+parser
+  .waitXPath('//span[contains(@class, "a-color-price")]/span')
   .then((response) => {
     // expression match and element exists
-  }).catch((error) => {
+  })
+  .catch((error) => {
     // match nothing and timeout
   });
 ```
@@ -164,5 +166,4 @@ All the XPath expressions above are tested on Amazon [product listing] and relat
 The icons are included from [flaticon] website.
 
 [product listing]: https://www.amazon.com/gp/new-releases/wireless
-
 [flaticon]: https://www.flaticon.com

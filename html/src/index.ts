@@ -108,7 +108,10 @@ export default class XPathParser {
    * @param {Expression} expression - An object that specifies the XPath expressions to use for the root node, child nodes, and pagination.
    * @return {Record<string, string>[]} An array of objects with the results of evaluating the XPath expressions as key-value pairs, and optionally, a pagination URL.
    */
-  subQuery(expression: Expression): { paginationUrl?: string; results: Record<string, string>[] } {
+  subQuery(expression: Expression): {
+    paginationUrl?: string;
+    results: Record<string, string>[];
+  } {
     // extract root DOM
     const rootDom = this.evaluate(expression.root);
     const results: Record<string, string>[] = [];
@@ -127,7 +130,10 @@ export default class XPathParser {
     }
 
     // init response
-    const response: { paginationUrl?: string; results: Record<string, string>[] } = { results };
+    const response: {
+      paginationUrl?: string;
+      results: Record<string, string>[];
+    } = { results };
     if (expression.pagination) {
       response.paginationUrl = this.queryFirst(expression.pagination);
     }
@@ -160,7 +166,7 @@ export default class XPathParser {
         // check if timeout
         if (timer++ >= maxSeconds) {
           clearInterval(refreshId);
-          const error = new Error(`Timeout! Max ${maxSeconds} seconds are allowed.`);
+          const error = new Error('Element not found');
           error.name = 'TimeoutError';
           reject(error);
         }

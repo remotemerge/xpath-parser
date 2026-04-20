@@ -1,0 +1,32 @@
+name: Test
+
+# Trigger the workflow on pull requests
+on: [ pull_request ]
+
+jobs:
+  test:
+    # Run on multiple operating systems
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ ubuntu-24.04, windows-latest, macos-latest ]
+      fail-fast: false
+
+    steps:
+      - name: "Checkout repository"
+        uses: actions/checkout@v6
+
+      - name: "Set up Bun"
+        uses: oven-sh/setup-bun@v2
+
+      - name: "Install dependencies"
+        working-directory: html
+        run: bun install
+
+      - name: "Build project"
+        working-directory: html
+        run: bun run build
+
+      - name: "Run Tests"
+        working-directory: html
+        run: bun run test
