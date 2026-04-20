@@ -25,29 +25,22 @@
   "engines": {
     "bun": ">=1.3.12"
   },
-  "prettier": {
-    "printWidth": 120,
-    "singleQuote": true
-  },
   "type": "module",
   "types": "dist/index.d.ts",
   "main": "dist/index.umd.js",
   "module": "dist/index.es.js",
   "scripts": {
-    "lint": "eslint --ext .ts src",
-    "lint:fix": "eslint --ext .ts --fix src",
+    "lint": "oxlint && oxfmt --check",
+    "lint:fix": "oxlint --fix && oxfmt",
     "test": "bun test",
     "build": "vite build && bun ./makers/package.ts"
   },
   "devDependencies": {
     "@types/jsdom": "^21.1.6",
-    "@typescript-eslint/eslint-plugin": "^7.6.0",
-    "@typescript-eslint/parser": "^7.6.0",
     "bun-types": "^1.3.13",
-    "eslint": "^8.57.0",
-    "eslint-plugin-prettier": "^5.1.3",
     "jsdom": "^24.0.0",
-    "prettier": "^3.2.5",
+    "oxfmt": "^0.45.0",
+    "oxlint": "^1.60.0",
     "typescript": "^5.4.4",
     "vite": "^5.2.8",
     "vite-plugin-dts": "^3.8.1"
