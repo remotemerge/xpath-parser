@@ -37,6 +37,8 @@
     "lint": "oxlint && oxfmt --check",
     "lint:fix": "oxlint --fix && oxfmt",
     "test": "bun test",
+    "dev": "vite --host 0.0.0.0 --port 3000",
+    "preview": "vite preview",
     "build": "vite build && bun ./makers/package.ts"
   },
   "devDependencies": {
