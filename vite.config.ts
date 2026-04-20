@@ -1,19 +1,27 @@
-// modules
-import { defineConfig } from 'vitest/config';
+import { defineConfig } from 'vite';
 import dts from 'vite-plugin-dts';
 
-// overwrite configs
 export default defineConfig({
-  plugins: [dts({ include: ['src/*.ts'] })],
+  plugins: [dts({ include: 'src/*.ts', outDir: 'dist' })],
   build: {
-    minify: false,
-    target: 'esnext',
+    minify: true,
     lib: {
-      entry: 'src/index.ts',
+      entry: './src/index.ts',
       name: 'XPathParser',
-      formats: ['cjs', 'es'],
-      fileName: (format) => `index.${format}.js`,
+      formats: ['es', 'iife', 'cjs'],
+      fileName: (format) => {
+        switch (format) {
+          case 'es':
+            return 'index.es.js';
+          case 'iife':
+            return 'index.browser.js';
+          case 'cjs':
+            return 'index.node.js';
+          default:
+            return `index.${format}.js`;
+        }
+      },
     },
-    sourcemap: true,
+    sourcemap: false,
   },
 });

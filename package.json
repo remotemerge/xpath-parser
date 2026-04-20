@@ -23,9 +23,16 @@
     "url": "git+https://github.com/remotemerge/xpath-parser.git"
   },
   "type": "module",
-  "main": "dist/index.umd.js",
+  "main": "dist/index.node.js",
   "module": "dist/index.es.js",
-  "types": "dist/index.d.ts",
+  "types": "dist/src/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.es.js",
+      "require": "./dist/index.node.js",
+      "types": "./dist/src/index.d.ts"
+    }
+  },
   "scripts": {
     "lint": "oxlint && oxfmt --check",
     "lint:fix": "oxlint --fix && oxfmt",
