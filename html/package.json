@@ -34,10 +34,10 @@
     }
   },
   "scripts": {
-    "lint": "../node_modules/.bin/oxlint && oxfmt --check",
-    "lint:fix": "../node_modules/.bin/oxlint --fix && oxfmt",
+    "lint": "oxlint && oxfmt --check",
+    "lint:fix": "oxlint --fix && oxfmt",
     "test": "bun test",
-    "build": "../node_modules/.bin/vite build && bun ./makers/package.ts"
+    "build": "vite build && bun ./makers/package.ts"
   },
   "devDependencies": {
     "@types/jsdom": "^28.0.1",
