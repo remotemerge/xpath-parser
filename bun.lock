@@ -6,7 +6,6 @@
       "name": "@remotemerge/xpath-parser",
       "devDependencies": {
         "@types/jsdom": "^21.1.6",
-        "@types/node": "^20.12.6",
         "@typescript-eslint/eslint-plugin": "^7.6.0",
         "@typescript-eslint/parser": "^7.6.0",
         "bun-types": "^1.3.13",
