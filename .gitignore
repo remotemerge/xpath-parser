@@ -1,12 +1,12 @@
 ### Vendor directories
-/.yarn/
-/node_modules/
+/html/.yarn/
+/html/node_modules/
+/html/vendor/
 
 ### Build directories
-/build/
-/bundle/
-/dist/
-/output/
+/html/build/
+/html/bundle/
+/html/dist/
 
 ### JetBrains
 /.idea/*

@@ -23,8 +23,8 @@
     "url": "git+https://github.com/remotemerge/xpath-parser.git"
   },
   "type": "module",
-  "main": "dist/index.node.js",
-  "module": "dist/index.es.js",
+  "main": "../dist/index.node.js",
+  "module": "../dist/index.es.js",
   "types": "dist/types/index.d.ts",
   "exports": {
     ".": {
@@ -34,10 +34,10 @@
     }
   },
   "scripts": {
-    "lint": "oxlint && oxfmt --check",
-    "lint:fix": "oxlint --fix && oxfmt",
+    "lint": "../node_modules/.bin/oxlint && oxfmt --check",
+    "lint:fix": "../node_modules/.bin/oxlint --fix && oxfmt",
     "test": "bun test",
-    "build": "vite build && bun ./makers/package.ts"
+    "build": "../node_modules/.bin/vite build && bun ./makers/package.ts"
   },
   "devDependencies": {
     "@types/jsdom": "^28.0.1",
