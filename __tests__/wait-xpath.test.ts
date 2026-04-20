@@ -13,7 +13,7 @@ test('must have an object with target', async () => {
 test('must have an object with error', async () => {
   try {
     await parser.waitXPath('//span[contains(@class, "class-not-exists")]/span', 3);
-  } catch (error: any) {
-    expect(error.message).toBe('Element not found');
+  } catch (error: unknown) {
+    expect((error as Error).message).toBe('Element not found');
   }
 });

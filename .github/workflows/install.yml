@@ -4,7 +4,7 @@ name: Install
 # Controls when the workflow will run
 on:
   workflow_run:
-    workflows: [ "Production" ]
+    workflows: ['Production']
     types:
       - completed
 
@@ -13,26 +13,26 @@ jobs:
     # The matrix of OS and Node.js versions
     strategy:
       matrix:
-        os: [ ubuntu-latest, macos-latest, windows-latest ]
-        node: [ 14, 16, 18, 20, 'current' ]
+        os: [ubuntu-latest, macos-latest, windows-latest]
+        node: [14, 16, 18, 20, 'current']
 
     # The type of runner that the job will run on
     runs-on: ${{ matrix.os }}
 
     steps:
-      - name: "Use specified Node.js version"
+      - name: 'Use specified Node.js version'
         uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node }}
 
-      - name: "Print version"
+      - name: 'Print version'
         run: node -v && npm -v
 
-      - name: "Init package config"
+      - name: 'Init package config'
         run: npm init -y
 
-      - name: "Install XPathParser package"
+      - name: 'Install XPathParser package'
         run: npm i @remotemerge/xpath-parser
 
-      - name: "List installed packages"
+      - name: 'List installed packages'
         run: npm list --depth=0

@@ -15,7 +15,5 @@ test('must have 50 titles', () => {
 });
 
 test('match the first title', () => {
-  expect(results[0]).toBe(
-    'Cell Phone Stand,Angle Height Adjustable Stable LISEN Cell Phone Stand For Desk,Sturdy…',
-  );
+  expect(results[0]).toBe('Cell Phone Stand,Angle Height Adjustable Stable LISEN Cell Phone Stand For Desk,Sturdy…');
 });
