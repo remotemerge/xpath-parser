@@ -2,7 +2,7 @@ import { defineConfig } from 'vite';
 import dts from 'vite-plugin-dts';
 
 export default defineConfig({
-  plugins: [dts({ include: 'src/*.ts', outDir: 'dist' })],
+  plugins: [dts({ tsconfigPath: './tsconfig.dts.json', outDir: 'dist/types' })],
   build: {
     minify: true,
     lib: {

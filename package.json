@@ -25,12 +25,12 @@
   "type": "module",
   "main": "dist/index.node.js",
   "module": "dist/index.es.js",
-  "types": "dist/src/index.d.ts",
+  "types": "dist/types/index.d.ts",
   "exports": {
     ".": {
       "import": "./dist/index.es.js",
       "require": "./dist/index.node.js",
-      "types": "./dist/src/index.d.ts"
+      "types": "./dist/types/index.d.ts"
     }
   },
   "scripts": {
