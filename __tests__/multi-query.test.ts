@@ -1,4 +1,4 @@
-import { assert, test } from 'vitest';
+import { expect, test } from 'bun:test';
 
 import Parser from '../src/index';
 import htmlContent from './data/product.html';
@@ -12,24 +12,23 @@ const product = parser.multiQuery({
 });
 
 test('must return an object', () => {
-  assert.strictEqual(typeof product, 'object');
+  expect(typeof product).toBe('object');
 });
 
 test('must have four elements', () => {
-  assert.strictEqual(Object.keys(product).length, 4);
+  expect(Object.keys(product).length).toBe(4);
 });
 
 test('match the product title', () => {
-  assert.strictEqual(
-    product.title,
+  expect(product.title).toBe(
     'LETSCOM Fitness Tracker HR, Activity Tracker Watch with Heart Rate Monitor, Waterproof Smart Fitness Band with Step Counter, Calorie Counter, Pedometer Watch for Kids Women and Men',
   );
 });
 
 test('product price contains dollar sign', () => {
-  assert(product.price.includes('$'));
+  expect(product.price.includes('$')).toBe(true);
 });
 
 test('product rating contains numbers', () => {
-  assert(product.rating.match(/\d+/));
+  expect(product.rating.match(/\d+/)).toBeTruthy();
 });

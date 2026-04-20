@@ -160,7 +160,7 @@ export default class XPathParser {
         // check if timeout
         if (timer++ >= maxSeconds) {
           clearInterval(refreshId);
-          const error = new Error(`Timeout! Max ${maxSeconds} seconds are allowed.`);
+          const error = new Error('Element not found');
           error.name = 'TimeoutError';
           reject(error);
         }

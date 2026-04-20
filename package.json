@@ -36,7 +36,7 @@
   "scripts": {
     "lint": "eslint --ext .ts src",
     "lint:fix": "eslint --ext .ts --fix src",
-    "test": "vitest run",
+    "test": "bun test",
     "build": "vite build && tsx ./makers/package.ts"
   },
   "devDependencies": {
@@ -44,14 +44,13 @@
     "@types/node": "^20.12.6",
     "@typescript-eslint/eslint-plugin": "^7.6.0",
     "@typescript-eslint/parser": "^7.6.0",
+    "bun-types": "^1.3.13",
     "eslint": "^8.57.0",
     "eslint-plugin-prettier": "^5.1.3",
     "jsdom": "^24.0.0",
     "prettier": "^3.2.5",
-    "tsx": "^4.7.2",
     "typescript": "^5.4.4",
     "vite": "^5.2.8",
-    "vite-plugin-dts": "^3.8.1",
-    "vitest": "^1.4.0"
+    "vite-plugin-dts": "^3.8.1"
   }
 }

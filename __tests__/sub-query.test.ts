@@ -1,4 +1,4 @@
-import { assert, test } from 'vitest';
+import { expect, test } from 'bun:test';
 
 import Parser from '../src/index';
 import htmlContent from './data/products.html';
@@ -16,41 +16,40 @@ const products = parser.subQuery({
 });
 
 test('must return an object', () => {
-  assert.strictEqual(typeof products, 'object');
+  expect(typeof products).toBe('object');
 });
 
 test('must have resuts array and pagination url', () => {
-  assert(Array.isArray(products.results));
-  assert.strictEqual(typeof products.paginationUrl, 'string');
+  expect(Array.isArray(products.results)).toBe(true);
+  expect(typeof products.paginationUrl).toBe('string');
 });
 
 test('pagination url is string', () => {
   if (products.paginationUrl) {
-    assert.strictEqual(typeof products.paginationUrl, 'string');
+    expect(typeof products.paginationUrl).toBe('string');
   }
 });
 
 test('must have results array', () => {
-  assert(Array.isArray(products.results));
+  expect(Array.isArray(products.results)).toBe(true);
 });
 
 test('each product must be an object', () => {
-  assert.strictEqual(typeof products.results[0], 'object');
+  expect(typeof products.results[0]).toBe('object');
 });
 
 const firstProduct = products.results[0];
 
 test('match the product title', () => {
-  assert.strictEqual(
-    firstProduct.title,
+  expect(firstProduct.title).toBe(
     'Cell Phone Stand,Angle Height Adjustable Stable LISEN Cell Phone Stand For Desk,Sturdy Aluminum Metal Phone Holder,Compatible with Mobile Phone/iPad/Kindle/Tablet,4-10inch',
   );
 });
 
 test('product price contains dollar sign', () => {
-  assert(firstProduct.price.includes('$'));
+  expect(firstProduct.price.includes('$')).toBe(true);
 });
 
 test('product image url starts with https', () => {
-  assert(firstProduct.image.startsWith('https://'));
+  expect(firstProduct.image.startsWith('https://')).toBe(true);
 });
