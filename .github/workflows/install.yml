@@ -15,7 +15,7 @@ jobs:
     strategy:
       matrix:
         os: [ ubuntu-latest, windows-latest, macos-latest ]
-        node-version: [20, 22, 24]
+        node-version: [18, 20, 22, 24]
       fail-fast: false
 
     steps:
@@ -36,7 +36,7 @@ jobs:
     strategy:
       matrix:
         os: [ ubuntu-latest, macos-latest ]
-        node-version: [20, 22, 24]
+        node-version: [18, 20, 22, 24]
       fail-fast: false
 
     steps:
@@ -57,7 +57,7 @@ jobs:
     strategy:
       matrix:
         os: [ ubuntu-latest, windows-latest, macos-latest ]
-        node-version: [20, 22, 24]
+        node-version: [18, 20, 22, 24]
       fail-fast: false
 
     steps:
@@ -68,6 +68,8 @@ jobs:
 
       - name: "Install pnpm"
         uses: pnpm/action-setup@v6
+        with:
+          version: 10
 
       - name: "Install XPath Parser"
         run: pnpm init && pnpm add @remotemerge/xpath-parser
