@@ -62,7 +62,7 @@
     "build": "vite build && bun ./scripts/post-build.ts"
   },
   "dependencies": {
-    "@xmldom/xmldom": "^0.8.13",
+    "@xmldom/xmldom": "^0.9.10",
     "xpath": "^0.0.34"
   },
   "devDependencies": {
