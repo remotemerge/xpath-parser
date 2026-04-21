@@ -18,6 +18,7 @@ import type { DomNode, Engine } from './engine';
 
 /** XHTML namespace URI used by `@xmldom/xmldom` for parsed HTML elements. */
 const XHTML_NS = 'http://www.w3.org/1999/xhtml';
+const FALLBACK_NS_BASE = 'urn:remotemerge:xmldom-prefix:';
 
 /**
  * `xpath.select`-style function pre-bound to the `h:` → XHTML namespace
@@ -25,6 +26,28 @@ const XHTML_NS = 'http://www.w3.org/1999/xhtml';
  * consistent with the bindings the `xpath` library knows about.
  */
 const selectWithXhtmlNs = xpath.useNamespaces({ h: XHTML_NS });
+
+/**
+ * `xmldom@0.9.x` rejects prefixed element names that do not have a namespace
+ * binding, even in sloppy real-world HTML. To preserve the library's
+ * forgiving parsing behaviour, pre-bind any undeclared tag prefixes to a
+ * synthetic namespace URI before parsing.
+ */
+const getImplicitNamespaceBindings = (html: string): Record<string, string> | undefined => {
+  const declaredPrefixes = new Set<string>();
+  for (const match of html.matchAll(/xmlns:([A-Za-z_][\w.-]*)\s*=/g)) {
+    declaredPrefixes.add(match[1]!);
+  }
+
+  const bindings: Record<string, string> = {};
+  for (const match of html.matchAll(/<\/?([A-Za-z_][\w-]*):[A-Za-z_][\w.-]*/g)) {
+    const prefix = match[1]!;
+    if (prefix === 'xml' || prefix === 'xmlns' || declaredPrefixes.has(prefix)) continue;
+    bindings[prefix] = `${FALLBACK_NS_BASE}${prefix}`;
+  }
+
+  return Object.keys(bindings).length > 0 ? bindings : undefined;
+};
 
 /**
  * Reserved XPath axis names. When one of these appears as an identifier
@@ -179,11 +202,8 @@ export const createXmlDomEngine = (): Engine => ({
     // `@xmldom/xmldom` would otherwise log to stderr. Silence them — the
     // parser is forgiving and the resulting tree is what callers care about.
     const parser = new DOMParser({
-      errorHandler: {
-        warning: () => {},
-        error: () => {},
-        fatalError: () => {},
-      },
+      onError: () => {},
+      xmlns: getImplicitNamespaceBindings(html),
     });
     return parser.parseFromString(html, 'text/html') as unknown as DomNode;
   },
