@@ -9,11 +9,11 @@
 
 ## Overview
 
-Scraping a page should feel as direct as pointing at what you want. `@remotemerge/xpath-parser` is a small, focused TypeScript library that lets XPath do the talking. Write the expression, get the value back. No selector gymnastics, no wrappers around, no ceremony.
+`@remotemerge/xpath-parser` is a focused TypeScript library for extracting data from HTML and XML with XPath. Write an expression, evaluate it, and get the result back without extra wrappers or unnecessary ceremony.
 
-The same code runs in the browser, in jsdom, and in plain Node.js. The library quietly picks the right engine for the runtime. When the browser's native `document.evaluate` is available it uses that, and when it is not, it falls back to a pure-JavaScript `@xmldom/xmldom` engine. The API looks identical everywhere. Authored in TypeScript 6.x, shipped as ESM and CJS, and typed end-to-end.
+The same API works in the browser, in jsdom, and in plain Node.js. The library selects the appropriate engine for the current runtime. When native `document.evaluate` is available, it uses the browser implementation; otherwise, it falls back to a pure JavaScript engine powered by `@xmldom/xmldom`. The API remains consistent across environments. The package is authored in TypeScript 6.x, shipped as both ESM and CJS, and fully typed.
 
-This is XPath 1.0, the dialect every browser already speaks. That is a deliberate trade: broad compatibility and a predictable surface area, at the cost of features from XPath 2.0 and 3.1.
+The library targets XPath 1.0, the version already supported by browsers. That choice favors compatibility and predictability over newer XPath 2.0 and 3.1 features.
 
 ### What it is good at
 
@@ -45,7 +45,7 @@ bun add @remotemerge/xpath-parser
 
 ## Quick Start
 
-Three lines are usually enough to see a result:
+A basic query usually takes only a few lines:
 
 ```typescript
 import XPathParser from "@remotemerge/xpath-parser";
@@ -55,11 +55,11 @@ const title = parser.queryFirst("//h1");
 // "Hello"
 ```
 
-That is the whole shape of the library. Everything else is variations on this idea: one match, many matches, one record, many records, or a match that has not arrived yet.
+That is the core model of the library. The rest of the API builds on the same idea: one match, many matches, one record, many records, or a match that appears later.
 
 ## Entry Points
 
-There are three entry points, and picking one is mostly about how much you care where the code ends up running. If you are not sure, start with the universal one. It figures it out on its own.
+The package provides three entry points. In most cases, the universal entry point is the best default. It detects the runtime automatically.
 
 | Import                              | Class                  | Engine                              | When to use                                                          |
 |-------------------------------------|------------------------|-------------------------------------|----------------------------------------------------------------------|
@@ -73,7 +73,7 @@ import BrowserXPathParser from "@remotemerge/xpath-parser/browser";
 import NodeXPathParser from "@remotemerge/xpath-parser/node";
 ```
 
-All three classes share the same base class, so the API below applies regardless of which one you import.
+All three classes extend the same base class, so the API below applies to each entry point.
 
 ## API Reference
 
@@ -83,11 +83,11 @@ All three classes share the same base class, so the API below applies regardless
 new XPathParser(content: DomNode | string)
 ```
 
-Pass in a string and the parser will turn it into a document for you. Pass in a node you already have (a live `document`, a parsed fragment, anything the engine recognises) and it will query against that directly, skipping the parse step entirely. Either way, the rest of the API behaves the same.
+Pass a string to have the parser create a document automatically. Pass an existing node, such as a live `document` or parsed fragment, to query it directly and skip parsing. In both cases, the rest of the API behaves the same way.
 
 ### `queryFirst(expression: string): string`
 
-The workhorse for "give me this one thing." Returns the trimmed text of the first match, or an empty string when nothing matches, so you can write straight-line code without a single `if (x != null)`.
+Use this method to retrieve a single value. It returns the trimmed text of the first match, or an empty string when nothing matches, which keeps calling code straightforward.
 
 ```typescript
 const title = parser.queryFirst('//span[@id="productTitle"]');
@@ -95,7 +95,7 @@ const title = parser.queryFirst('//span[@id="productTitle"]');
 
 ### `queryList(expression: string): string[]`
 
-When one is not enough. Returns every match as a trimmed string, in document order. Missed entirely? You get an empty array. No surprises, no exceptions.
+Use this method when multiple matches are expected. It returns every result as a trimmed string in document order. If nothing matches, it returns an empty array.
 
 ```typescript
 const titles = parser.queryList('//span[contains(@class, "zg-item")]/a/div');
@@ -103,7 +103,7 @@ const titles = parser.queryList('//span[contains(@class, "zg-item")]/a/div');
 
 ### `multiQuery(queries: Record<string, string>): Record<string, string>`
 
-The shape of a record, described as a map of XPaths. Each field runs once; each value comes back as the first match. Perfect for the "one product per page" case where you want title, price, rating, and seller in a single call.
+This method maps a record shape to a set of XPath expressions. Each field is evaluated once, and each value is returned as the first match. It works well for single-page records such as product detail pages.
 
 ```typescript
 const product = parser.multiQuery({
@@ -127,7 +127,7 @@ Sample output:
 
 ### `subQuery(expression: SubQueryExpression): SubQueryResult`
 
-The listing-page companion to `multiQuery`. Point `root` at the container that repeats (a product tile, a search result, a table row), describe the shape of one record in `queries`, and the parser will walk every match and build a clean array of records for you. Throw in a `pagination` expression and the next-page link comes along for the ride.
+`subQuery` is designed for repeated structures such as product tiles, search results, or table rows. Set `root` to the repeating container, define the record shape in `queries`, and the parser will return an array of records. If a `pagination` expression is included, the next-page link is returned as well.
 
 ```typescript
 const result = parser.subQuery({
@@ -176,7 +176,7 @@ type SubQueryResult = {
 
 ### `waitXPath(expression: string, maxSeconds?: number): Promise<WaitXPathResult>`
 
-Modern pages arrive in pieces. `waitXPath` is the escape hatch for that reality: it checks the document once per second and resolves the moment the expression finds something real. Default patience is ten seconds; exceed it and the promise rejects with an `Error` named `'TimeoutError'`. It is easy to branch on and impossible to ignore.
+Modern pages often render content incrementally. `waitXPath` handles that case by checking the document once per second and resolving as soon as the expression matches. By default, it waits for up to ten seconds. If the timeout is exceeded, the promise rejects with an `Error` named `'TimeoutError'`.
 
 ```typescript
 try {
@@ -187,7 +187,7 @@ try {
 }
 ```
 
-`waitXPath` watches; it does not fetch or render. Pair it with a headless browser, a mutation-heavy widget, or any driver changing the document underneath you, and it will pick up the result the instant it lands.
+`waitXPath` only observes the current document. It does not fetch, render, or drive page updates. Pair it with a headless browser or any process that mutates the DOM, and it will resolve as soon as the target appears.
 
 ### Exported Types
 
@@ -199,7 +199,7 @@ import type { DomNode, Engine, EvaluateResult, SubQueryExpression, SubQueryResul
 
 ## Architecture
 
-Underneath the friendly API is a very short story: a high-level `XPathParser` on top, and a pluggable `Engine` doing the actual DOM and XPath work below. The seam between them is what makes the same code run in a browser tab and a plain Node process without conditionals.
+The architecture is intentionally simple: a high-level `XPathParser` sits on top of a pluggable `Engine` that handles DOM parsing and XPath evaluation. This separation is what allows the same API to work in both browser and Node.js environments.
 
 ```text
            ┌────────────────────────────────────┐
@@ -230,23 +230,23 @@ type Engine = {
 };
 ```
 
-Three methods, nothing more:
+The contract consists of three methods:
 
 - `parse` takes a string and hands back something queryable.
-- `evaluate` runs the expression. Ask for one match with `first: true` and it takes a fast path; ask for many, and it hands back an iterator.
-- `isNode` answers the quiet question "is this one of mine?"
+- `evaluate` runs an XPath expression. With `first: true`, it follows the fast path for a single match; otherwise, it returns an iterator for multiple matches.
+- `isNode` determines whether a value belongs to the engine's node model.
 
-While `subQuery` walks a list of records, the parser rebinds its evaluation context to each root in turn. That is why the per-field expressions inside `queries` can be written relative to the row: they really are evaluated from there.
+During `subQuery`, the parser rebinds the evaluation context to each matched root. That is why expressions inside `queries` can be written relative to the current row.
 
 ### Native engine
 
-When a real DOM is in scope, use it. `createNativeEngine` pulls `document`, `DOMParser`, `XPathResult`, and `Node` straight from `globalThis` and leans on `document.evaluate`. For `queryFirst` it asks for `FIRST_ORDERED_NODE_TYPE` so the browser can stop looking after the first hit; for `queryList` it uses an iterator so nothing is materialized that you are not going to read.
+When a real DOM is available, the library uses it directly. `createNativeEngine` reads `document`, `DOMParser`, `XPathResult`, and `Node` from `globalThis` and relies on `document.evaluate`. For `queryFirst`, it requests `FIRST_ORDERED_NODE_TYPE` so the browser can stop after the first match. For `queryList`, it uses an iterator to avoid materializing results unnecessarily.
 
-The universal entry point checks for `document` and `XPathResult` via `hasNativeDom()` at construction time. If they are there, the native engine wins. You do not have to think about it.
+The universal entry point checks for `document` and `XPathResult` through `hasNativeDom()` during construction. If both are present, the native engine is selected automatically.
 
 ### xmldom engine
 
-On plain Node.js there is no `document` to evaluate against, so the library ships a pure-JavaScript engine built on `@xmldom/xmldom` and the `xpath` package. It covers one awkward corner on your behalf: HTML parsed by `xmldom` is implicitly in the XHTML namespace, but scraper XPath almost never writes `h:div`. The engine rewrites your expression to add that prefix where, and _only_ where, it is actually necessary, so `//div[@id="main"]` works the way you wrote it.
+In plain Node.js, there is no native `document.evaluate`, so the library includes a pure JavaScript engine built on `@xmldom/xmldom` and `xpath`. It also handles an important namespace detail: HTML parsed by `xmldom` is placed in the XHTML namespace, while scraper XPath expressions typically omit prefixes. The engine rewrites expressions only where needed, so `//div[@id="main"]` continues to work as expected.
 
 The rewriter knows the difference between an element name and:
 
@@ -255,11 +255,11 @@ The rewriter knows the difference between an element name and:
 - a function call,
 - an attribute or variable reference (`@name`, `$var`).
 
-Each of those is left alone. Bare element names get the prefix. Everything else continues to read like the XPath you already know.
+Those forms are preserved as-is. Bare element names receive the prefix. Everything else remains readable and familiar.
 
 ### `DomNode`
 
-Both engines speak the same tiny node shape, so the parser never needs to care who produced it:
+Both engines expose the same minimal node shape, so the parser does not need to care which engine produced it:
 
 ```typescript
 type DomNode = {
@@ -269,13 +269,13 @@ type DomNode = {
 };
 ```
 
-That is enough to cover both worlds. Attribute nodes (`nodeType === 2`) expose their value via `value`; everything else exposes it via `textContent`. The parser reads whichever one applies and hands you a trimmed string.
+This is enough for both environments. Attribute nodes (`nodeType === 2`) expose their content through `value`; all other nodes use `textContent`. The parser reads the applicable field and returns a trimmed string.
 
 ## Usage Patterns
 
 ### Working with a pre-parsed document
 
-Already have a document in the hand? Skip the parse step. Every entry point takes a node as happily as a string.
+If a document is already available, parsing can be skipped. Every entry point accepts a node as well as a string.
 
 ```typescript
 import BrowserXPathParser from "@remotemerge/xpath-parser/browser";
@@ -286,7 +286,7 @@ const hrefs = parser.queryList("//a/@href");
 
 ### Server-side scraping
 
-Fetch the page, hand it to the parser, and describe the record. Done.
+Fetch the page, pass it to the parser, and describe the record shape.
 
 ```typescript
 import NodeXPathParser from "@remotemerge/xpath-parser/node";
@@ -303,7 +303,7 @@ const product = parser.multiQuery({
 
 ### Combined listing and pagination
 
-Scrape the page and pick up the link to the next one and the same breath.
+Extract listing data and the next-page link in a single pass.
 
 ```typescript
 const page = parser.subQuery({
@@ -326,31 +326,31 @@ if (page.paginationUrl) {
 
 ## Error Handling
 
-The parser tries hard not to make missing data an exception. Empty results are data:
+The parser treats missing data as a normal result rather than an exceptional condition:
 
-- `queryFirst` returns `''`, `queryList` returns `[]`, and `multiQuery` / `subQuery` return records with empty fields rather than throwing. Branching on "did this match?" stays at the value level, where it is easiest to read.
-- Invalid XPath is a different story: the underlying engine raises (a `DOMException` in the browser, a standard `Error` from the `xpath` package in Node). The parser does not swallow these. If your expressions come from user input, wrap the call in `try` / `catch`.
-- `waitXPath` is the one method that can reject on purpose, with an `Error` named `'TimeoutError'` when the budget runs out. Easy to spot, easy to handle.
+- `queryFirst` returns `''`, `queryList` returns `[]`, and `multiQuery` / `subQuery` return records with empty fields instead of throwing.
+- Invalid XPath is handled differently. The underlying engine throws a runtime error instead: a `DOMException` in the browser or a standard `Error` from the `xpath` package in Node.js. These errors are not swallowed. If expressions may come from user input, wrap calls in `try` / `catch`.
+- `waitXPath` is the only method designed to reject during normal use, returning an `Error` named `'TimeoutError'` when the timeout expires.
 
 ## Compatibility
 
-- **Runtime:** modern ES2022+ engines. Ships as ESM (`.mjs`) and CJS (`.cjs`) with conditional exports so browser and Node consumers each get a tuned bundle.
-- **TypeScript:** `.d.ts` files live alongside the code under `dist/types`, so IntelliSense works the moment you install.
-- **XPath level:** XPath 1.0, the dialect that every browser and the `xpath` npm package already implement. No 2.0/3.1 features.
-- **Server-side parsing:** handled by `@xmldom/xmldom`. It is happy with well-formed HTML but stricter than the browser's forgiving parser, so pages that are wildly broken may parse a little differently than they would in a tab.
+- **Runtime:** modern ES2022+ engines. Ships as ESM (`.mjs`) and CJS (`.cjs`) with conditional exports so browser and Node consumers each receive an appropriate bundle.
+- **TypeScript:** `.d.ts` files are included under `dist/types`, so IntelliSense is available immediately after installation.
+- **XPath level:** XPath 1.0, the version implemented by browsers and the `xpath` npm package. XPath 2.0 and 3.1 features are not supported.
+- **Server-side parsing:** powered by `@xmldom/xmldom`. It works well with well-formed HTML, but it is stricter than the browser parser, so severely malformed pages may parse differently than they would in a browser.
 
 ## Performance Considerations
 
-The library is small, but a few details earn their keep:
+The library is small, but several implementation details improve efficiency:
 
-- When you call `queryFirst`, the native engine asks the browser for `FIRST_ORDERED_NODE_TYPE`, so it can stop looking the moment it finds a hit. You do not pay for results you are not going to read.
+- `queryFirst` uses `FIRST_ORDERED_NODE_TYPE` in the native engine, allowing the browser to stop as soon as a match is found.
 - `subQuery` rebinds the evaluation context to each matched root instead of re-querying the entire document per row. Work stays proportional to the subtree that actually matters.
-- Parsing a document is the most expensive thing a scraper does. Reuse a single parser instance across many queries, and it will only parse once.
-- The xmldom engine rewrites each expression in a single linear pass. In practice the cost disappears behind the first evaluation and never comes back.
+- Parsing is typically the most expensive step. Reusing a single parser instance across multiple queries avoids repeated parse work.
+- In the `xmldom` engine, expression rewriting runs in a single linear pass and is typically negligible compared to evaluation itself.
 
 ## Contributing
 
-Contributions are genuinely welcome: bug fixes, new examples, docs improvements, and edge cases we missed. For anything significant, open an issue first so we can agree on the shape before you write the code.
+Contributions are welcome, including bug fixes, new examples, documentation improvements, and missing edge cases. For larger changes, opening an issue first helps align with the approach before implementation begins.
 
 Before sending a pull request, make sure the tests and linter are happy:
 
@@ -360,10 +360,10 @@ bun test
 bun run lint
 ```
 
-Bug reports and feature requests live here: [Bug Reports](https://github.com/remotemerge/xpath-parser/issues).
+Bug reports and feature requests can be filed here: [Bug Reports](https://github.com/remotemerge/xpath-parser/issues).
 
 ## Disclaimer
 
-The XPath expressions in this README are drawn from public product pages for illustration only. They are meant to teach the shape of the API, not to endorse scraping any particular site. Please respect the terms of service and `robots.txt` of anywhere you point this library.
+The XPath expressions in this README are taken from public product pages for demonstration purposes only. They are intended to illustrate the API, not to endorse scraping any specific site. Always respect applicable terms of service and `robots.txt` policies.
 
 Logo courtesy of [flaticon](https://www.flaticon.com).
