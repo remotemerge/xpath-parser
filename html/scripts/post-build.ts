@@ -1,6 +1,6 @@
 import { join, resolve } from 'path';
 import { readFileSync } from 'fs';
-import { copyFile, mkdir, writeFile } from 'fs/promises';
+import { copyFile, cp, mkdir, readFile, writeFile } from 'fs/promises';
 
 // Read and parse the root package.json
 const packageJsonPath = join(resolve(), 'package.json');
@@ -73,7 +73,14 @@ await mkdir(distPath, { recursive: true });
 // Write the generated package.json to the dist folder
 await writeFile(join(distPath, 'package.json'), JSON.stringify(npmPackageConfig, null, 2), 'utf-8');
 
-// Copy README.md and LICENSE from project root
+// Copy LICENSE from project root
 const projectRoot = join(resolve(), '..');
-await copyFile(join(projectRoot, 'README.md'), join(distPath, 'README.md'));
 await copyFile(join(projectRoot, 'LICENSE'), join(distPath, 'LICENSE'));
+
+// Copy README.md with path fix
+const readmeContent = await readFile(join(projectRoot, 'README.md'), 'utf-8');
+const fixedReadme = readmeContent.replace(/\.\/html\/assets\//g, './assets/');
+await writeFile(join(distPath, 'README.md'), fixedReadme, 'utf-8');
+
+// Copy assets folder to dist/assets
+await cp(join(resolve(), 'assets'), join(distPath, 'assets'), { recursive: true });
