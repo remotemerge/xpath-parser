@@ -59,7 +59,7 @@
     "test": "bun test",
     "dev": "vite --host 0.0.0.0 --port 3000",
     "preview": "vite preview",
-    "build": "vite build && bun ./makers/package.ts"
+    "build": "vite build && bun ./scripts/post-build.ts"
   },
   "dependencies": {
     "@xmldom/xmldom": "^0.8.13",
