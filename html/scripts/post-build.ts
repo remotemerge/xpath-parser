@@ -1,10 +1,9 @@
-import { join, resolve } from 'path';
-import { readFileSync } from 'fs';
-import { copyFile, cp, mkdir, readFile, writeFile } from 'fs/promises';
+import { cp, mkdir } from 'node:fs/promises';
+import { join } from 'node:path';
 
 // Read and parse the root package.json
-const packageJsonPath = join(resolve(), 'package.json');
-const packageJson = JSON.parse(readFileSync(packageJsonPath, 'utf8'));
+const cwd = process.cwd();
+const packageJson = await Bun.file(join(cwd, 'package.json')).json();
 
 // Extract necessary fields from package.json
 const {
@@ -66,21 +65,19 @@ const npmPackageConfig = {
   },
 };
 
-// Create the dist folder if it doesn't exist
-const distPath = join(resolve(), 'dist');
-await mkdir(distPath, { recursive: true });
-
 // Write the generated package.json to the dist folder
-await writeFile(join(distPath, 'package.json'), JSON.stringify(npmPackageConfig, null, 2), 'utf-8');
+const distPath = join(cwd, 'dist');
+await Bun.write(join(distPath, 'package.json'), JSON.stringify(npmPackageConfig, null, 2));
 
 // Copy LICENSE from project root
-const projectRoot = join(resolve(), '..');
-await copyFile(join(projectRoot, 'LICENSE'), join(distPath, 'LICENSE'));
+await Bun.write(join(distPath, 'LICENSE'), Bun.file(join(cwd, '..', 'LICENSE')));
 
 // Copy README.md with path fix
-const readmeContent = await readFile(join(projectRoot, 'README.md'), 'utf-8');
+const readmeContent = await Bun.file(join(cwd, '..', 'README.md')).text();
 const fixedReadme = readmeContent.replace(/\.\/html\/assets\//g, './assets/');
-await writeFile(join(distPath, 'README.md'), fixedReadme, 'utf-8');
+await Bun.write(join(distPath, 'README.md'), fixedReadme);
 
 // Copy assets folder to dist/assets
-await cp(join(resolve(), 'assets'), join(distPath, 'assets'), { recursive: true });
+const distAssetsPath = join(distPath, 'assets');
+await mkdir(distAssetsPath, { recursive: true });
+await cp(join(cwd, 'assets'), distAssetsPath, { recursive: true });
