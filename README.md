@@ -1,12 +1,12 @@
-# <img src="./assets/logo.png" width="28" height="28"> XPath Parser
+# <img src="./html/assets/logo.png" width="28" height="28"> XPath Parser
 
 [![Package](https://img.shields.io/npm/v/@remotemerge/xpath-parser?logo=npm)](https://www.npmjs.com/package/@remotemerge/xpath-parser)
-![Build](https://img.shields.io/github/actions/workflow/status/remotemerge/xpath-parser/production.yml?logo=github)
+![Build](https://img.shields.io/github/actions/workflow/status/remotemerge/xpath-parser/publish.yml?logo=github)
 ![Downloads](https://img.shields.io/npm/dt/@remotemerge/xpath-parser)
 ![License](https://img.shields.io/npm/l/@remotemerge/xpath-parser)
 
 XPath Parser is a JavaScript utility for extracting data from HTML and XML documents; built for web scraping in a JavaScript
-environment. It's open source, modern, lightweight and fast. You can easily integrate it into new or existing web
+environment. It's open source, modern, lightweight and fast. You can integrate it into new or existing web
 crawlers, browser extensions, etc.
 
 ## Install
@@ -69,7 +69,7 @@ Sample output:
 
 ### Scrape multiple elements
 
-This method loop through the given expressions and captures the first match of each expression. It is useful for
+This method loops through the given expressions and captures the first match of each expression. It is useful for
 scraping full product information (`title`, `seller`, `price`, `rating`, etc.) from HTML pages. The keys are preserved
 and the values are returned to the same keys.
 
@@ -142,8 +142,7 @@ Sample output:
 ### Wait for Element
 
 This method waits until the element (matches by expression) exists on a page. The first parameter `expression` is XPath
-expression to match and the second parameter `maxSeconds` is the maximum time to wait in seconds (default to 10 seconds)
-.
+expression to match and the second parameter `maxSeconds` is the maximum time to wait in seconds (default to 10 seconds).
 
 ```javascript
 parser
