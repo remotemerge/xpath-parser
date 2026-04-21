@@ -67,7 +67,7 @@ jobs:
           node-version: ${{ matrix.node-version }}
 
       - name: "Install pnpm"
-        uses: pnpm/action-setup@v4
+        uses: pnpm/action-setup@v6
 
       - name: "Install XPath Parser"
         run: pnpm init && pnpm add @remotemerge/xpath-parser
