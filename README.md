@@ -1,15 +1,10 @@
 # <img src="./html/assets/logo.png" width="28" height="28"> XPath Parser
 
 [![Package](https://img.shields.io/npm/v/@remotemerge/xpath-parser?logo=npm&logoColor=fff)](https://www.npmjs.com/package/@remotemerge/xpath-parser)
-
 [![Build](https://img.shields.io/github/actions/workflow/status/remotemerge/xpath-parser/publish.yml?logo=github-actions&logoColor=fff&label=build)](https://github.com/remotemerge/xpath-parser/actions/workflows/publish.yml)
-
-[![Tests](https://img.shields.io/github/actions/workflow/status/remotemerge/xpath-parser/test.yml?logo=jest&logoColor=fff&label=tests)](https://github.com/remotemerge/xpath-parser/actions/workflows/test.yml)
-
+[![Tests](https://img.shields.io/github/actions/workflow/status/remotemerge/xpath-parser/test.yml?logo=bun&logoColor=fff&label=tests)](https://github.com/remotemerge/xpath-parser/actions/workflows/test.yml)
 [![Downloads](https://img.shields.io/npm/dt/@remotemerge/xpath-parser?logo=icloud&logoColor=fff)](https://www.npmjs.com/package/@remotemerge/xpath-parser)
-
 [![Size](https://img.shields.io/bundlephobia/minzip/@remotemerge/xpath-parser?logo=nodedotjs&logoColor=fff&label=size)](https://bundlephobia.com/package/@remotemerge/xpath-parser)
-
 [![License](https://img.shields.io/github/license/remotemerge/xpath-parser?logo=opensourceinitiative&logoColor=fff)](LICENSE)
 
 XPath Parser is a JavaScript utility for extracting data from HTML and XML documents; built for web scraping in a JavaScript
