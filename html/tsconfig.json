@@ -25,6 +25,6 @@
   },
 
   // Include and Exclude
-  "include": ["*.ts", "__tests__/**/*.ts", "makers/*.ts", "scripts/**/*.ts", "src/**/*.ts"],
+  "include": ["*.ts", "__tests__/**/*.ts", "scripts/**/*.ts", "src/**/*.ts"],
   "exclude": ["../node_modules", "dist"]
 }
