@@ -5,6 +5,20 @@ import { join, resolve } from 'path';
 // use vars from package config
 const pc = JSON.parse(readFileSync(`${resolve()}/package.json`, 'utf8'));
 
+const stripDist = (value: string) => value.replace(/^(\.\/|\.\.\/)?dist\//, '');
+
+const rewriteExports = (exports: Record<string, unknown>): Record<string, unknown> => {
+  const out: Record<string, unknown> = {};
+  for (const [key, val] of Object.entries(exports)) {
+    if (typeof val === 'string') {
+      out[key] = './' + stripDist(val);
+    } else if (val && typeof val === 'object') {
+      out[key] = rewriteExports(val as Record<string, unknown>);
+    }
+  }
+  return out;
+};
+
 // format configs
 const configs = {
   name: pc.name,
@@ -16,9 +30,11 @@ const configs = {
   repository: pc.repository,
   bugs: pc.bugs,
   type: pc.type,
-  types: pc.types.replace(/^dist\//, ''),
-  main: pc.main.replace(/^dist\//, ''),
-  module: pc.module.replace(/^dist\//, ''),
+  types: stripDist(pc.types),
+  main: stripDist(pc.main),
+  module: stripDist(pc.module),
+  exports: rewriteExports(pc.exports),
+  dependencies: pc.dependencies,
 };
 
 // generate package.json in dist
