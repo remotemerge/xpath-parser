@@ -1,6 +1,6 @@
 {
   "name": "@remotemerge/xpath-parser",
-  "version": "1.4.0",
+  "version": "1.4.1",
   "description": "Lightweight XPath parser for extracting structured data from HTML and XML documents.",
   "keywords": [
     "DOM",
