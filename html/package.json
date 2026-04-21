@@ -1,7 +1,7 @@
 {
   "name": "@remotemerge/xpath-parser",
-  "version": "1.3.0",
-  "description": "JavaScript utility for extracting data from HTML and XML documents!",
+  "version": "1.4.0",
+  "description": "Lightweight XPath parser for extracting structured data from HTML and XML documents.",
   "keywords": [
     "DOM",
     "Evaluate",
@@ -62,7 +62,7 @@
     "build": "vite build && bun ./scripts/post-build.ts"
   },
   "dependencies": {
-    "@xmldom/xmldom": "^0.8.13",
+    "@xmldom/xmldom": "^0.9.10",
     "xpath": "^0.0.34"
   },
   "devDependencies": {

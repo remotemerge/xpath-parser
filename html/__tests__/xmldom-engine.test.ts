@@ -4,6 +4,12 @@ import NodeParser from '../src/node';
 import htmlContent from './data/product.html';
 import productsHtml from './data/products.html';
 
+const undeclaredPrefixedHtml =
+  '<html><body><widget:panel><span id="productTitle">Namespaced title</span></widget:panel></body></html>';
+
+const declaredPrefixedHtml =
+  '<html xmlns:widget="urn:test-widget"><body><widget:panel><span id="productTitle">Declared title</span></widget:panel></body></html>';
+
 test('xmldom engine: queryFirst returns string title', () => {
   const parser = new NodeParser(htmlContent);
   const title = parser.queryFirst('//span[@id="productTitle"]');
@@ -42,4 +48,14 @@ test('xmldom engine: multiQuery returns record', () => {
   });
   expect(typeof result.title).toBe('string');
   expect(result.title.length).toBeGreaterThan(0);
+});
+
+test('xmldom engine: undeclared prefixed tags do not break HTML parsing', () => {
+  const parser = new NodeParser(undeclaredPrefixedHtml);
+  expect(parser.queryFirst('//span[@id="productTitle"]')).toBe('Namespaced title');
+});
+
+test('xmldom engine: declared prefixed tags continue to parse normally', () => {
+  const parser = new NodeParser(declaredPrefixedHtml);
+  expect(parser.queryFirst('//span[@id="productTitle"]')).toBe('Declared title');
 });
